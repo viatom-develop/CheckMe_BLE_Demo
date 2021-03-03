@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@id/nav_1"
+            android:icon="@drawable/dlc_l"
+            android:title="Daily Check" />
+        <item
+            android:id="@+id/nav_2"
+            android:icon="@drawable/ecg_l"
+            android:title="ECG Recorder" />
+        <item
+            android:id="@+id/nav_3"
+            android:icon="@drawable/spo2_l"
+            android:title="Pulse Oximeter" />
+        <item
+            android:id="@+id/nav_4"
+            android:icon="@drawable/temp_l"
+            android:title="Thermometer" />
+        <item
+            android:id="@+id/nav_5"
+            android:icon="@drawable/step_l"
+            android:title="Pedometer" />
+        <item
+            android:id="@+id/nav_6"
+            android:icon="@drawable/update_l"
+            android:title="My Device" />
+        <item
+            android:id="@+id/nav_7"
+            android:icon="@drawable/about_l"
+            android:title="About" />
+
+
+    </group>
+</menu>
