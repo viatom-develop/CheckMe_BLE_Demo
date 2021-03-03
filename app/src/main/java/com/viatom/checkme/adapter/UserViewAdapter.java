@@ -35,7 +35,7 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.ble_scan_view, parent, false);
+        View view = mInflater.inflate(R.layout.item_user_view, parent, false);
         return new ViewHolder(view);
     }
 
@@ -66,7 +66,7 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
         TextView bleName;
         ViewHolder(View itemView) {
             super(itemView);
-            bleName=itemView.findViewById(R.id.ble_name);
+            bleName=itemView.findViewById(R.id.userName);
             itemView.setOnClickListener(this);
         }
         @Override
