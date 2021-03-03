@@ -9,17 +9,17 @@
         android:id="@+id/nav_1"
         android:name="com.viatom.checkme.ui.ERecorder.ErecorderFragment"
         android:label="Daily Check"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_dailycheck" />
 
     <fragment
         android:id="@+id/nav_2"
         android:name="com.viatom.checkme.ui.DCheck.DcheckFragment"
         android:label="ECG Recorder"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_ecg" />
 
     <fragment
         android:id="@+id/nav_3"
         android:name="com.viatom.checkme.ui.Poximeter.PoximiterFragment"
         android:label="Pulse Oximeter"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_pulseoximeter" />
 </navigation>

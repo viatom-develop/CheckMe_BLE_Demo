@@ -21,7 +21,7 @@ class ErecorderFragment : Fragment() {
     ): View? {
         erecorderViewModel =
                 ViewModelProvider(this).get(ErecorderViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
+        val root = inflater.inflate(R.layout.fragment_dailycheck, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
         erecorderViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

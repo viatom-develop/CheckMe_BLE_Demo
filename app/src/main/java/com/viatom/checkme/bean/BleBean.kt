@@ -1,4 +1,4 @@
-package com.viatom.fda.bean
+package com.viatom.checkme.bean
 
 import android.bluetooth.BluetoothDevice
 

@@ -27,17 +27,21 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.vaca.x1.UserFile
 import com.vaca.x1.utils.add
 import com.vaca.x1.utils.toUInt
 import com.viatom.checkme.adapter.BlePanelAdapter
 import com.viatom.checkme.adapter.BleViewAdapter
+import com.viatom.checkme.adapter.UserViewAdapter
 import com.viatom.checkme.ble.EndReadPkg
 import com.viatom.checkme.ble.FDAResponse
 import com.viatom.checkme.ble.ReadContentPkg
 import com.viatom.checkme.ble.StartReadPkg
 import com.viatom.checkme.utils.CRCUtils.calCRC8
-import com.viatom.fda.bean.BleBean
+import com.viatom.checkme.bean.BleBean
 import kotlinx.android.synthetic.main.activity_main.*
 
 import me.weyye.hipermission.HiPermission
@@ -61,9 +65,12 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
     var userID:ByteArray?=null
     var currentFileIndex=0;
     lateinit var blePanelAdapter: BlePanelAdapter
+    lateinit var userAdapter:UserViewAdapter
     var pkgTotal=0;
     var currentPkg=0;
     var fileData: ByteArray? = null
+
+    lateinit var userInfo:UserFile.UserInfo
 
     var filePath:String?=null
     fun getPathX(): String? {
@@ -126,30 +133,38 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
                 })
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().setStatusBarColor(Color.BLACK);
-        setContentView(R.layout.activity_main)
+    override fun onPause() {
+        super.onPause()
+        this.finish()
+    }
+
+    fun initDrawer(){
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_1, R.id.nav_2, R.id.nav_3), drawerLayout)
+                R.id.nav_1, R.id.nav_2, R.id.nav_3), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
 
+    fun initActionBarColor(){
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().setStatusBarColor(Color.BLACK);
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initActionBarColor()
+        setContentView(R.layout.activity_main)
+        initDrawer()
         initVar()
         initView()
         AskPermission()
-
-
     }
 
     private val leScanCallback: ScanCallback = object : ScanCallback() {
@@ -220,6 +235,15 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
         blePanelAdapter= BlePanelAdapter(this)
         ble_panel.adapter=blePanelAdapter
         blePanelAdapter.setClickListener(this)
+
+        val linearLayoutManager=LinearLayoutManager(this)
+        linearLayoutManager.orientation=RecyclerView.VERTICAL
+        userAdapter= UserViewAdapter(this)
+        right_user.adapter=userAdapter
+        right_user.layoutManager=linearLayoutManager
+
+
+
     }
 
     fun initVar(){
@@ -233,8 +257,14 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
             myBleManager.connect(it)
                 .useAutoConnect(true)
                 .timeout(10000)
-                .retry(3, 100)
+                .retry(5, 100)
                 .done {
+                    if(cmdState==0){
+                        cmdState=1
+                        currentFileIndex=0
+                        val pkg=StartReadPkg(fileName[currentFileIndex])
+                        sendCmd(pkg.buf)
+                    }
                     Log.i("BLE", "连接成功了.>>.....>>>>")
                 }
                 .enqueue()
@@ -334,20 +364,14 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
                     bleResponse.content.apply {
                         fileData=add(fileData,this)
                     }
+
                     if(currentPkg>pkgTotal){
                         fileData?.apply {
                             if(currentFileIndex==0){
-                                val s=this.size/52
-                                userID= ByteArray(s)
-                                if(userID!=null){
-                                    for(k in 0 until s){
-                                        userID!![k]=this[k*52]
-                                    }
+                                userInfo=UserFile.UserInfo(this)
+                                for(user in userInfo.user){
+                                    userAdapter.addUser(user)
                                 }
-                                for(k in 1 until 9){
-                                    fileName[k]=userID!![1].toString()+fileName[k]
-                                }
-
                             }
                             Log.e("数量222","顺利打开房间昆仑山但是大家考虑是否收到    ${this.size}     ${s.toString()}")
                             File(getPathX(fileName[currentFileIndex])).writeBytes(this)

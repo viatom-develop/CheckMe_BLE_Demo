@@ -1,6 +1,5 @@
 package com.viatom.checkme.adapter;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,23 +9,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.viatom.checkme.R;
-import com.viatom.checkme.bean.BleBean;
+import com.viatom.checkme.bean.UserBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHolder> {
-    private List<BleBean> mBleData;
+public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHolder> {
+    private List<UserBean> mUserData;
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
+    private userClickListener mClickListener;
     private Context mContext;
 
     // data is passed into the constructor
-    public BleViewAdapter(Context context) {
+    public UserViewAdapter(Context context) {
         this.mInflater = LayoutInflater.from(context);
-        this.mBleData = new ArrayList<>();
+        this.mUserData = new ArrayList<>();
         mContext = context;
     }
 
@@ -44,12 +42,12 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bleName.setText(mBleData.get(position).getName());
+        holder.bleName.setText(mUserData.get(position).getName());
 
     }
 
-    public void addDevice(String name, BluetoothDevice bluetoothDevice) {
-        mBleData.add(new BleBean(name,bluetoothDevice));
+    public void addUser(UserBean userBean) {
+        mUserData.add(userBean);
         notifyDataSetChanged();
     }
 
@@ -60,7 +58,7 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
     // total number of cells
     @Override
     public int getItemCount() {
-        return mBleData.size();
+        return mUserData.size();
     }
 
 
@@ -73,18 +71,18 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
         }
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onScanItemClick(mBleData.get(getAdapterPosition()).getBluetoothDevice());
+            if (mClickListener != null) mClickListener.onScanItemClick(mUserData.get(getAdapterPosition()));
         }
     }
 
 
 
     // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+    public void setClickListener(userClickListener userClickListener) {
+        this.mClickListener = userClickListener;
     }
 
-    public interface ItemClickListener {
-        void onScanItemClick(BluetoothDevice bluetoothDevice);
+    public interface userClickListener {
+        void onScanItemClick(UserBean userBean);
     }
 }

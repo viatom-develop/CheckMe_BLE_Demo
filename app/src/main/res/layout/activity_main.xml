@@ -22,13 +22,21 @@
         android:background="#fff0f000"
         android:orientation="vertical">
         <TextView
+            android:background="#ff000000"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
             android:id="@+id/scan_title"
-            android:text="扫描设备中..."
+            android:text="Scanning Checkme Device..."
             android:textColor="@color/black"
             android:typeface="monospace"
             android:padding="20dp"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <androidx.recyclerview.widget.RecyclerView
@@ -79,11 +87,11 @@
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
         >
-        <TextView
-            android:id="@+id/gg"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/right_user"
+            android:background="@color/black"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="dksjfkdsf"/>
+            android:layout_height="match_parent"/>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
 

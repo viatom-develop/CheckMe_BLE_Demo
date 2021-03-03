@@ -22,7 +22,7 @@ class DcheckFragment : Fragment() {
     ): View? {
         dcheckViewModel =
                 ViewModelProvider(this).get(DcheckViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
+        val root = inflater.inflate(R.layout.fragment_ecg, container, false)
         val textView: TextView = root.findViewById(R.id.text_gallery)
         dcheckViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it

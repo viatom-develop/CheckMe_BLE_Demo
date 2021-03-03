@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.viatom.checkme.R;
-import com.viatom.fda.bean.PanelBean;
+import com.viatom.checkme.bean.PanelBean;
 
 import java.util.ArrayList;
 import java.util.List;

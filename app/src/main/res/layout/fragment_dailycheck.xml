@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ERecorder.ErecorderFragment">
-
+<ProgressBar
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
     <TextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"

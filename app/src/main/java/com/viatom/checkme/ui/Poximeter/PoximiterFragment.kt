@@ -21,7 +21,7 @@ class PoximiterFragment : Fragment() {
     ): View? {
         poximiterViewModel =
                 ViewModelProvider(this).get(PoximiterViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
+        val root = inflater.inflate(R.layout.fragment_pulseoximeter, container, false)
         val textView: TextView = root.findViewById(R.id.text_slideshow)
         poximiterViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
