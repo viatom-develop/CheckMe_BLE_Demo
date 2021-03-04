@@ -5,7 +5,7 @@
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
-    android:orientation="vertical"
+    android:orientation="horizontal"
 
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -13,10 +13,10 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:paddingBottom="15dp"
         android:id="@+id/imageView"
-
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
         android:contentDescription="@string/nav_header_desc"
         app:srcCompat="@drawable/ico1" />
 
@@ -25,7 +25,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="aa"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:padding="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
