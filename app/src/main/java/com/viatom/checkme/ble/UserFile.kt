@@ -22,7 +22,7 @@ object UserFile {
                 user[k].name=String(SetRange(start + 1, 16))
                 user[k].ico=bytes[start + 17].toUByte().toInt()
                 user[k].sex=bytes[start + 18].toUByte().toInt()
-                val year:Int= toUInt(SetRange(start + 19, 2))-1900
+                val year:Int= toUInt(SetRange(start + 19, 2))
                 val month:Int= toUInt(SetRange(start + 21, 1))-1
                 val date:Int= toUInt(SetRange(start + 22, 1))
                 val calendar = Calendar.getInstance()
@@ -41,7 +41,7 @@ object UserFile {
 
 
         }
-        fun SetRange(start: Int, len: Int):ByteArray{
+        private fun SetRange(start: Int, len: Int):ByteArray{
             return bytes.copyOfRange(start, start + len)
         }
 
