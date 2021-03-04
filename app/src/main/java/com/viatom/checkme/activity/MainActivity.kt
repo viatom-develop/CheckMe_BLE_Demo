@@ -1,4 +1,4 @@
-package com.viatom.checkme
+package com.viatom.checkme.activity
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -35,8 +35,10 @@ import com.google.android.material.navigation.NavigationView
 import com.vaca.x1.UserFile
 import com.vaca.x1.utils.add
 import com.vaca.x1.utils.toUInt
-import com.viatom.checkme.Constant.filePath
-import com.viatom.checkme.Constant.getPathX
+import com.viatom.checkme.utils.Constant
+import com.viatom.checkme.utils.Constant.getPathX
+import com.viatom.checkme.ble.FDABleManager
+import com.viatom.checkme.R
 import com.viatom.checkme.adapter.BleViewAdapter
 import com.viatom.checkme.adapter.UserViewAdapter
 import com.viatom.checkme.bean.BleBean
@@ -57,7 +59,8 @@ import java.text.SimpleDateFormat
 import java.util.Locale.ENGLISH
 import kotlin.experimental.inv
 
-class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, FDABleManager.onNotifyListener, UserViewAdapter.userClickListener {
+class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
+    FDABleManager.onNotifyListener, UserViewAdapter.userClickListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var leScanner: BluetoothLeScanner
@@ -121,7 +124,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, FDAB
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
                 setOf(
-                        R.id.nav_1, R.id.nav_2, R.id.nav_3
+                    R.id.nav_1, R.id.nav_2, R.id.nav_3
                 ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

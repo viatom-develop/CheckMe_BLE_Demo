@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Checkme">
-        <activity android:name=".Permission"
+        <activity android:name=".activity.PermissionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Checkme.NoActionBar"
            >
@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Checkme.NoActionBar"/>
 

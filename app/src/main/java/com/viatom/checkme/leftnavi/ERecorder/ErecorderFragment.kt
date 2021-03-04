@@ -1,4 +1,4 @@
-package com.viatom.checkme.ui.ERecorder
+package com.viatom.checkme.leftnavi.ERecorder
 
 import android.os.Bundle
 import android.view.LayoutInflater

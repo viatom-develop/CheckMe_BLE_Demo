@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.viatom.checkme.Constant;
+import com.viatom.checkme.utils.Constant;
 import com.viatom.checkme.R;
 import com.viatom.checkme.bean.UserBean;
 

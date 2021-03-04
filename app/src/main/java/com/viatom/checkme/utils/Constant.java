@@ -1,6 +1,8 @@
-package com.viatom.checkme;
+package com.viatom.checkme.utils;
 
 import android.content.Context;
+
+import com.viatom.checkme.R;
 
 import java.io.File;
 

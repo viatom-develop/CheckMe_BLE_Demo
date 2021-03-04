@@ -1,4 +1,4 @@
-package com.viatom.checkme.ui.Poximeter
+package com.viatom.checkme.leftnavi.Poximeter
 
 import android.os.Bundle
 import android.view.LayoutInflater

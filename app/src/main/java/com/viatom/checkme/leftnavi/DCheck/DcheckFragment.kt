@@ -1,4 +1,4 @@
-package com.viatom.checkme.ui.DCheck
+package com.viatom.checkme.leftnavi.DCheck
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.viatom.checkme;
+package com.viatom.checkme.ble;
 
 
 import android.bluetooth.BluetoothDevice;
