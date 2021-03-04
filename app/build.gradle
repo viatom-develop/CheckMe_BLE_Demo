@@ -48,5 +48,5 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
     implementation 'no.nordicsemi.android:ble:2.2.4'
-    implementation 'me.weyye.hipermission:library:1.0.7'
+
 }
