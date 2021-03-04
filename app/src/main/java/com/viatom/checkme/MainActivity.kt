@@ -42,16 +42,22 @@ import com.viatom.checkme.ble.ReadContentPkg
 import com.viatom.checkme.ble.StartReadPkg
 import com.viatom.checkme.utils.CRCUtils.calCRC8
 import com.viatom.checkme.bean.BleBean
+import com.viatom.checkme.bean.UserBean
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.right_drawer.*
+import kotlinx.android.synthetic.main.scan_view.*
 
 import me.weyye.hipermission.HiPermission
 import me.weyye.hipermission.PermissionCallback
 import me.weyye.hipermission.PermissionItem
 import no.nordicsemi.android.ble.data.Data
 import java.io.File
+import java.lang.Thread.sleep
+import java.text.SimpleDateFormat
+import java.util.Locale.ENGLISH
 import kotlin.experimental.inv
 
-class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, BlePanelAdapter.ItemClickListener,FDABleManager.onNotifyListener{
+class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, BlePanelAdapter.ItemClickListener,FDABleManager.onNotifyListener,UserViewAdapter.userClickListener{
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val REQUEST_LOCATION = 223
     private val REQUEST_ENABLE_BT = 224
@@ -238,9 +244,10 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
 
         val linearLayoutManager=LinearLayoutManager(this)
         linearLayoutManager.orientation=RecyclerView.VERTICAL
-        userAdapter= UserViewAdapter(this)
+        userAdapter= UserViewAdapter(this,right_user)
         right_user.adapter=userAdapter
         right_user.layoutManager=linearLayoutManager
+        userAdapter.setClickListener(this)
 
 
 
@@ -373,6 +380,15 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
                                     userAdapter.addUser(user)
                                 }
                             }
+                            Thread{
+                                sleep(300)
+                                userAdapter.setUser(0)
+                                runOnUiThread {
+                                    onUserItemClick(userAdapter.mUserData[0],0)
+                                }
+
+                            }.start()
+
                             Log.e("数量222","顺利打开房间昆仑山但是大家考虑是否收到    ${this.size}     ${s.toString()}")
                             File(getPathX(fileName[currentFileIndex])).writeBytes(this)
                         }
@@ -405,5 +421,31 @@ class MainActivity : AppCompatActivity() , BleViewAdapter.ItemClickListener, Ble
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+    override fun onUserItemClick(userBean: UserBean?, position: Int) {
+            userBean?.apply {
+                rName.text=name
+                if(sex==0){
+                    rSex.text="Male"
+                }else{
+                    rSex.text="Female"
+                }
+                val dateFormat = SimpleDateFormat("MMM. d, yyyy",ENGLISH )
+                rBirthday.text=dateFormat.format(birthday)
+                rWeight.text=weight.toString()
+                rHeight.text=height.toString()
+                rMedicalID.text=medicalId
+                if(pacemakeflag==0){
+                    rPacemaker.text="NO"
+                }else{
+                    rPacemaker.text="YES"
+                }
+
+
+            }
+
+    }
+
+
 
 }

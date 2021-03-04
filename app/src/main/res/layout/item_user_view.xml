@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#ff0000f0"
+    android:background="#ff0000a0"
+    android:id="@+id/gaga"
     android:layout_height="90dp">
 <LinearLayout
     android:orientation="horizontal"
@@ -12,6 +13,7 @@
     android:layout_height="88dp">
 
 <ImageView
+    android:id="@+id/head"
     android:layout_marginStart="20dp"
     android:layout_width="50dp"
     android:layout_height="50dp"

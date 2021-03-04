@@ -13,64 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
-    <LinearLayout
-        android:id="@+id/scan_layout"
-        android:visibility="visible"
+    <include
+        layout="@layout/scan_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff0f000"
-        android:orientation="vertical">
-        <TextView
-            android:background="#ff000000"
-            android:text="@string/app_name"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:textSize="22sp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"/>
-        <TextView
-            android:id="@+id/scan_title"
-            android:text="Scanning Checkme Device..."
-            android:textColor="@color/black"
-            android:typeface="monospace"
-            android:padding="20dp"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ble_table"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:background="@drawable/panel_bg"
-            android:id="@+id/ble_panel"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="350dp"/>
-        <TextView
-            android:id="@+id/notifyVal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/notifySum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <LinearLayout
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:padding="20sp"
-                android:text="Offline Mode"/>
-        </LinearLayout>
+        android:layout_height="match_parent" />
 
-    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -87,27 +34,10 @@
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
         >
-        <LinearLayout
+        <include
+            layout="@layout/right_drawer"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
-            <TextView
-                android:background="@color/black"
-                android:gravity="center"
-                android:text="User List"
-                android:textSize="26sp"
-                android:textColor="#ffff00"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/right_user"
-                android:background="@color/black"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="0dp"/>
-        </LinearLayout>
-
+            android:layout_height="match_parent" />
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:id="@+id/scan_layout"
+    android:visibility="visible"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff0f000"
+    android:orientation="vertical"
+    >
+        <TextView
+            android:background="#ff000000"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/scan_title"
+            android:text="Scanning Checkme Device..."
+            android:textColor="@color/black"
+            android:typeface="monospace"
+            android:padding="20dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ble_table"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@drawable/panel_bg"
+            android:id="@+id/ble_panel"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"/>
+        <TextView
+            android:id="@+id/notifyVal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/notifySum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <Button
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                android:padding="20sp"
+                android:text="Offline Mode"/>
+        </LinearLayout>
+
+
+
+</LinearLayout>
