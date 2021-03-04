@@ -65,26 +65,29 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var leScanner: BluetoothLeScanner
-    private val bleList: MutableList<BleBean> = ArrayList<BleBean>()
+    private val bleList: MutableList<BleBean> = ArrayList()
     lateinit var bleViewAdapter: BleViewAdapter
     lateinit var myBleManager: FDABleManager
     private var cmdState = 0;
     private var pool: ByteArray? = null
     var currentFileName=""
 
-
+//-------------8 files
+    var downloadNumber=8
+    var currentNumber=0
     var userfileName = arrayOf(
             "dlc.dat",
             "spc.dat",
-            "bpcal.dat",
+            "hrv.dat",
             "ecg.dat",
             "oxi.dat",
             "tmp.dat",
             "slm.dat",
             "ped.dat"
     )
-    var userID: ByteArray? = null
-    var currentFileIndex = 0;
+    var currentUser=0
+
+
     lateinit var userAdapter: UserViewAdapter
     var pkgTotal = 0;
     var currentPkg = 0;
@@ -331,20 +334,21 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
                     if (currentPkg > pkgTotal) {
                         fileData?.apply {
-                            if (currentFileIndex == 0) {
+                            if (currentFileName.equals("usr.dat")) {
                                 userInfo = UserFile.UserInfo(this)
                                 for (user in userInfo.user) {
                                     userAdapter.addUser(user)
                                 }
-                            }
-                            Thread {
-                                sleep(300)
-                                userAdapter.setUser(0)
-                                runOnUiThread {
-                                    onUserItemClick(userAdapter.mUserData[0], 0)
-                                }
+                                Thread {
+                                    sleep(300)
+                                    userAdapter.setUser(0)
+                                    runOnUiThread {
+                                        onUserItemClick(userAdapter.mUserData[0], 0)
+                                    }
 
-                            }.start()
+                                }.start()
+                            }
+
 
                             File(getPathX(currentFileName)).writeBytes(this)
                         }
@@ -361,6 +365,28 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                     fileData = null
                     currentPkg = 0;
                     cmdState = 0;
+                    if(currentFileName.equals("usr.dat")){
+                        currentNumber=0
+                        currentUser=0
+                    }else{
+                        currentNumber++
+                    }
+                    if(currentNumber<downloadNumber){
+                        cmdState = 1
+                        currentFileName= userInfo.user[currentUser].id+userfileName[currentNumber]
+                        Log.e("sdfsdfsdfsdf","sdlkfjlksdlsdfjklsdlk独立开发就开始了的风口浪尖是  $currentFileName")
+                        val pkg = StartReadPkg(currentFileName)
+                        sendCmd(pkg.buf)
+                    }else{
+                        currentUser++
+                        if(currentUser<userInfo.size){
+                            currentNumber=0
+                            cmdState = 1
+                            currentFileName= userInfo.user[currentUser].id+userfileName[currentNumber]
+                            val pkg = StartReadPkg(currentFileName)
+                            sendCmd(pkg.buf)
+                        }
+                    }
                 }
                 val tempBytes: ByteArray? = if (i + 8 + len == bytes.size) null else bytes.copyOfRange(
                         i + 8 + len,
