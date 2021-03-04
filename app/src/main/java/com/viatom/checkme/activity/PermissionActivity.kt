@@ -6,12 +6,14 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.viatom.checkme.R
+
 
 class PermissionActivity :AppCompatActivity() {
 
@@ -40,12 +42,16 @@ class PermissionActivity :AppCompatActivity() {
 
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         when (requestCode) {
             permissionRequestCode -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initA()
             } else {
-                startActivity(Intent(Permission@this, MainActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 this.finish()
             }
             else -> {
@@ -73,26 +79,31 @@ class PermissionActivity :AppCompatActivity() {
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
             return;
         }
-        if (!(bluetoothAdapter!!.isEnabled)) {
+        if (!(bluetoothAdapter.isEnabled)) {
             val enableBtIntent = Intent(
                 BluetoothAdapter.ACTION_REQUEST_ENABLE
             )
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
             return;
         }
-        startActivity(Intent(Permission@this, MainActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         this.finish()
     }
-    fun isLocationEnabled(): Boolean {
-        var locationMode = 0
-        var locationProviders: String
-        locationMode = try {
-            Settings.Secure.getInt(getContentResolver(), Settings.Secure.LOCATION_MODE)
-        } catch (e: Settings.SettingNotFoundException) {
-            e.printStackTrace()
-            return false
+    private fun isLocationEnabled(): Boolean {
+        val lm =getSystemService(LOCATION_SERVICE) as LocationManager
+        var gps_enabled = false
+        var network_enabled = false
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (ex: Exception) {
         }
-        return locationMode != Settings.Secure.LOCATION_MODE_OFF
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        } catch (ex: Exception) {
+        }
+        return (gps_enabled || network_enabled)
     }
 
     private val REQUEST_LOCATION = 223

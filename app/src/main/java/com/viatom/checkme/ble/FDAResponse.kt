@@ -8,8 +8,9 @@ import kotlinx.android.parcel.Parcelize
 
 object FDAResponse {
 
-    @Parcelize
-    class CheckMeResponse @ExperimentalUnsignedTypes constructor(var bytes: ByteArray) : Parcelable {
+
+    @ExperimentalUnsignedTypes
+    class CheckMeResponse  constructor(var bytes: ByteArray)  {
         var cmd: Int
         var pkgNo: Int
         var len: Int

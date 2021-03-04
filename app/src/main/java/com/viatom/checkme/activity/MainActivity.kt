@@ -21,6 +21,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -66,8 +67,9 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     private lateinit var leScanner: BluetoothLeScanner
     private val bleList: MutableList<BleBean> = ArrayList<BleBean>()
     lateinit var bleViewAdapter: BleViewAdapter
+    lateinit var myBleManager: FDABleManager
     private var cmdState = 0;
-
+    private var pool: ByteArray? = null
     var currentFileName=""
 
 
@@ -87,23 +89,42 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     var pkgTotal = 0;
     var currentPkg = 0;
     var fileData: ByteArray? = null
-    val model: LeftHead by viewModels()
+    private val model: LeftHead by viewModels()
+    @ExperimentalUnsignedTypes
     lateinit var userInfo: UserFile.UserInfo
     lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
 
 
+    private val leScanCallback: ScanCallback = object : ScanCallback() {
+        override fun onScanResult(
+            callbackType: Int,
+            result: ScanResult
+        ) {
+            super.onScanResult(callbackType, result)
+            val device = result.device
+            if (device == null) return;
+            if (device.name == null) return;
+            System.out.println(device.name)
+            if (!device.name.contains("Checkme")) return;
+            var z: Int = 0;
+            for (ble in bleList) run {
+                if (ble.name.equals(device.name)) {
+                    z = 1
+                }
+            }
+            if (z == 0) {
+                bleList.add(BleBean(device.name, device))
+                bleViewAdapter.addDevice(device.name, device)
+                Log.e("sdf", device.name)
+            }
+        }
 
-
-
-
-
-
-
-    override fun onPause() {
-        super.onPause()
-        this.finish()
+        override fun onBatchScanResults(results: List<ScanResult>) {}
+        override fun onScanFailed(errorCode: Int) {}
     }
+
+
 
     private fun addLiveDateObserver() {
         model.headIcon.observe(this, {
@@ -138,60 +159,15 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         }
     }
 
-    private fun initActionBarColor() {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().setStatusBarColor(Color.BLACK);
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initActionBarColor()
-        setContentView(R.layout.activity_main)
-        initDrawer()
-        addLiveDateObserver()
-        initVar()
-        initView()
-        initScan()
-    }
-
-    private val leScanCallback: ScanCallback = object : ScanCallback() {
-        override fun onScanResult(
-                callbackType: Int,
-                result: ScanResult
-        ) {
-            super.onScanResult(callbackType, result)
-            val device = result.device
-            if (device == null) return;
-            if (device.name == null) return;
-            System.out.println(device.name)
-            if (!device.name.contains("Checkme")) return;
-            var z: Int = 0;
-            var k: Int = 0;
-            for (ble in bleList) run {
-                if (ble.name.equals(device.name)) {
-                    z = 1
-                }
-            }
-            if (z == 0) {
-                bleList.add(BleBean(device.name, device))
-                bleViewAdapter.addDevice(device.name, device)
-                Log.e("sdf", device.name)
-            }
-        }
-
-        override fun onBatchScanResults(results: List<ScanResult>) {}
-        override fun onScanFailed(errorCode: Int) {}
-    }
-
-    fun initScan() {
+    private fun initScan() {
         val settings: ScanSettings = ScanSettings.Builder()
-                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
-                .build()
+            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+            .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
+            .build()
 
 
         val bluetoothManager =
-                getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+            getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager.adapter
         leScanner = bluetoothAdapter!!.bluetoothLeScanner
         leScanner.startScan(null, settings, leScanCallback)
@@ -219,22 +195,76 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         myBleManager.setNotifyListener(this)
     }
 
+    private fun sendCmd(bs: ByteArray) {
+        myBleManager.sendCmd(bs)
+    }
+
+
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        initDrawer()
+        addLiveDateObserver()
+        initVar()
+        initView()
+        initScan()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        this.finish()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onUserItemClick(userBean: UserBean?, position: Int) {
+        userBean?.apply {
+            model.headIcon.value = ico
+            model.headName.value = name
+            rName.text = name
+            if (sex == 0) {
+                rSex.text = "Male"
+            } else {
+                rSex.text = "Female"
+            }
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy", ENGLISH)
+            rBirthday.text = dateFormat.format(birthday)
+            rWeight.text = weight.toString()
+            rHeight.text = height.toString()
+            rMedicalID.text = medicalId
+            if (pacemakeflag == 0) {
+                rPacemaker.text = "NO"
+            } else {
+                rPacemaker.text = "YES"
+            }
+        }
+
+    }
+
+
+
     override fun onScanItemClick(bluetoothDevice: BluetoothDevice?) {
         bluetoothDevice?.let {
             myBleManager.connect(it)
-                    .useAutoConnect(true)
-                    .timeout(10000)
-                    .retry(5, 100)
-                    .done {
-                        if (cmdState == 0) {
-                            cmdState = 1
-                            currentFileName="usr.dat"
-                            val pkg = StartReadPkg(currentFileName)
-                            sendCmd(pkg.buf)
-                        }
-                        Log.i("BLE", "连接成功了.>>.....>>>>")
+                .useAutoConnect(true)
+                .timeout(10000)
+                .retry(5, 100)
+                .done {
+                    if (cmdState == 0) {
+                        cmdState = 1
+                        currentFileName="usr.dat"
+                        val pkg = StartReadPkg(currentFileName)
+                        sendCmd(pkg.buf)
                     }
-                    .enqueue()
+                    Log.i("BLE", "连接成功了.>>.....>>>>")
+                }
+                .enqueue()
             leScanner.stopScan(leScanCallback)
             runOnUiThread {
                 scan_title.visibility = GONE
@@ -248,10 +278,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
 
 
-
-
-    var sum: Int = 0;
-    private var pool: ByteArray? = null
+    @ExperimentalUnsignedTypes
     override fun onNotify(device: BluetoothDevice?, data: Data?) {
         data?.value?.apply {
             pool = add(pool, this)
@@ -261,6 +288,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         }
     }
 
+    @ExperimentalUnsignedTypes
     private fun hasResponse(bytes: ByteArray?): ByteArray? {
         val bytesLeft: ByteArray? = bytes
 
@@ -280,17 +308,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
             val temp: ByteArray = bytes.copyOfRange(i, i + 8 + len)
             if (temp.last() == calCRC8(temp)) {
-                var s: String = "   "
-                for (k in temp) {
-                    val ga: Int = k.toUByte().toInt()
-                    s += (ga.toString() + "   ");
-//                    System.out.println(ga!!.toString())
-                }
-                sum += temp.size
-                runOnUiThread {
-                    notifySum.text = sum.toString()
-                    notifyVal.text = s
-                }
                 val bleResponse = FDAResponse.CheckMeResponse(temp)
                 if (cmdState == 1) {
                     fileData = null
@@ -344,7 +361,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                     fileData = null
                     currentPkg = 0;
                     cmdState = 0;
-                    sum = 0
                 }
                 val tempBytes: ByteArray? = if (i + 8 + len == bytes.size) null else bytes.copyOfRange(
                         i + 8 + len,
@@ -356,48 +372,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         }
 
         return bytesLeft
-    }
-
-
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
-    override fun onUserItemClick(userBean: UserBean?, position: Int) {
-        userBean?.apply {
-            model.headIcon.value = ico
-            model.headName.value = name
-            rName.text = name
-            if (sex == 0) {
-                rSex.text = "Male"
-            } else {
-                rSex.text = "Female"
-            }
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy", ENGLISH)
-            rBirthday.text = dateFormat.format(birthday)
-            rWeight.text = weight.toString()
-            rHeight.text = height.toString()
-            rMedicalID.text = medicalId
-            if (pacemakeflag == 0) {
-                rPacemaker.text = "NO"
-            } else {
-                rPacemaker.text = "YES"
-            }
-
-
-        }
-
-    }
-
-
-    companion object {
-        lateinit var myBleManager: FDABleManager
-        fun sendCmd(bs: ByteArray) {
-            myBleManager.sendCmd(bs)
-        }
-
-        var vibrator: Vibrator? = null
     }
 
 }
