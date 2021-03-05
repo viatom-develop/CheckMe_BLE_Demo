@@ -30,7 +30,7 @@ class PulseOximiterFragment : Fragment() {
         val r: RecyclerView = root.findViewById(R.id.oxylist)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        oxyViewAdapter = OxyViewAdapter(context, r)
+        oxyViewAdapter = OxyViewAdapter(requireContext(), r)
         r.layoutManager = linearLayoutManager
         r.adapter = oxyViewAdapter
         model.list.observe(viewLifecycleOwner, {
