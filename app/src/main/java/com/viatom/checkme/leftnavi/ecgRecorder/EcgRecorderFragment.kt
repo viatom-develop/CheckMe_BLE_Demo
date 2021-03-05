@@ -30,7 +30,7 @@ class EcgRecorderFragment : Fragment() {
         val r: RecyclerView = root.findViewById(R.id.ecglist)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        ecgViewAdapter = EcgViewAdapter(context, r)
+        ecgViewAdapter = EcgViewAdapter(requireContext(), r)
         r.layoutManager = linearLayoutManager
         r.adapter = ecgViewAdapter
         model.list.observe(viewLifecycleOwner, {

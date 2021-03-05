@@ -1,114 +1,90 @@
-package com.viatom.checkme.leftnavi.ecgRecorder;
+package com.viatom.checkme.leftnavi.ecgRecorder
 
-import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.viatom.checkme.R
+import com.viatom.checkme.bean.EcgBean
+import com.viatom.checkme.bean.UserBean
+import com.viatom.checkme.utils.Constant
+import java.text.SimpleDateFormat
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.viatom.checkme.R;
-import com.viatom.checkme.bean.EcgBean;
-import com.viatom.checkme.bean.UserBean;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class EcgViewAdapter extends RecyclerView.Adapter<EcgViewAdapter.ViewHolder> {
-    public List<EcgBean> mEcgData;
-    private LayoutInflater mInflater;
-    private userClickListener mClickListener;
-    private Context mContext;
-    private RecyclerView recyclerView;
-
-    // data is passed into the constructor
-    public EcgViewAdapter(Context context, RecyclerView r) {
-        this.mInflater = LayoutInflater.from(context);
-        this.mEcgData = new ArrayList<>();
-        this.recyclerView = r;
-        mContext = context;
-    }
-
+class EcgViewAdapter(context: Context, r: RecyclerView) :
+    RecyclerView.Adapter<EcgViewAdapter.ViewHolder>() {
+    var mEcgData: MutableList<EcgBean>
+    private val mInflater: LayoutInflater = LayoutInflater.from(context)
+    private var mClickListener: userClickListener? = null
+    private val mContext: Context
+    private val recyclerView: RecyclerView
 
     // inflates the cell layout from xml when needed
-    @Override
-    @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_user_view, parent, false);
-        return new ViewHolder(view);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = mInflater.inflate(R.layout.item_ecg, parent, false)
+        return ViewHolder(view)
     }
 
     // binds the data to the TextView in each cell
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bleName.setText(mEcgData.get(position).getTimeString());
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        mEcgData[position].apply {
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy \n hh : mm : ss", Locale.ENGLISH)
+            holder.bleName.text =dateFormat.format(date)
+            holder.face.setImageResource(Constant.RESULT_IMG[face])
+            holder.way.text=Constant.EcgWay[way-1]
+        }
     }
 
-    public void add(EcgBean userBean) {
-        mEcgData.add(userBean);
-        notifyDataSetChanged();
+    fun add(userBean: EcgBean) {
+        mEcgData.add(userBean)
+        notifyDataSetChanged()
     }
 
-    public void addAll(ArrayList userBean) {
-        mEcgData.clear();
-        mEcgData.addAll(userBean);
-        notifyDataSetChanged();
-    }
-
-
-    public void setUser(int position) {
-        for (int k = 0; k < mEcgData.size(); k++) {
-            ViewHolder v = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(k);
-            if (v == null) return;
-            if (v.gaga == null) return;
-            if (k != position) {
-                v.gaga.setBackgroundColor(Color.parseColor("#0000F0"));
-            } else {
-                v.gaga.setBackgroundColor(Color.parseColor("#FF00FF"));
+    fun addAll(userBean: ArrayList<*>?) {
+        mEcgData.clear()
+        if (userBean != null) {
+            for(k in userBean){
+                mEcgData.add(k as EcgBean)
             }
         }
 
+        notifyDataSetChanged()
     }
-
 
     // total number of cells
-    @Override
-    public int getItemCount() {
-        return mEcgData.size();
+    override fun getItemCount(): Int {
+        return mEcgData.size
     }
 
+    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+        val bleName: TextView = itemView.findViewById(R.id.userName)
+        val way: TextView=itemView.findViewById(R.id.way)
+        val face:ImageView=itemView.findViewById(R.id.head)
+        override fun onClick(view: View) {}
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView bleName;
-        LinearLayout gaga;
-        ImageView head;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            head = itemView.findViewById(R.id.head);
-            bleName = itemView.findViewById(R.id.userName);
-            gaga = itemView.findViewById(R.id.gaga);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-
+        init {
+            itemView.setOnClickListener(this)
         }
     }
-
 
     // allows clicks events to be caught
-    public void setClickListener(userClickListener userClickListener) {
-        this.mClickListener = userClickListener;
+    fun setClickListener(userClickListener: userClickListener?) {
+        mClickListener = userClickListener
     }
 
-    public interface userClickListener {
-        void onUserItemClick(UserBean userBean, int position);
+    interface userClickListener {
+        fun onUserItemClick(userBean: UserBean?, position: Int)
+    }
+
+    // data is passed into the constructor
+    init {
+        mEcgData = ArrayList()
+        recyclerView = r
+        mContext = context
     }
 }

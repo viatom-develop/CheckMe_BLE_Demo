@@ -14,6 +14,8 @@ public class Constant {
 
     public final static int[] RESULT_IMG = { R.drawable.smile, R.drawable.cry,
             R.drawable.none };
+
+    public final static String[] EcgWay = { "Hand-Hand","Hand-Chest","1-Lead","2-Lead" };
     public static String filePath;
 
     public static String getPathX(String s) {

@@ -43,6 +43,7 @@ object EcgFile {
                     )
                     way = toUInt(setRange(start + 7, 1))
                     face = toUInt(setRange(start + 8, 1))
+                    if(face>2)face=2
                     voice = toUInt(setRange(start + 9, 1))
                 }
 
