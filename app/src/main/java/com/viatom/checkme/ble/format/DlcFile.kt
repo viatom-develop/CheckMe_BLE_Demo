@@ -43,12 +43,15 @@ object DlcFile {
                     )
                     hr = toUInt(setRange(start + 7, 2))
                     eface = toUInt(setRange(start + 9, 1))
+                    if(eface>2)eface=2
                     oxy = toUInt(setRange(start + 10, 1))
                     pi = toUInt(setRange(start + 11, 1))
                     oface = toUInt(setRange(start + 12, 1))
+                    if(oface>2)oface=2
                     prFlag = toUInt(setRange(start + 13, 1))
                     pr = toUInt(setRange(start + 14, 1))
                     bpiFace = toUInt(setRange(start + 15, 1))
+                    if(bpiFace>2)bpiFace=2
                     voice = toUInt(setRange(start + 16, 1))
                 }
 

@@ -35,7 +35,7 @@ class DailyCheckFragment : Fragment() {
 
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        dailyViewAdapter = DailyViewAdapter(context, r)
+        dailyViewAdapter = DailyViewAdapter(requireContext(), r)
         r.layoutManager = linearLayoutManager
         r.adapter = dailyViewAdapter
 

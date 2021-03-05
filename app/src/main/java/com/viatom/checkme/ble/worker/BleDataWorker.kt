@@ -69,7 +69,7 @@ class BleDataWorker {
                 val bleResponse = FDAResponse.CheckMeResponse(temp)
                 if (cmdState == 1) {
                     fileData = null
-                    pkgTotal = toUInt(bleResponse.content) / 1024
+                    pkgTotal =toUInt(bleResponse.content) / 512
                     if (bleResponse.cmd == 1) {
                         result = 1
                         val pkg = EndReadPkg()

@@ -53,16 +53,17 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     companion object {
         var loading = true
         var currentId = ""
+        val bleWorker = BleDataWorker()
+        val scan = BleScanManager()
+        val dataScope = CoroutineScope(Dispatchers.IO)
+        val uiScope = CoroutineScope(Dispatchers.Main)
     }
 
     lateinit var mMainNavFragment: Fragment
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val bleList: MutableList<BleBean> = ArrayList()
     lateinit var bleViewAdapter: BleViewAdapter
-    private val bleWorker = BleDataWorker()
-    private val scan = BleScanManager()
-    val dataScope = CoroutineScope(Dispatchers.IO)
-    val uiScope = CoroutineScope(Dispatchers.Main)
+
     private val userChannel = Channel<Int>(Channel.CONFLATED)
 
     //-------------8 files

@@ -12,7 +12,8 @@ public class Constant {
             R.drawable.ico6, R.drawable.ico7, R.drawable.ico8, R.drawable.ico9,
             R.drawable.ico10};
 
-
+    public final static int[] RESULT_IMG = { R.drawable.smile, R.drawable.cry,
+            R.drawable.none };
     public static String filePath;
 
     public static String getPathX(String s) {
