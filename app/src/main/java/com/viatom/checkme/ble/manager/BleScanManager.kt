@@ -12,12 +12,13 @@ import android.util.Log
 
 
 class BleScanManager {
-    interface Scan{
-        fun scanReturn(name:String,bluetoothDevice: BluetoothDevice)
+    interface Scan {
+        fun scanReturn(name: String, bluetoothDevice: BluetoothDevice)
     }
+
     private var bluetoothAdapter: BluetoothAdapter? = null
     private lateinit var leScanner: BluetoothLeScanner
-    private var scan: Scan?=null
+    private var scan: Scan? = null
     private val leScanCallback: ScanCallback = object : ScanCallback() {
         override fun onScanResult(
             callbackType: Int,
@@ -27,19 +28,20 @@ class BleScanManager {
             val device = result.device
             if (device?.name == null) return;
             scan?.apply {
-                scanReturn(device.name,device)
+                scanReturn(device.name, device)
             }
-            Log.e("是独立开发就","扣税的接口 ${device.name}")
+            Log.e("是独立开发就", "扣税的接口 ${device.name}")
         }
+
         override fun onBatchScanResults(results: List<ScanResult>) {}
         override fun onScanFailed(errorCode: Int) {}
     }
 
-    fun setCallBack(scan: Scan){
-        this.scan=scan
+    fun setCallBack(scan: Scan) {
+        this.scan = scan
     }
 
-    fun initScan(context: Context){
+    fun initScan(context: Context) {
         context.apply {
             val settings: ScanSettings = ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
@@ -54,7 +56,8 @@ class BleScanManager {
             leScanner.startScan(null, settings, leScanCallback)
         }
     }
-    fun stop(){
+
+    fun stop() {
         leScanner.stopScan(leScanCallback)
     }
 }

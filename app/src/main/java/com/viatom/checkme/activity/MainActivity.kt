@@ -47,25 +47,27 @@ import java.text.SimpleDateFormat
 import java.util.Locale.ENGLISH
 
 
-class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, UserViewAdapter.userClickListener,
+class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
+    UserViewAdapter.userClickListener,
     BleScanManager.Scan {
-    companion object{
-        var loading=true
-        var currentId=""
+    companion object {
+        var loading = true
+        var currentId = ""
     }
-    lateinit var  mMainNavFragment: Fragment
+
+    lateinit var mMainNavFragment: Fragment
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val bleList: MutableList<BleBean> = ArrayList()
     lateinit var bleViewAdapter: BleViewAdapter
-    private val bleWorker= BleDataWorker()
-    private val scan= BleScanManager()
-    val dataScope= CoroutineScope(Dispatchers.IO)
-    val uiScope= CoroutineScope(Dispatchers.Main)
+    private val bleWorker = BleDataWorker()
+    private val scan = BleScanManager()
+    val dataScope = CoroutineScope(Dispatchers.IO)
+    val uiScope = CoroutineScope(Dispatchers.Main)
     private val userChannel = Channel<Int>(Channel.CONFLATED)
 
-//-------------8 files
-    var downloadNumber=8
-    var currentNumber=0
+    //-------------8 files
+    var downloadNumber = 8
+    var currentNumber = 0
     var userfileName = arrayOf(
         "dlc.dat",
         "spc.dat",
@@ -76,19 +78,20 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
         "slm.dat",
         "ped.dat"
     )
-    var currentUser=0
+    var currentUser = 0
 
     lateinit var userAdapter: UserViewAdapter
     private val model: LeftHead by viewModels()
+
     @ExperimentalUnsignedTypes
     lateinit var userInfo: UserFile.UserInfo
     lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
 
     @ExperimentalUnsignedTypes
-    private suspend fun readUser(){
+    private suspend fun readUser() {
         userChannel.receive()
-        val userTemp=File(Constant.getPathX("usr.dat")).readBytes()
+        val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
         userTemp.apply {
             userInfo = UserFile.UserInfo(this)
 
@@ -100,19 +103,14 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
             userAdapter.setUser(0)
             onUserItemClick(userAdapter.mUserData[0], 0)
             for (user in userInfo.user) {
-                for(f in userfileName){
+                for (f in userfileName) {
                     bleWorker.getFile(user.id + f)
                 }
             }
-            loading=false
+            loading = false
             Chanl.teChannel.send(1)
         }
     }
-
-
-
-
-
 
 
     private fun addLiveDateObserver() {
@@ -156,7 +154,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     }
 
 
-
     private fun initView() {
         ble_table.layoutManager = GridLayoutManager(this, 2);
         bleViewAdapter = BleViewAdapter(this)
@@ -176,7 +173,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     }
 
 
-    fun initScan(){
+    fun initScan() {
         scan.initScan(this)
         scan.setCallBack(this)
     }
@@ -192,12 +189,12 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     }
 
 
-
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    @ExperimentalUnsignedTypes
     override fun onUserItemClick(userBean: UserBean?, position: Int) {
         userBean?.apply {
             model.headIcon.value = ico
@@ -220,22 +217,21 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
             }
 
             val fragmentA = mMainNavFragment.childFragmentManager.primaryNavigationFragment
-            if(fragmentA is DailyCheckFragment){
+            if (fragmentA is DailyCheckFragment) {
                 fragmentA.switch(id)
-            }else if(fragmentA is EcgRecorderFragment){
+            } else if (fragmentA is EcgRecorderFragment) {
                 fragmentA.switch(id)
-            }else if(fragmentA is PedometerFragment){
+            } else if (fragmentA is PedometerFragment) {
                 fragmentA.switch(id)
-            }else if(fragmentA is PulseOximiterFragment){
+            } else if (fragmentA is PulseOximiterFragment) {
                 fragmentA.switch(id)
-            }else if(fragmentA is ThermometerFragment){
+            } else if (fragmentA is ThermometerFragment) {
                 fragmentA.switch(id)
             }
-            currentId=id
+            currentId = id
         }
 
     }
-
 
 
     @ExperimentalUnsignedTypes
@@ -249,16 +245,16 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
             scan_layout.visibility = GONE
         }
         dataScope.launch {
-            val a=withTimeoutOrNull(10000) {
+            val a = withTimeoutOrNull(10000) {
                 bleWorker.waitConnect()
             }
             a?.let {
-                val b= withTimeoutOrNull(10000){
+                val b = withTimeoutOrNull(10000) {
                     bleWorker.getFile("usr.dat")
                 }
                 b?.let {
                     userChannel.send(1)
-                  println("圣诞快乐房价受到了记录方式打开立即分解")
+                    println("圣诞快乐房价受到了记录方式打开立即分解")
                 }
 
 

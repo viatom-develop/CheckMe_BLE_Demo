@@ -12,9 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.viatom.checkme.utils.Constant;
 import com.viatom.checkme.R;
 import com.viatom.checkme.bean.UserBean;
+import com.viatom.checkme.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +27,12 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
     private RecyclerView recyclerView;
 
     // data is passed into the constructor
-    public UserViewAdapter(Context context,RecyclerView r) {
+    public UserViewAdapter(Context context, RecyclerView r) {
         this.mInflater = LayoutInflater.from(context);
         this.mUserData = new ArrayList<>();
-        this.recyclerView=r;
+        this.recyclerView = r;
         mContext = context;
     }
-
-
 
 
     // inflates the cell layout from xml when needed
@@ -49,7 +47,7 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bleName.setText(mUserData.get(position).getName());
-        holder.head.setImageResource(Constant.ICO_IMG[mUserData.get(position).getIco()-1]);
+        holder.head.setImageResource(Constant.ICO_IMG[mUserData.get(position).getIco() - 1]);
     }
 
     public void addUser(UserBean userBean) {
@@ -61,20 +59,19 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
         mUserData.add(userBean);
     }
 
-    public void setUser(int position){
-        for(int k=0;k<mUserData.size();k++){
-            ViewHolder v= (ViewHolder) recyclerView.findViewHolderForAdapterPosition(k);
-            if(v==null)return;
-            if(v.gaga==null)return;
-            if(k!=position){
+    public void setUser(int position) {
+        for (int k = 0; k < mUserData.size(); k++) {
+            ViewHolder v = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(k);
+            if (v == null) return;
+            if (v.gaga == null) return;
+            if (k != position) {
                 v.gaga.setBackgroundColor(Color.parseColor("#0000F0"));
-            }else{
+            } else {
                 v.gaga.setBackgroundColor(Color.parseColor("#FF00FF"));
             }
         }
 
     }
-
 
 
     // total number of cells
@@ -88,20 +85,22 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
         TextView bleName;
         LinearLayout gaga;
         ImageView head;
+
         ViewHolder(View itemView) {
             super(itemView);
-            head=itemView.findViewById(R.id.head);
-            bleName=itemView.findViewById(R.id.userName);
-            gaga=itemView.findViewById(R.id.gaga);
+            head = itemView.findViewById(R.id.head);
+            bleName = itemView.findViewById(R.id.userName);
+            gaga = itemView.findViewById(R.id.gaga);
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
             setUser(getAdapterPosition());
-            if (mClickListener != null) mClickListener.onUserItemClick(mUserData.get(getAdapterPosition()),getAdapterPosition());
+            if (mClickListener != null)
+                mClickListener.onUserItemClick(mUserData.get(getAdapterPosition()), getAdapterPosition());
         }
     }
-
 
 
     // allows clicks events to be caught
@@ -110,6 +109,6 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
     }
 
     public interface userClickListener {
-        void onUserItemClick(UserBean userBean,int position);
+        void onUserItemClick(UserBean userBean, int position);
     }
 }

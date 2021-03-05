@@ -27,13 +27,14 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:fitsSystemWindows="true"
-        >
+        android:fitsSystemWindows="true">
+
         <include
             layout="@layout/right_drawer"
             android:layout_width="match_parent"

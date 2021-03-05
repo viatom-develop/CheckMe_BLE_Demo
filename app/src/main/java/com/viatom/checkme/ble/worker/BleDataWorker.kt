@@ -16,7 +16,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.File
@@ -28,14 +27,14 @@ class BleDataWorker {
     private val connectChannel = Channel<String>(Channel.CONFLATED)
     private lateinit var myBleDataManager: BleDataManager
     private val dataScope = CoroutineScope(Dispatchers.IO)
-    private val mutex=Mutex()
+    private val mutex = Mutex()
 
     private var cmdState = 0;
     var pkgTotal = 0;
     var currentPkg = 0;
     var fileData: ByteArray? = null
-    var currentFileName=""
-    var result=1;
+    var currentFileName = ""
+    var result = 1;
 
     @ExperimentalUnsignedTypes
     private val comeData = BleDataManager.onNotifyListener { _, data ->
@@ -72,7 +71,7 @@ class BleDataWorker {
                     fileData = null
                     pkgTotal = toUInt(bleResponse.content) / 1024
                     if (bleResponse.cmd == 1) {
-                        result=1
+                        result = 1
                         val pkg = EndReadPkg()
                         sendCmd(pkg.buf)
                         cmdState = 3
@@ -92,8 +91,8 @@ class BleDataWorker {
 
                     if (currentPkg > pkgTotal) {
                         fileData?.apply {
-                            result=0
-                            Log.e("file","sdlkfj  $currentFileName")
+                            result = 0
+                            Log.e("file", "sdlkfj  $currentFileName")
                             File(Constant.getPathX(currentFileName)).writeBytes(this)
                         }
                         val pkg = EndReadPkg()
@@ -114,10 +113,11 @@ class BleDataWorker {
                         fileChannel.send(result)
                     }
                 }
-                val tempBytes: ByteArray? = if (i + 8 + len == bytes.size) null else bytes.copyOfRange(
-                    i + 8 + len,
-                    bytes.size
-                )
+                val tempBytes: ByteArray? =
+                    if (i + 8 + len == bytes.size) null else bytes.copyOfRange(
+                        i + 8 + len,
+                        bytes.size
+                    )
 
                 return hasResponse(tempBytes)
             }
@@ -150,14 +150,14 @@ class BleDataWorker {
         }
     }
 
-   suspend fun waitConnect() {
-       connectChannel.receive()
+    suspend fun waitConnect() {
+        connectChannel.receive()
     }
 
-    suspend fun getFile(name: String):Int {
+    suspend fun getFile(name: String): Int {
         mutex.withLock {
-            this.currentFileName=name
-            cmdState=1
+            this.currentFileName = name
+            cmdState = 1
             val pkg = StartReadPkg(name)
             sendCmd(pkg.buf)
             return fileChannel.receive()

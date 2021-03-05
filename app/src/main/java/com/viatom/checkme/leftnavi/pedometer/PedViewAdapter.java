@@ -30,11 +30,9 @@ public class PedViewAdapter extends RecyclerView.Adapter<PedViewAdapter.ViewHold
     public PedViewAdapter(Context context, RecyclerView r) {
         this.mInflater = LayoutInflater.from(context);
         this.mPedData = new ArrayList<>();
-        this.recyclerView=r;
+        this.recyclerView = r;
         mContext = context;
     }
-
-
 
 
     // inflates the cell layout from xml when needed
@@ -63,20 +61,19 @@ public class PedViewAdapter extends RecyclerView.Adapter<PedViewAdapter.ViewHold
     }
 
 
-    public void setUser(int position){
-        for(int k = 0; k< mPedData.size(); k++){
-            ViewHolder v= (ViewHolder) recyclerView.findViewHolderForAdapterPosition(k);
-            if(v==null)return;
-            if(v.gaga==null)return;
-            if(k!=position){
+    public void setUser(int position) {
+        for (int k = 0; k < mPedData.size(); k++) {
+            ViewHolder v = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(k);
+            if (v == null) return;
+            if (v.gaga == null) return;
+            if (k != position) {
                 v.gaga.setBackgroundColor(Color.parseColor("#0000F0"));
-            }else{
+            } else {
                 v.gaga.setBackgroundColor(Color.parseColor("#FF00FF"));
             }
         }
 
     }
-
 
 
     // total number of cells
@@ -90,19 +87,20 @@ public class PedViewAdapter extends RecyclerView.Adapter<PedViewAdapter.ViewHold
         TextView bleName;
         LinearLayout gaga;
         ImageView head;
+
         ViewHolder(View itemView) {
             super(itemView);
-            head=itemView.findViewById(R.id.head);
-            bleName=itemView.findViewById(R.id.userName);
-            gaga=itemView.findViewById(R.id.gaga);
+            head = itemView.findViewById(R.id.head);
+            bleName = itemView.findViewById(R.id.userName);
+            gaga = itemView.findViewById(R.id.gaga);
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
 
         }
     }
-
 
 
     // allows clicks events to be caught
@@ -111,6 +109,6 @@ public class PedViewAdapter extends RecyclerView.Adapter<PedViewAdapter.ViewHold
     }
 
     public interface userClickListener {
-        void onUserItemClick(UserBean userBean,int position);
+        void onUserItemClick(UserBean userBean, int position);
     }
 }

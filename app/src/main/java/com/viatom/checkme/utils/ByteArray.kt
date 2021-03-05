@@ -27,19 +27,20 @@ fun add(ori: ByteArray?, add: ByteArray): ByteArray {
     return new
 }
 
-@ExperimentalUnsignedTypes fun toUInt(bytes: ByteArray): Int {
-    var result : UInt = 0u
+@ExperimentalUnsignedTypes
+fun toUInt(bytes: ByteArray): Int {
+    var result: UInt = 0u
     for (i in bytes.indices) {
-        result = result or ((bytes[i].toUInt() and 0xFFu) shl 8*i)
+        result = result or ((bytes[i].toUInt() and 0xFFu) shl 8 * i)
     }
 
     return result.toInt()
 }
 
 fun toInt(bytes: ByteArray): Int {
-    var result : Int = 0
+    var result: Int = 0
     for (i in bytes.indices) {
-        result = result or ((bytes[i].toInt() and 0xFF) shl 8*i)
+        result = result or ((bytes[i].toInt() and 0xFF) shl 8 * i)
     }
 
     return result

@@ -21,7 +21,7 @@ import java.io.File
 
 class DailyCheckFragment : Fragment() {
 
-   private val model: DailyCheckViewModel by viewModels()
+    private val model: DailyCheckViewModel by viewModels()
     lateinit var dailyViewAdapter: DailyViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,24 +30,24 @@ class DailyCheckFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_dailycheck, container, false)
-        val r:RecyclerView=root.findViewById(R.id.daily_list)
-        val pro:ProgressBar=root.findViewById(R.id.pro)
+        val r: RecyclerView = root.findViewById(R.id.daily_list)
+        val pro: ProgressBar = root.findViewById(R.id.pro)
 
-        val linearLayoutManager=LinearLayoutManager(context)
-        linearLayoutManager.orientation=RecyclerView.VERTICAL
-        dailyViewAdapter= DailyViewAdapter(context,r)
-        r.layoutManager=linearLayoutManager
-        r.adapter=dailyViewAdapter
+        val linearLayoutManager = LinearLayoutManager(context)
+        linearLayoutManager.orientation = RecyclerView.VERTICAL
+        dailyViewAdapter = DailyViewAdapter(context, r)
+        r.layoutManager = linearLayoutManager
+        r.adapter = dailyViewAdapter
 
-        model.done.observe(viewLifecycleOwner,{
-            if(it){
-                pro.visibility=View.VISIBLE
-            }else{
-                pro.visibility=View.GONE
+        model.done.observe(viewLifecycleOwner, {
+            if (it) {
+                pro.visibility = View.VISIBLE
+            } else {
+                pro.visibility = View.GONE
             }
         })
 
-        model.list.observe(viewLifecycleOwner,{
+        model.list.observe(viewLifecycleOwner, {
             dailyViewAdapter.addAll(it)
         })
 
@@ -60,33 +60,38 @@ class DailyCheckFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         MainScope().launch {
-            if(MainActivity.loading){
+            if (MainActivity.loading) {
                 Chanl.teChannel.receive()
             }
 
-            model.done.value=false
-            val file=File(Constant.getPathX(MainActivity.currentId+"dlc.dat"))
-            if(file.exists()){
-                val temp=file.readBytes()
+            model.done.value = false
+            val file = File(Constant.getPathX(MainActivity.currentId + "dlc.dat"))
+            if (file.exists()) {
+                val temp = file.readBytes()
                 temp.let {
-                    val f=DlcFile.DlcInfo(it)
-                    model.list.value=f.dlc
+                    val f = DlcFile.DlcInfo(it)
+                    model.list.value = f.dlc
                 }
+            } else {
+                model.list.value = arrayListOf()
             }
 
 
         }
     }
 
-    fun switch(s:String){
-        model.done.value=false
-        val file=File(Constant.getPathX(s+"dlc.dat"))
-        if(file.exists()){
-            val temp=file.readBytes()
+    @ExperimentalUnsignedTypes
+    fun switch(s: String) {
+        model.done.value = false
+        val file = File(Constant.getPathX(s + "dlc.dat"))
+        if (file.exists()) {
+            val temp = file.readBytes()
             temp.let {
-                val f=DlcFile.DlcInfo(it)
-                model.list.value=f.dlc
+                val f = DlcFile.DlcInfo(it)
+                model.list.value = f.dlc
             }
+        } else {
+            model.list.value = arrayListOf()
         }
     }
 }

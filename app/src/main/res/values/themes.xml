@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.Checkme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="windowActionBar">false</item>

@@ -6,16 +6,16 @@ import com.viatom.checkme.bean.DlcBean
 
 class DailyCheckViewModel : ViewModel() {
 
-    val text:MutableLiveData<String> by lazy{
+    val text: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
 
-    val done:MutableLiveData<Boolean> by lazy{
+    val done: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
 
 
-    val list:MutableLiveData<ArrayList<DlcBean>> by lazy{
+    val list: MutableLiveData<ArrayList<DlcBean>> by lazy {
         MutableLiveData<ArrayList<DlcBean>>()
     }
 

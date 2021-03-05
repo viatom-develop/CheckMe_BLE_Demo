@@ -71,7 +71,6 @@ public class BleDataManager extends BleManager {
         }
 
 
-
         // If you have any optional services, allocate them here. Return true only if
         // they are found.
         @Override

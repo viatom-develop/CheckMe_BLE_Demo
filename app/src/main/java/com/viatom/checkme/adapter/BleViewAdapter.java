@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.viatom.checkme.R;
 import com.viatom.checkme.bean.BleBean;
 
@@ -31,8 +30,6 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
     }
 
 
-
-
     // inflates the cell layout from xml when needed
     @Override
     @NonNull
@@ -49,12 +46,9 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
     }
 
     public void addDevice(String name, BluetoothDevice bluetoothDevice) {
-        mBleData.add(new BleBean(name,bluetoothDevice));
+        mBleData.add(new BleBean(name, bluetoothDevice));
         notifyDataSetChanged();
     }
-
-
-
 
 
     // total number of cells
@@ -66,17 +60,19 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView bleName;
+
         ViewHolder(View itemView) {
             super(itemView);
-            bleName=itemView.findViewById(R.id.ble_name);
+            bleName = itemView.findViewById(R.id.ble_name);
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onScanItemClick(mBleData.get(getAdapterPosition()).getBluetoothDevice());
+            if (mClickListener != null)
+                mClickListener.onScanItemClick(mBleData.get(getAdapterPosition()).getBluetoothDevice());
         }
     }
-
 
 
     // allows clicks events to be caught

@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import com.viatom.checkme.R
 
 
-class PermissionActivity :AppCompatActivity() {
+class PermissionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,18 +60,19 @@ class PermissionActivity :AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    fun initA(){
+    fun initA() {
         if (!isLocationEnabled()) {
             val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
             startActivityForResult(intent, REQUEST_LOCATION)
         } else {
-          initB()
+            initB()
         }
     }
+
     fun initB() {
         val bluetoothManager =
             getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-       val bluetoothAdapter = bluetoothManager.adapter
+        val bluetoothAdapter = bluetoothManager.adapter
         if (bluetoothAdapter == null) {
             val enableBtIntent = Intent(
                 BluetoothAdapter.ACTION_REQUEST_ENABLE
@@ -89,8 +90,9 @@ class PermissionActivity :AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         this.finish()
     }
+
     private fun isLocationEnabled(): Boolean {
-        val lm =getSystemService(LOCATION_SERVICE) as LocationManager
+        val lm = getSystemService(LOCATION_SERVICE) as LocationManager
         var gps_enabled = false
         var network_enabled = false
 
