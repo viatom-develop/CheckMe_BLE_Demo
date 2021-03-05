@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     private suspend fun readUser(){
         userChannel.receive()
         val userTemp=File(Constant.getPathX("usr.dat")).readBytes()
-        userTemp?.apply {
+        userTemp.apply {
             userInfo = UserFile.UserInfo(this)
 
             for (user in userInfo.user) {
@@ -210,6 +210,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
 
 
 
+    @ExperimentalUnsignedTypes
     override fun onScanItemClick(bluetoothDevice: BluetoothDevice?) {
         scan.stop()
         bleWorker.initWorker(this,bluetoothDevice)

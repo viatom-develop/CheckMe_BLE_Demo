@@ -37,7 +37,8 @@ class BleDataWorker {
     var currentFileName=""
     var result=1;
 
-    private val comeData = BleDataManager.onNotifyListener { device, data ->
+    @ExperimentalUnsignedTypes
+    private val comeData = BleDataManager.onNotifyListener { _, data ->
         data?.value?.apply {
             pool = add(pool, this)
         }
@@ -129,6 +130,7 @@ class BleDataWorker {
         myBleDataManager.sendCmd(bs)
     }
 
+    @ExperimentalUnsignedTypes
     fun initWorker(context: Context, bluetoothDevice: BluetoothDevice?) {
         myBleDataManager = BleDataManager(context)
         myBleDataManager.setNotifyListener(comeData)
@@ -155,7 +157,6 @@ class BleDataWorker {
     suspend fun getFile(name: String):Int {
         mutex.withLock {
             this.currentFileName=name
-            var result=1
             cmdState=1
             val pkg = StartReadPkg(name)
             sendCmd(pkg.buf)
