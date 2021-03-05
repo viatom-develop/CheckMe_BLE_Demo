@@ -41,10 +41,6 @@ class EcgRecorderFragment : Fragment() {
             ecgViewAdapter.addAll(it)
         })
 
-
-
-
-
         return root
     }
 
@@ -56,13 +52,17 @@ class EcgRecorderFragment : Fragment() {
             if(MainActivity.loading){
                 Chanl.teChannel.receive()
             }
-            val temp= File(Constant.getPathX("1ecg.dat")).readBytes()
-            if(!temp.isEmpty()) {
-                temp.let {
-                    val f = EcgFile.EcgInfo(it)
-                    model.list.value = f.ecg
+            val file= File(Constant.getPathX("1ecg.dat"))
+            if(file.exists()){
+                val temp=file.readBytes()
+                if(!temp.isEmpty()) {
+                    temp.let {
+                        val f = EcgFile.EcgInfo(it)
+                        model.list.value = f.ecg
+                    }
                 }
             }
+
 
         }
     }

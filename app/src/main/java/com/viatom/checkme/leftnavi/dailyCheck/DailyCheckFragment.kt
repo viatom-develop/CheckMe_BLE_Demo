@@ -65,11 +65,15 @@ class DailyCheckFragment : Fragment() {
             }
 
             model.done.value=false
-            val temp=File(Constant.getPathX("1dlc.dat")).readBytes()
-            temp?.let {
-                val f=DlcFile.DlcInfo(it)
-                model.list.value=f.dlc
+            val file=File(Constant.getPathX("1dlc.dat"))
+            if(file.exists()){
+                val temp=file.readBytes()
+                temp.let {
+                    val f=DlcFile.DlcInfo(it)
+                    model.list.value=f.dlc
+                }
             }
+
 
         }
     }
