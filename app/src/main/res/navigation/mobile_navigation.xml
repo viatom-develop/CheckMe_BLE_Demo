@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_2"
-        android:name="com.viatom.checkme.leftnavi.ecgRecorder.ErecorderFragment"
+        android:name="com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment"
         android:label="ECG Recorder"
         tools:layout="@layout/fragment_ecg" />
 

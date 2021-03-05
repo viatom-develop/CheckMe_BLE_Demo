@@ -66,8 +66,11 @@ class DailyCheckFragment : Fragment() {
 
             model.done.value=false
             val temp=File(Constant.getPathX("1dlc.dat")).readBytes()
-            val f=DlcFile.DlcInfo(temp)
-            model.list.value=f.dlc
+            temp?.let {
+                val f=DlcFile.DlcInfo(it)
+                model.list.value=f.dlc
+            }
+
         }
     }
 }
