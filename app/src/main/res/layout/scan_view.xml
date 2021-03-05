@@ -7,21 +7,21 @@
     android:visibility="visible"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff0f000"
+    android:background="#87CEEB"
     android:orientation="vertical"
     >
         <TextView
-            android:background="#ff000000"
+            android:background="#f0f8ff"
             android:text="@string/app_name"
             android:gravity="center"
-            android:textColor="#ffffff"
+            android:textColor="#87CEEB"
             android:textSize="22sp"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
         <TextView
             android:id="@+id/scan_title"
             android:text="Scanning Checkme Device..."
-            android:textColor="@color/black"
+            android:textColor="#00ff00"
             android:typeface="monospace"
             android:padding="20dp"
             android:gravity="center"
