@@ -1,4 +1,4 @@
-package com.viatom.checkme.leftnavi.DCheck
+package com.viatom.checkme.leftnavi.ecgRecorder
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,23 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.viatom.checkme.R
 
+class ErecorderFragment : Fragment() {
 
-class DcheckFragment : Fragment() {
-
-    private lateinit var dcheckViewModel: DcheckViewModel
+    private lateinit var erecorderViewModel: ErecorderViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dcheckViewModel =
-                ViewModelProvider(this).get(DcheckViewModel::class.java)
+        erecorderViewModel =
+                ViewModelProvider(this).get(ErecorderViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_ecg, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        dcheckViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
+
         return root
     }
 }

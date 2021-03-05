@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.viatom.checkme.Chanl
 import com.viatom.checkme.ble.format.UserFile
 import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.R
@@ -42,6 +43,10 @@ import java.util.Locale.ENGLISH
 
 class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, UserViewAdapter.userClickListener,
     BleScanManager.Scan {
+    companion object{
+        var loading=true
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val bleList: MutableList<BleBean> = ArrayList()
     lateinit var bleViewAdapter: BleViewAdapter
@@ -73,6 +78,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
 
+    @ExperimentalUnsignedTypes
     private suspend fun readUser(){
         userChannel.receive()
         val userTemp=File(Constant.getPathX("usr.dat")).readBytes()
@@ -91,6 +97,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
                     bleWorker.getFile(user.id+f)
                 }
             }
+            loading=false
+            Chanl.teChannel.send(1)
         }
     }
 
@@ -117,7 +125,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
                 setOf(
-                    R.id.nav_1, R.id.nav_2, R.id.nav_3
+                    R.id.nav_1, R.id.nav_2, R.id.nav_3,R.id.nav_4, R.id.nav_5, R.id.nav_6,R.id.nav_7
                 ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -169,10 +177,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
 
     }
 
-    override fun onPause() {
-        super.onPause()
-        this.finish()
-    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)

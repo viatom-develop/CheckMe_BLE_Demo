@@ -1,4 +1,4 @@
-package com.viatom.checkme.leftnavi.Poximeter
+package com.viatom.checkme.leftnavi.pulseOximeter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,10 +22,7 @@ class PoximiterFragment : Fragment() {
         poximiterViewModel =
                 ViewModelProvider(this).get(PoximiterViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_pulseoximeter, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        poximiterViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
         return root
     }
 }

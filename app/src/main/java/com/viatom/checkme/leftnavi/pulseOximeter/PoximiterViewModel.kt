@@ -1,4 +1,4 @@
-package com.viatom.checkme.leftnavi.Poximeter
+package com.viatom.checkme.leftnavi.pulseOximeter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -7,19 +7,39 @@
 
     <fragment
         android:id="@+id/nav_1"
-        android:name="com.viatom.checkme.leftnavi.ERecorder.ErecorderFragment"
+        android:name="com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment"
         android:label="Daily Check"
         tools:layout="@layout/fragment_dailycheck" />
 
     <fragment
         android:id="@+id/nav_2"
-        android:name="com.viatom.checkme.leftnavi.DCheck.DcheckFragment"
+        android:name="com.viatom.checkme.leftnavi.ecgRecorder.ErecorderFragment"
         android:label="ECG Recorder"
         tools:layout="@layout/fragment_ecg" />
 
     <fragment
         android:id="@+id/nav_3"
-        android:name="com.viatom.checkme.leftnavi.Poximeter.PoximiterFragment"
+        android:name="com.viatom.checkme.leftnavi.pulseOximeter.PoximiterFragment"
         android:label="Pulse Oximeter"
         tools:layout="@layout/fragment_pulseoximeter" />
+    <fragment
+        android:id="@+id/nav_4"
+        android:name="com.viatom.checkme.leftnavi.thermometer.ThermometerFragment"
+        android:label="Thermometer"
+        tools:layout="@layout/fragment_thermometer" />
+    <fragment
+        android:id="@+id/nav_5"
+        android:name="com.viatom.checkme.leftnavi.pedometer.PedometerFragment"
+        android:label="Pedometer"
+        tools:layout="@layout/fragment_pedometer" />
+    <fragment
+        android:id="@+id/nav_6"
+        android:name="com.viatom.checkme.leftnavi.mydevice.MyDeviceFragment"
+        android:label="My Device"
+        tools:layout="@layout/fragment_mydevice" />
+    <fragment
+        android:id="@+id/nav_7"
+        android:name="com.viatom.checkme.leftnavi.about.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
 </navigation>
