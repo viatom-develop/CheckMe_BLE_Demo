@@ -1,27 +1,16 @@
 package com.viatom.checkme.activity
 
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
-import android.bluetooth.le.BluetoothLeScanner
-import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanResult
-import android.bluetooth.le.ScanSettings
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -33,44 +22,30 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.vaca.x1.UserFile
-import com.vaca.x1.utils.add
-import com.vaca.x1.utils.toUInt
+import com.viatom.checkme.ble.format.UserFile
 import com.viatom.checkme.utils.Constant
-import com.viatom.checkme.utils.Constant.getPathX
-import com.viatom.checkme.ble.FDABleManager
 import com.viatom.checkme.R
 import com.viatom.checkme.adapter.BleViewAdapter
 import com.viatom.checkme.adapter.UserViewAdapter
 import com.viatom.checkme.bean.BleBean
 import com.viatom.checkme.bean.UserBean
-import com.viatom.checkme.ble.EndReadPkg
-import com.viatom.checkme.ble.FDAResponse
-import com.viatom.checkme.ble.ReadContentPkg
-import com.viatom.checkme.ble.StartReadPkg
-import com.viatom.checkme.utils.CRCUtils.calCRC8
+import com.viatom.checkme.ble.manager.BleScanManager
+import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.viewmodel.LeftHead
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.right_drawer.*
 import kotlinx.android.synthetic.main.scan_view.*
-import no.nordicsemi.android.ble.data.Data
-import java.io.File
-import java.lang.Thread.sleep
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.Locale.ENGLISH
-import kotlin.experimental.inv
 
-class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
-    FDABleManager.onNotifyListener, UserViewAdapter.userClickListener {
+class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, UserViewAdapter.userClickListener,
+    BleScanManager.Scan {
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private var bluetoothAdapter: BluetoothAdapter? = null
-    private lateinit var leScanner: BluetoothLeScanner
     private val bleList: MutableList<BleBean> = ArrayList()
     lateinit var bleViewAdapter: BleViewAdapter
-    lateinit var myBleManager: FDABleManager
-    private var cmdState = 0;
-    private var pool: ByteArray? = null
-    var currentFileName=""
+    private val getFile= BleDataWorker()
+    private val scan= BleScanManager()
+    val dataScope= CoroutineScope(Dispatchers.IO)
 
 //-------------8 files
     var downloadNumber=8
@@ -87,11 +62,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     )
     var currentUser=0
 
-
     lateinit var userAdapter: UserViewAdapter
-    var pkgTotal = 0;
-    var currentPkg = 0;
-    var fileData: ByteArray? = null
+
     private val model: LeftHead by viewModels()
     @ExperimentalUnsignedTypes
     lateinit var userInfo: UserFile.UserInfo
@@ -99,33 +71,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     lateinit var leftName: TextView
 
 
-    private val leScanCallback: ScanCallback = object : ScanCallback() {
-        override fun onScanResult(
-            callbackType: Int,
-            result: ScanResult
-        ) {
-            super.onScanResult(callbackType, result)
-            val device = result.device
-            if (device == null) return;
-            if (device.name == null) return;
-            System.out.println(device.name)
-            if (!device.name.contains("Checkme")) return;
-            var z: Int = 0;
-            for (ble in bleList) run {
-                if (ble.name.equals(device.name)) {
-                    z = 1
-                }
-            }
-            if (z == 0) {
-                bleList.add(BleBean(device.name, device))
-                bleViewAdapter.addDevice(device.name, device)
-                Log.e("sdf", device.name)
-            }
-        }
-
-        override fun onBatchScanResults(results: List<ScanResult>) {}
-        override fun onScanFailed(errorCode: Int) {}
-    }
 
 
 
@@ -162,19 +107,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         }
     }
 
-    private fun initScan() {
-        val settings: ScanSettings = ScanSettings.Builder()
-            .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-            .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
-            .build()
 
-
-        val bluetoothManager =
-            getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        bluetoothAdapter = bluetoothManager.adapter
-        leScanner = bluetoothAdapter!!.bluetoothLeScanner
-        leScanner.startScan(null, settings, leScanCallback)
-    }
 
     private fun initView() {
         ble_table.layoutManager = GridLayoutManager(this, 2);
@@ -188,23 +121,17 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         right_user.adapter = userAdapter
         right_user.layoutManager = linearLayoutManager
         userAdapter.setClickListener(this)
-
-
     }
 
     private fun initVar() {
         Constant.initVar(this)
-        myBleManager = FDABleManager(this)
-        myBleManager.setNotifyListener(this)
-    }
-
-    private fun sendCmd(bs: ByteArray) {
-        myBleManager.sendCmd(bs)
     }
 
 
-
-
+    fun initScan(){
+        scan.initScan(this)
+        scan.setCallBack(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -214,6 +141,16 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         initVar()
         initView()
         initScan()
+        dataScope.launch {
+            val a=withTimeoutOrNull(30000) {
+                getFile.waitConnect()
+            }
+            a?.let {
+                getFile.getFile("usr.dat")
+                Log.e("sdf","是的路口附近开了士大夫艰苦拉萨大家考虑上课的房间里肯定是龙卷风")
+            }
+        }
+
     }
 
     override fun onPause() {
@@ -253,151 +190,29 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
 
     override fun onScanItemClick(bluetoothDevice: BluetoothDevice?) {
-        bluetoothDevice?.let {
-            myBleManager.connect(it)
-                .useAutoConnect(true)
-                .timeout(10000)
-                .retry(5, 100)
-                .done {
-                    if (cmdState == 0) {
-                        cmdState = 1
-                        currentFileName="usr.dat"
-                        val pkg = StartReadPkg(currentFileName)
-                        sendCmd(pkg.buf)
-                    }
-                    Log.i("BLE", "连接成功了.>>.....>>>>")
-                }
-                .enqueue()
-            leScanner.stopScan(leScanCallback)
-            runOnUiThread {
-                scan_title.visibility = GONE
-                ble_table.visibility = GONE
-                ble_panel.visibility = VISIBLE
-                scan_layout.visibility = GONE
-            }
+        scan.stop()
+        getFile.initWorker(this,bluetoothDevice)
+        runOnUiThread {
+            scan_title.visibility = GONE
+            ble_table.visibility = GONE
+            ble_panel.visibility = VISIBLE
+            scan_layout.visibility = GONE
         }
+
     }
 
-
-
-
-    @ExperimentalUnsignedTypes
-    override fun onNotify(device: BluetoothDevice?, data: Data?) {
-        data?.value?.apply {
-            pool = add(pool, this)
-        }
-        pool?.apply {
-            pool = hasResponse(pool)
-        }
-    }
-
-    @ExperimentalUnsignedTypes
-    private fun hasResponse(bytes: ByteArray?): ByteArray? {
-        val bytesLeft: ByteArray? = bytes
-
-        if (bytes == null || bytes.size < 8) {
-            return bytes
-        }
-        loop@ for (i in 0 until bytes.size - 7) {
-            if (bytes[i] != 0x55.toByte() || bytes[i + 1] != bytes[i + 2].inv()) {
-                continue@loop
-            }
-
-            // need content length
-            val len = toUInt(bytes.copyOfRange(i + 5, i + 7))
-            if (i + 8 + len > bytes.size) {
-                continue@loop
-            }
-
-            val temp: ByteArray = bytes.copyOfRange(i, i + 8 + len)
-            if (temp.last() == calCRC8(temp)) {
-                val bleResponse = FDAResponse.CheckMeResponse(temp)
-                if (cmdState == 1) {
-                    fileData = null
-                    pkgTotal = toUInt(bleResponse.content) / 1024
-                    if (bleResponse.cmd == 1) {
-                        val pkg = EndReadPkg()
-                        sendCmd(pkg.buf)
-                        cmdState = 3
-                    } else if (bleResponse.cmd == 0) {
-                        val pkg = ReadContentPkg(currentPkg)
-                        sendCmd(pkg.buf)
-                        currentPkg++
-                        cmdState = 2;
-                    }
-
-
-                } else if (cmdState == 2) {
-                    bleResponse.content.apply {
-                        fileData = add(fileData, this)
-                    }
-
-                    if (currentPkg > pkgTotal) {
-                        fileData?.apply {
-                            if (currentFileName.equals("usr.dat")) {
-                                userInfo = UserFile.UserInfo(this)
-                                for (user in userInfo.user) {
-                                    userAdapter.addUser(user)
-                                }
-                                Thread {
-                                    sleep(300)
-                                    userAdapter.setUser(0)
-                                    runOnUiThread {
-                                        onUserItemClick(userAdapter.mUserData[0], 0)
-                                    }
-
-                                }.start()
-                            }
-
-
-                            File(getPathX(currentFileName)).writeBytes(this)
-                        }
-                        val pkg = EndReadPkg()
-                        sendCmd(pkg.buf)
-                        cmdState = 3
-                    } else {
-                        val pkg = ReadContentPkg(currentPkg)
-                        sendCmd(pkg.buf)
-                        currentPkg++
-                    }
-
-                } else if (cmdState == 3) {
-                    fileData = null
-                    currentPkg = 0;
-                    cmdState = 0;
-                    if(currentFileName.equals("usr.dat")){
-                        currentNumber=0
-                        currentUser=0
-                    }else{
-                        currentNumber++
-                    }
-                    if(currentNumber<downloadNumber){
-                        cmdState = 1
-                        currentFileName= userInfo.user[currentUser].id+userfileName[currentNumber]
-                        Log.e("sdfsdfsdfsdf","sdlkfjlksdlsdfjklsdlk独立开发就开始了的风口浪尖是  $currentFileName")
-                        val pkg = StartReadPkg(currentFileName)
-                        sendCmd(pkg.buf)
-                    }else{
-                        currentUser++
-                        if(currentUser<userInfo.size){
-                            currentNumber=0
-                            cmdState = 1
-                            currentFileName= userInfo.user[currentUser].id+userfileName[currentNumber]
-                            val pkg = StartReadPkg(currentFileName)
-                            sendCmd(pkg.buf)
-                        }
-                    }
-                }
-                val tempBytes: ByteArray? = if (i + 8 + len == bytes.size) null else bytes.copyOfRange(
-                        i + 8 + len,
-                        bytes.size
-                )
-
-                return hasResponse(tempBytes)
+    override fun scanReturn(name: String, bluetoothDevice: BluetoothDevice) {
+        if (!(name.contains("Checkme"))) return;
+        var z: Int = 0;
+        for (ble in bleList) run {
+            if (ble.name.equals(bluetoothDevice.name)) {
+                z = 1
             }
         }
-
-        return bytesLeft
+        if (z == 0) {
+            bleList.add(BleBean(name, bluetoothDevice))
+            bleViewAdapter.addDevice(name, bluetoothDevice)
+        }
     }
 
 }

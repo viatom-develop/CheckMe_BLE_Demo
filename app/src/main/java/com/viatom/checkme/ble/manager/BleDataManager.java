@@ -1,4 +1,4 @@
-package com.viatom.checkme.ble;
+package com.viatom.checkme.ble.manager;
 
 
 import android.bluetooth.BluetoothDevice;
@@ -15,7 +15,7 @@ import java.util.UUID;
 import no.nordicsemi.android.ble.BleManager;
 import no.nordicsemi.android.ble.data.Data;
 
-public class FDABleManager extends BleManager {
+public class BleDataManager extends BleManager {
     public final static UUID service_uuid =
             UUID.fromString("14839ac4-7d7e-415c-9a42-167340cf2339");
     public final static UUID write_uuid =
@@ -31,7 +31,7 @@ public class FDABleManager extends BleManager {
         this.listener = listener;
     }
 
-    public FDABleManager(@NonNull final Context context) {
+    public BleDataManager(@NonNull final Context context) {
         super(context);
     }
 

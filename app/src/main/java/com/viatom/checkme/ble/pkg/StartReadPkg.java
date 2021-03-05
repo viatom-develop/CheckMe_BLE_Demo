@@ -1,6 +1,7 @@
-package com.viatom.checkme.ble;
+package com.viatom.checkme.ble.pkg;
 
 
+import com.viatom.checkme.ble.constant.BTConstant;
 import com.viatom.checkme.utils.CRCUtils;
 import com.viatom.checkme.utils.LogUtils;
 
@@ -8,7 +9,7 @@ public class StartReadPkg {
 	private byte[] buf;
 	
 	public StartReadPkg(String fileName){
-		if(fileName==null || fileName.length()>BTConstant.BT_READ_FILE_NAME_MAX_LENGTH){
+		if(fileName==null || fileName.length()> BTConstant.BT_READ_FILE_NAME_MAX_LENGTH){
 			LogUtils.d("File name error");
 			return;
 		}

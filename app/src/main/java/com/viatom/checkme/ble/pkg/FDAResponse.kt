@@ -1,10 +1,6 @@
-package com.viatom.checkme.ble
-
-import android.os.Parcelable
+package com.viatom.checkme.ble.pkg
 
 import com.vaca.x1.utils.toUInt
-
-import kotlinx.android.parcel.Parcelize
 
 object FDAResponse {
 

@@ -1,4 +1,4 @@
-package com.viatom.checkme.ble;
+package com.viatom.checkme.ble.constant;
 
 public class BTConstant {
 

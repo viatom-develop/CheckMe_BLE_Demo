@@ -1,6 +1,7 @@
-package com.viatom.checkme.ble;
+package com.viatom.checkme.ble.pkg;
 
 
+import com.viatom.checkme.ble.constant.BTConstant;
 import com.viatom.checkme.utils.CRCUtils;
 import com.viatom.checkme.utils.LogUtils;
 
@@ -14,7 +15,7 @@ public class PingAckPkg {
 		LogUtils.d("BUG[1]="+(int)buf[1]);
 		this.buf=buf;
 		// TODO Auto-generated constructor stub
-		if(buf.length!=BTConstant.COMMON_ACK_PKG_LENGTH) {
+		if(buf.length!= BTConstant.COMMON_ACK_PKG_LENGTH) {
 			LogUtils.d("PingAckPkg length error");
 			return;
 		}

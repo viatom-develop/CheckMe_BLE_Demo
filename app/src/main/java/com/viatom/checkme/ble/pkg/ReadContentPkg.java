@@ -1,6 +1,7 @@
-package com.viatom.checkme.ble;
+package com.viatom.checkme.ble.pkg;
 
 
+import com.viatom.checkme.ble.constant.BTConstant;
 import com.viatom.checkme.utils.CRCUtils;
 import com.viatom.checkme.utils.LogUtils;
 
