@@ -7,15 +7,14 @@ import java.util.*
 object UserFile {
     @ExperimentalUnsignedTypes
     class UserInfo constructor(var bytes: ByteArray){
-        var size: Int
-        var user:Array<UserBean>
-        init {
-            size=bytes.size/52
-            user= Array(size){
-              UserBean()
-            }
+        var size: Int = bytes.size/52
+        var user:Array<UserBean> = Array(size){
+          UserBean()
+        }
 
-           var start:Int
+        init {
+
+            var start:Int
             for(k in 0 until size){
                 start=k*52
                 user[k].id=bytes[start].toUByte().toInt().toString()

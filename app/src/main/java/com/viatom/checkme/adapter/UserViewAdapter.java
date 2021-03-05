@@ -57,6 +57,9 @@ public class UserViewAdapter extends RecyclerView.Adapter<UserViewAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public void addUserS(UserBean userBean) {
+        mUserData.add(userBean);
+    }
 
     public void setUser(int position){
         for(int k=0;k<mUserData.size();k++){

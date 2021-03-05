@@ -35,6 +35,8 @@ import com.viatom.checkme.viewmodel.LeftHead
 import kotlinx.android.synthetic.main.right_drawer.*
 import kotlinx.android.synthetic.main.scan_view.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale.ENGLISH
 
@@ -43,9 +45,11 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val bleList: MutableList<BleBean> = ArrayList()
     lateinit var bleViewAdapter: BleViewAdapter
-    private val getFile= BleDataWorker()
+    private val bleWorker= BleDataWorker()
     private val scan= BleScanManager()
     val dataScope= CoroutineScope(Dispatchers.IO)
+    val uiScope= CoroutineScope(Dispatchers.Main)
+    private val userChannel = Channel<Int>(Channel.CONFLATED)
 
 //-------------8 files
     var downloadNumber=8
@@ -63,12 +67,32 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     var currentUser=0
 
     lateinit var userAdapter: UserViewAdapter
-
     private val model: LeftHead by viewModels()
     @ExperimentalUnsignedTypes
     lateinit var userInfo: UserFile.UserInfo
     lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
+
+    private suspend fun readUser(){
+        userChannel.receive()
+        val userTemp=File(Constant.getPathX("usr.dat")).readBytes()
+        userTemp?.apply {
+            userInfo = UserFile.UserInfo(this)
+
+            for (user in userInfo.user) {
+                userAdapter.addUserS(user)
+            }
+            userAdapter.notifyDataSetChanged()
+            delay(100)
+            userAdapter.setUser(0)
+            onUserItemClick(userAdapter.mUserData[0], 0)
+            for (user in userInfo.user) {
+                for(f in userfileName){
+                    bleWorker.getFile(user.id+f)
+                }
+            }
+        }
+    }
 
 
 
@@ -141,15 +165,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
         initVar()
         initView()
         initScan()
-        dataScope.launch {
-            val a=withTimeoutOrNull(30000) {
-                getFile.waitConnect()
-            }
-            a?.let {
-                getFile.getFile("usr.dat")
-                Log.e("sdf","是的路口附近开了士大夫艰苦拉萨大家考虑上课的房间里肯定是龙卷风")
-            }
-        }
+
 
     }
 
@@ -191,13 +207,33 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
 
     override fun onScanItemClick(bluetoothDevice: BluetoothDevice?) {
         scan.stop()
-        getFile.initWorker(this,bluetoothDevice)
+        bleWorker.initWorker(this,bluetoothDevice)
         runOnUiThread {
             scan_title.visibility = GONE
             ble_table.visibility = GONE
             ble_panel.visibility = VISIBLE
             scan_layout.visibility = GONE
         }
+        dataScope.launch {
+            val a=withTimeoutOrNull(10000) {
+                bleWorker.waitConnect()
+            }
+            a?.let {
+                val b= withTimeoutOrNull(10000){
+                    bleWorker.getFile("usr.dat")
+                }
+                b?.let {
+                    userChannel.send(1)
+                  println("圣诞快乐房价受到了记录方式打开立即分解")
+                }
+
+
+            }
+        }
+        uiScope.launch {
+            readUser()
+        }
+
 
     }
 

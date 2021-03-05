@@ -17,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.io.File
 import kotlin.experimental.inv
 
@@ -25,7 +27,9 @@ class BleDataWorker {
     private val fileChannel = Channel<Int>(Channel.CONFLATED)
     private val connectChannel = Channel<String>(Channel.CONFLATED)
     private lateinit var myBleDataManager: BleDataManager
-    val dataScope = CoroutineScope(Dispatchers.IO)
+    private val dataScope = CoroutineScope(Dispatchers.IO)
+    private val mutex=Mutex()
+
     private var cmdState = 0;
     var pkgTotal = 0;
     var currentPkg = 0;
@@ -144,19 +148,18 @@ class BleDataWorker {
     }
 
    suspend fun waitConnect() {
-            connectChannel.receive()
+       connectChannel.receive()
     }
 
-    fun getFile(name: String):Int {
-        this.currentFileName=name
-        var result=1
-        runBlocking {
+    suspend fun getFile(name: String):Int {
+        mutex.withLock {
+            this.currentFileName=name
+            var result=1
             cmdState=1
             val pkg = StartReadPkg(name)
             sendCmd(pkg.buf)
-            result= fileChannel.receive()
+            return fileChannel.receive()
         }
-        return result
     }
 
 }
