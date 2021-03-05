@@ -55,7 +55,7 @@ class ThermometerFragment : Fragment() {
             if(MainActivity.loading){
                 Chanl.teChannel.receive()
             }
-            val file= File(Constant.getPathX("1tmp.dat"))
+            val file= File(Constant.getPathX(MainActivity.currentId+"tmp.dat"))
             if(file.exists()){
                 val temp=file.readBytes()
                 if(!temp.isEmpty()) {
@@ -67,6 +67,19 @@ class ThermometerFragment : Fragment() {
             }
 
 
+        }
+    }
+
+    fun switch(s:String){
+        val file= File(Constant.getPathX(s+"tmp.dat"))
+        if(file.exists()){
+            val temp=file.readBytes()
+            if(temp.isNotEmpty()) {
+                temp.let {
+                    val f = TmpFile.TmpInfo(it)
+                    model.list.value = f.Tmp
+                }
+            }
         }
     }
 }

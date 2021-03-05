@@ -52,7 +52,7 @@ class EcgRecorderFragment : Fragment() {
             if(MainActivity.loading){
                 Chanl.teChannel.receive()
             }
-            val file= File(Constant.getPathX("1ecg.dat"))
+            val file= File(Constant.getPathX(MainActivity.currentId+"ecg.dat"))
             if(file.exists()){
                 val temp=file.readBytes()
                 if(!temp.isEmpty()) {
@@ -64,6 +64,19 @@ class EcgRecorderFragment : Fragment() {
             }
 
 
+        }
+    }
+
+    fun switch(s:String){
+        val file= File(Constant.getPathX(s+"ecg.dat"))
+        if(file.exists()){
+            val temp=file.readBytes()
+            if(temp.isNotEmpty()) {
+                temp.let {
+                    val f = EcgFile.EcgInfo(it)
+                    model.list.value = f.ecg
+                }
+            }
         }
     }
 }

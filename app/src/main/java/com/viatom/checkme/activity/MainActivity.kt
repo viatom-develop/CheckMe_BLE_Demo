@@ -2,7 +2,6 @@ package com.viatom.checkme.activity
 
 import android.bluetooth.BluetoothDevice
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -23,15 +23,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.viatom.checkme.Chanl
-import com.viatom.checkme.ble.format.UserFile
-import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.R
 import com.viatom.checkme.adapter.BleViewAdapter
 import com.viatom.checkme.adapter.UserViewAdapter
 import com.viatom.checkme.bean.BleBean
 import com.viatom.checkme.bean.UserBean
+import com.viatom.checkme.ble.format.UserFile
 import com.viatom.checkme.ble.manager.BleScanManager
 import com.viatom.checkme.ble.worker.BleDataWorker
+import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
+import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
+import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
+import com.viatom.checkme.leftnavi.pulseOximeter.PulseOximiterFragment
+import com.viatom.checkme.leftnavi.thermometer.ThermometerFragment
+import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.viewmodel.LeftHead
 import kotlinx.android.synthetic.main.right_drawer.*
 import kotlinx.android.synthetic.main.scan_view.*
@@ -41,12 +46,14 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale.ENGLISH
 
+
 class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, UserViewAdapter.userClickListener,
     BleScanManager.Scan {
     companion object{
         var loading=true
+        var currentId=""
     }
-
+    lateinit var  mMainNavFragment: Fragment
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val bleList: MutableList<BleBean> = ArrayList()
     lateinit var bleViewAdapter: BleViewAdapter
@@ -60,14 +67,14 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     var downloadNumber=8
     var currentNumber=0
     var userfileName = arrayOf(
-            "dlc.dat",
-            "spc.dat",
-            "hrv.dat",
-            "ecg.dat",
-            "oxi.dat",
-            "tmp.dat",
-            "slm.dat",
-            "ped.dat"
+        "dlc.dat",
+        "spc.dat",
+        "hrv.dat",
+        "ecg.dat",
+        "oxi.dat",
+        "tmp.dat",
+        "slm.dat",
+        "ped.dat"
     )
     var currentUser=0
 
@@ -94,13 +101,15 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
             onUserItemClick(userAdapter.mUserData[0], 0)
             for (user in userInfo.user) {
                 for(f in userfileName){
-                    bleWorker.getFile(user.id+f)
+                    bleWorker.getFile(user.id + f)
                 }
             }
             loading=false
             Chanl.teChannel.send(1)
         }
     }
+
+
 
 
 
@@ -124,10 +133,17 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.nav_1, R.id.nav_2, R.id.nav_3,R.id.nav_4, R.id.nav_5, R.id.nav_6,R.id.nav_7
-                ), drawerLayout
+            setOf(
+                R.id.nav_1,
+                R.id.nav_2,
+                R.id.nav_3,
+                R.id.nav_4,
+                R.id.nav_5,
+                R.id.nav_6,
+                R.id.nav_7
+            ), drawerLayout
         )
+        mMainNavFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         val headerLayout: View = navView.getHeaderView(0)
@@ -173,8 +189,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
         initVar()
         initView()
         initScan()
-
-
     }
 
 
@@ -204,6 +218,20 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
             } else {
                 rPacemaker.text = "YES"
             }
+
+            val fragmentA = mMainNavFragment.childFragmentManager.primaryNavigationFragment
+            if(fragmentA is DailyCheckFragment){
+                fragmentA.switch(id)
+            }else if(fragmentA is EcgRecorderFragment){
+                fragmentA.switch(id)
+            }else if(fragmentA is PedometerFragment){
+                fragmentA.switch(id)
+            }else if(fragmentA is PulseOximiterFragment){
+                fragmentA.switch(id)
+            }else if(fragmentA is ThermometerFragment){
+                fragmentA.switch(id)
+            }
+            currentId=id
         }
 
     }
@@ -213,7 +241,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener, User
     @ExperimentalUnsignedTypes
     override fun onScanItemClick(bluetoothDevice: BluetoothDevice?) {
         scan.stop()
-        bleWorker.initWorker(this,bluetoothDevice)
+        bleWorker.initWorker(this, bluetoothDevice)
         runOnUiThread {
             scan_title.visibility = GONE
             ble_table.visibility = GONE

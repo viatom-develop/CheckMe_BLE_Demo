@@ -21,7 +21,7 @@ import java.io.File
 
 class DailyCheckFragment : Fragment() {
 
-    private val model: DailyCheckViewModel by viewModels()
+   private val model: DailyCheckViewModel by viewModels()
     lateinit var dailyViewAdapter: DailyViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,7 +65,7 @@ class DailyCheckFragment : Fragment() {
             }
 
             model.done.value=false
-            val file=File(Constant.getPathX("1dlc.dat"))
+            val file=File(Constant.getPathX(MainActivity.currentId+"dlc.dat"))
             if(file.exists()){
                 val temp=file.readBytes()
                 temp.let {
@@ -75,6 +75,18 @@ class DailyCheckFragment : Fragment() {
             }
 
 
+        }
+    }
+
+    fun switch(s:String){
+        model.done.value=false
+        val file=File(Constant.getPathX(s+"dlc.dat"))
+        if(file.exists()){
+            val temp=file.readBytes()
+            temp.let {
+                val f=DlcFile.DlcInfo(it)
+                model.list.value=f.dlc
+            }
         }
     }
 }

@@ -54,13 +54,24 @@ class PedometerFragment : Fragment() {
             if(MainActivity.loading){
                 Chanl.teChannel.receive()
             }
-            val file= File(Constant.getPathX("1ped.dat"))
+            val file= File(Constant.getPathX(MainActivity.currentId+"ped.dat"))
             if(file.exists()){
                 val temp=file.readBytes()
                 temp.let {
                     val f = PedFile.PedInfo(it)
                     model.list.value = f.Ped
                 }
+            }
+        }
+    }
+
+    fun switch(s:String){
+        val file= File(Constant.getPathX(s+"ped.dat"))
+        if(file.exists()){
+            val temp=file.readBytes()
+            temp.let {
+                val f = PedFile.PedInfo(it)
+                model.list.value = f.Ped
             }
         }
     }

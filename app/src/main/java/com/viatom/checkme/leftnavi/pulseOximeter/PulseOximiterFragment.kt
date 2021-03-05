@@ -50,7 +50,7 @@ class PulseOximiterFragment : Fragment() {
             if(MainActivity.loading){
                 Chanl.teChannel.receive()
             }
-            val file=File(Constant.getPathX("1oxi.dat"))
+            val file=File(Constant.getPathX(MainActivity.currentId+"oxi.dat"))
             if(file.exists()){
                 val temp= file.readBytes()
                 if(!temp.isEmpty()) {
@@ -62,6 +62,19 @@ class PulseOximiterFragment : Fragment() {
             }
 
 
+        }
+    }
+
+    fun switch(s:String){
+        val file=File(Constant.getPathX(s+"oxi.dat"))
+        if(file.exists()){
+            val temp= file.readBytes()
+            if(!temp.isEmpty()) {
+                temp.let {
+                    val f = OxyFile.OxyInfo(it)
+                    model.list.value = f.Oxy
+                }
+            }
         }
     }
 }
