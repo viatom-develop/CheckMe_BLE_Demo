@@ -30,7 +30,7 @@ class BleScanManager {
             scan?.apply {
                 scanReturn(device.name, device)
             }
-            Log.e("是独立开发就", "扣税的接口 ${device.name}")
+            Log.i("scanned ble", " ${device.name}")
         }
 
         override fun onBatchScanResults(results: List<ScanResult>) {}

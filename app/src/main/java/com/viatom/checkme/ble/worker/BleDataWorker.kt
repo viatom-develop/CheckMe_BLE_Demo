@@ -92,7 +92,7 @@ class BleDataWorker {
                     if (currentPkg > pkgTotal) {
                         fileData?.apply {
                             result = 0
-                            Log.e("file", "sdlkfj  $currentFileName")
+                            Log.i("file", "recieve  $currentFileName")
                             File(Constant.getPathX(currentFileName)).writeBytes(this)
                         }
                         val pkg = EndReadPkg()

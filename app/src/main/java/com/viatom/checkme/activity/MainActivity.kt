@@ -97,17 +97,15 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             userInfo = UserFile.UserInfo(this)
 
             for (user in userInfo.user) {
+                for (f in userfileName) {
+                    bleWorker.getFile(user.id + f)
+                }
                 userAdapter.addUserS(user)
             }
             userAdapter.notifyDataSetChanged()
             delay(100)
             userAdapter.setUser(0)
             onUserItemClick(userAdapter.mUserData[0], 0)
-            for (user in userInfo.user) {
-                for (f in userfileName) {
-                    bleWorker.getFile(user.id + f)
-                }
-            }
             loading = false
             Chanl.teChannel.send(1)
         }
