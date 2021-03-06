@@ -39,7 +39,7 @@ public class TmpViewAdapter extends RecyclerView.Adapter<TmpViewAdapter.ViewHold
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_user_view, parent, false);
+        View view = mInflater.inflate(R.layout.item_user, parent, false);
         return new ViewHolder(view);
     }
 

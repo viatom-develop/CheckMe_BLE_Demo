@@ -24,7 +24,7 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
 
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = mInflater.inflate(R.layout.item_user_view, parent, false)
+        val view = mInflater.inflate(R.layout.item_user, parent, false)
         return ViewHolder(view)
     }
 

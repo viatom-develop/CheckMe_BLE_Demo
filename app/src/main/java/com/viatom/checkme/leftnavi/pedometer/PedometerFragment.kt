@@ -32,7 +32,7 @@ class PedometerFragment : Fragment() {
         val r: RecyclerView = root.findViewById(R.id.pedlist)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        pedViewAdapter = PedViewAdapter(context, r)
+        pedViewAdapter = PedViewAdapter(requireContext(), r)
         r.layoutManager = linearLayoutManager
         r.adapter = pedViewAdapter
         model.list.observe(viewLifecycleOwner, {
