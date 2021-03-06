@@ -8,17 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.viatom.checkme.Chanl
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.ble.format.TmpFile
 import com.viatom.checkme.utils.Constant
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import java.io.File
 
 
-class ThermometerFragment : Fragment() {
+class TmpFragment : Fragment() {
 
     private val model: TmpViewModel by viewModels()
     lateinit var tmpViewAdapter: TmpViewAdapter
@@ -32,7 +29,7 @@ class ThermometerFragment : Fragment() {
         val r: RecyclerView = root.findViewById(R.id.tmplist)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        tmpViewAdapter = TmpViewAdapter(context, r)
+        tmpViewAdapter = TmpViewAdapter(requireContext())
         r.layoutManager = linearLayoutManager
         r.adapter = tmpViewAdapter
         model.list.observe(viewLifecycleOwner, {

@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.viatom.checkme.Chanl
+import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.R
 import com.viatom.checkme.adapter.BleViewAdapter
 import com.viatom.checkme.adapter.UserViewAdapter
@@ -35,7 +35,7 @@ import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
 import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
 import com.viatom.checkme.leftnavi.oximeter.OximiterFragment
-import com.viatom.checkme.leftnavi.thermometer.ThermometerFragment
+import com.viatom.checkme.leftnavi.thermometer.TmpFragment
 import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.viewmodel.LeftHead
 import kotlinx.android.synthetic.main.right_drawer.*
@@ -97,21 +97,20 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             userInfo = UserFile.UserInfo(this)
             val total=userInfo.user.size*userfileName.size+1
             var tIndex=1
-            Chanl.progressChannel.send(tIndex*100/total)
+            UiChannel.progressChannel.send(tIndex*100/total)
             for (user in userInfo.user) {
                 for (f in userfileName) {
                     bleWorker.getFile(user.id + f)
                     tIndex++
-                    Chanl.progressChannel.send(tIndex*100/total)
+                    UiChannel.progressChannel.send(tIndex*100/total)
                 }
                 userAdapter.addUser(user)
             }
             delay(300)
-            Chanl.progressChannel.close()
+            UiChannel.progressChannel.close()
             userAdapter.setUserColor(0)
             onUserItemClick(userAdapter.mUserData[0], 0)
             loading = false
-            Chanl.teChannel.send(1)
         }
     }
 
@@ -228,7 +227,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 fragmentA.switch(id)
             } else if (fragmentA is OximiterFragment) {
                 fragmentA.switch(id)
-            } else if (fragmentA is ThermometerFragment) {
+            } else if (fragmentA is TmpFragment) {
                 fragmentA.switch(id)
             }
             currentId = id
@@ -257,7 +256,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 }
                 b?.let {
                     userChannel.send(1)
-                    println("圣诞快乐房价受到了记录方式打开立即分解")
                 }
 
 

@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_pulseoximeter" />
     <fragment
         android:id="@+id/nav_4"
-        android:name="com.viatom.checkme.leftnavi.thermometer.ThermometerFragment"
+        android:name="com.viatom.checkme.leftnavi.thermometer.TmpFragment"
         android:label="Thermometer"
         tools:layout="@layout/fragment_thermometer" />
     <fragment

@@ -1,7 +1,6 @@
 package com.viatom.checkme.leftnavi.dailyCheck
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.viatom.checkme.Chanl
+import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.ble.format.DlcFile
 import com.viatom.checkme.utils.Constant
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 
 
@@ -62,7 +59,7 @@ class DailyCheckFragment : Fragment() {
         switch(MainActivity.currentId)
         MainScope().launch {
             if (MainActivity.loading) {
-                for(k in Chanl.progressChannel){
+                for(k in UiChannel.progressChannel){
                     model.progress.value=k
                 }
             }

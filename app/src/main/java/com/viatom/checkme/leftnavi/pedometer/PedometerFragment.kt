@@ -8,13 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.viatom.checkme.Chanl
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.ble.format.PedFile
 import com.viatom.checkme.utils.Constant
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import java.io.File
 
 
@@ -32,7 +29,7 @@ class PedometerFragment : Fragment() {
         val r: RecyclerView = root.findViewById(R.id.pedlist)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        pedViewAdapter = PedViewAdapter(requireContext(), r)
+        pedViewAdapter = PedViewAdapter(requireContext())
         r.layoutManager = linearLayoutManager
         r.adapter = pedViewAdapter
         model.list.observe(viewLifecycleOwner, {

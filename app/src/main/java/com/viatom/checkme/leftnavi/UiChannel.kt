@@ -1,8 +1,7 @@
-package com.viatom.checkme
+package com.viatom.checkme.leftnavi
 
 import kotlinx.coroutines.channels.Channel
 
-object Chanl {
-    val teChannel = Channel<Int>(Channel.CONFLATED)
+object UiChannel {
     val progressChannel = Channel<Int>(Channel.CONFLATED)
 }

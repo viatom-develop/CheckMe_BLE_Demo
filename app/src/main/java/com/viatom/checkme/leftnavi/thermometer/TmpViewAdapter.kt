@@ -1,114 +1,89 @@
-package com.viatom.checkme.leftnavi.thermometer;
+package com.viatom.checkme.leftnavi.thermometer
 
-import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.content.Context
+import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.viatom.checkme.R
+import com.viatom.checkme.bean.TmpBean
+import com.viatom.checkme.bean.UserBean
+import com.viatom.checkme.utils.Constant
+import java.text.SimpleDateFormat
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.viatom.checkme.R;
-import com.viatom.checkme.bean.TmpBean;
-import com.viatom.checkme.bean.UserBean;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class TmpViewAdapter extends RecyclerView.Adapter<TmpViewAdapter.ViewHolder> {
-    public List<TmpBean> mTmpData;
-    private LayoutInflater mInflater;
-    private userClickListener mClickListener;
-    private Context mContext;
-    private RecyclerView recyclerView;
-
-    // data is passed into the constructor
-    public TmpViewAdapter(Context context, RecyclerView r) {
-        this.mInflater = LayoutInflater.from(context);
-        this.mTmpData = new ArrayList<>();
-        this.recyclerView = r;
-        mContext = context;
-    }
-
+class TmpViewAdapter(context: Context) :
+    RecyclerView.Adapter<TmpViewAdapter.ViewHolder>() {
+    var mTmpData: MutableList<TmpBean> = ArrayList()
+    private val mInflater: LayoutInflater = LayoutInflater.from(context)
+    private var mClickListener: userClickListener? = null
 
     // inflates the cell layout from xml when needed
-    @Override
-    @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_user, parent, false);
-        return new ViewHolder(view);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = mInflater.inflate(R.layout.item_tmp, parent, false)
+        return ViewHolder(view)
     }
 
     // binds the data to the TextView in each cell
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bleName.setText(mTmpData.get(position).getTimeString());
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        mTmpData[position].apply {
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
+            holder.time.text =dateFormat.format(date)
+            holder.tmp.text=Constant.TmpWay[way]+":  "+tmp.toString()+" ℃"
+            holder.face.setImageResource(Constant.RESULT_IMG[face])
+        }
     }
 
-    public void add(TmpBean userBean) {
-        mTmpData.add(userBean);
-        notifyDataSetChanged();
+    fun add(userBean: TmpBean) {
+        mTmpData.add(userBean)
+        notifyDataSetChanged()
     }
 
-    public void addAll(ArrayList userBean) {
-        mTmpData.clear();
-        mTmpData.addAll(userBean);
-        notifyDataSetChanged();
-    }
-
-
-    public void setUser(int position) {
-        for (int k = 0; k < mTmpData.size(); k++) {
-            ViewHolder v = (ViewHolder) recyclerView.findViewHolderForAdapterPosition(k);
-            if (v == null) return;
-            if (v.gaga == null) return;
-            if (k != position) {
-                v.gaga.setBackgroundColor(Color.parseColor("#0000F0"));
-            } else {
-                v.gaga.setBackgroundColor(Color.parseColor("#FF00FF"));
+    fun addAll(userBean: ArrayList<*>?) {
+        mTmpData.clear()
+        if (userBean != null) {
+            for(m in userBean){
+                mTmpData.add(m as TmpBean)
             }
         }
-
+        notifyDataSetChanged()
     }
+
 
 
     // total number of cells
-    @Override
-    public int getItemCount() {
-        return mTmpData.size();
+    override fun getItemCount(): Int {
+        return mTmpData.size
     }
 
+    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+        val tmp:TextView=itemView.findViewById(R.id.tmp)
+        val time:TextView=itemView.findViewById(R.id.time)
+        val way:TextView=itemView.findViewById(R.id.way)
+        val face:ImageView=itemView.findViewById(R.id.face)
+        override fun onClick(view: View) {}
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView bleName;
-        LinearLayout gaga;
-        ImageView head;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            head = itemView.findViewById(R.id.head);
-            bleName = itemView.findViewById(R.id.userName);
-            gaga = itemView.findViewById(R.id.gaga);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-
+        init {
+            itemView.setOnClickListener(this)
         }
     }
-
 
     // allows clicks events to be caught
-    public void setClickListener(userClickListener userClickListener) {
-        this.mClickListener = userClickListener;
+    fun setClickListener(userClickListener: userClickListener?) {
+        mClickListener = userClickListener
     }
 
-    public interface userClickListener {
-        void onUserItemClick(UserBean userBean, int position);
+    interface userClickListener {
+        fun onUserItemClick(userBean: UserBean?, position: Int)
+    }
+
+    // data is passed into the constructor
+    init {
+
     }
 }

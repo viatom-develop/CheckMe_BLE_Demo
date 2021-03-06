@@ -12,7 +12,7 @@ import com.viatom.checkme.bean.UserBean
 import java.text.SimpleDateFormat
 import java.util.*
 
-class PedViewAdapter(context: Context, r: RecyclerView) :
+class PedViewAdapter(context: Context) :
     RecyclerView.Adapter<PedViewAdapter.ViewHolder>() {
     var mPedData: MutableList<PedBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
