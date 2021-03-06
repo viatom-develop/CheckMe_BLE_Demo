@@ -36,33 +36,11 @@ class PulseOximiterFragment : Fragment() {
         model.list.observe(viewLifecycleOwner, {
             oxyViewAdapter.addAll(it)
         })
+        switch(MainActivity.currentId)
         return root
     }
 
-    @ExperimentalUnsignedTypes
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
-        MainScope().launch {
-            if (MainActivity.loading) {
-                Chanl.teChannel.receive()
-            }
-            val file = File(Constant.getPathX(MainActivity.currentId + "oxi.dat"))
-            if (file.exists()) {
-                val temp = file.readBytes()
-
-                temp.let {
-                    val f = OxyFile.OxyInfo(it)
-                    model.list.value = f.Oxy
-                }
-
-            } else {
-                model.list.value = arrayListOf()
-            }
-
-
-        }
-    }
 
     @ExperimentalUnsignedTypes
     fun switch(s: String) {

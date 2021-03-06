@@ -37,33 +37,10 @@ class ThermometerFragment : Fragment() {
         model.list.observe(viewLifecycleOwner, {
             tmpViewAdapter.addAll(it)
         })
-
+        switch(MainActivity.currentId)
         return root
     }
 
-    @ExperimentalUnsignedTypes
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        MainScope().launch {
-            if (MainActivity.loading) {
-                Chanl.teChannel.receive()
-            }
-            val file = File(Constant.getPathX(MainActivity.currentId + "tmp.dat"))
-            if (file.exists()) {
-                val temp = file.readBytes()
-                temp.let {
-                    val f = TmpFile.TmpInfo(it)
-                    model.list.value = f.Tmp
-                }
-
-            } else {
-                model.list.value = arrayListOf()
-            }
-
-
-        }
-    }
 
     @ExperimentalUnsignedTypes
     fun switch(s: String) {

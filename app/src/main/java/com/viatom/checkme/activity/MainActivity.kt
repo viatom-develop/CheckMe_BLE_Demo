@@ -95,13 +95,18 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
         userTemp.apply {
             userInfo = UserFile.UserInfo(this)
-
+            val totol=userInfo.user.size*userfileName.size
+            if(totol==0)return;
+            var tIndex=0
             for (user in userInfo.user) {
                 for (f in userfileName) {
                     bleWorker.getFile(user.id + f)
+                    tIndex++
+                    Chanl.progressChannel.send(tIndex*100/totol)
                 }
                 userAdapter.addUserS(user)
             }
+            Chanl.progressChannel.close()
             userAdapter.notifyDataSetChanged()
             delay(100)
             userAdapter.setUser(0)

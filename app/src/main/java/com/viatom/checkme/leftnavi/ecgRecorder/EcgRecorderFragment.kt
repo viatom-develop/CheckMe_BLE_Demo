@@ -21,6 +21,7 @@ class EcgRecorderFragment : Fragment() {
 
     private val model: EcgRecorderViewModel by viewModels()
     lateinit var ecgViewAdapter: EcgViewAdapter
+    @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,34 +37,11 @@ class EcgRecorderFragment : Fragment() {
         model.list.observe(viewLifecycleOwner, {
             ecgViewAdapter.addAll(it)
         })
-
+        switch(MainActivity.currentId)
         return root
     }
 
-    @ExperimentalUnsignedTypes
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
 
-        MainScope().launch {
-            if (MainActivity.loading) {
-                Chanl.teChannel.receive()
-            }
-            val file = File(Constant.getPathX(MainActivity.currentId + "ecg.dat"))
-            if (file.exists()) {
-                val temp = file.readBytes()
-
-                temp.let {
-                    val f = EcgFile.EcgInfo(it)
-                    model.list.value = f.ecg
-                }
-
-            } else {
-                model.list.value = arrayListOf()
-            }
-
-
-        }
-    }
 
     @ExperimentalUnsignedTypes
     fun switch(s: String) {

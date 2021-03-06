@@ -19,4 +19,8 @@ class DailyCheckViewModel : ViewModel() {
         MutableLiveData<ArrayList<DlcBean>>()
     }
 
+    val progress: MutableLiveData<Int> by lazy {
+        MutableLiveData<Int>()
+    }
+
 }
