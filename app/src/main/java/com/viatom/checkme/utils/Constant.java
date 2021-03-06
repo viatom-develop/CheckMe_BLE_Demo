@@ -16,6 +16,7 @@ public class Constant {
             R.drawable.none };
 
     public final static String[] EcgWay = { "Hand-Hand","Hand-Chest","1-Lead","2-Lead" };
+    public final static String[] OxyWay = { "Internal","External","" };
     public static String filePath;
 
     public static String getPathX(String s) {

@@ -4,11 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.bean.OxyBean
 import com.viatom.checkme.bean.UserBean
+import com.viatom.checkme.utils.Constant
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,7 +20,7 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
     var mOxyData: MutableList<OxyBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mClickListener: userClickListener? = null
-    private val mContext: Context
+    private val mContext: Context = context
     private val recyclerView: RecyclerView = r
 
     // inflates the cell layout from xml when needed
@@ -31,9 +34,13 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
         holder.bleName.text = mOxyData[position].timeString
 
         mOxyData[position].apply {
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy \n hh : mm : ss", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
             holder.bleName.text =dateFormat.format(date)
-
+            holder.o2.text=oxy.toString()
+            holder.pr.text=pr.toString()
+            holder.pi.text=pi.toString()
+            holder.face.setImageResource(Constant.RESULT_IMG[face])
+            holder.way.text=Constant.OxyWay[way]
         }
     }
 
@@ -64,6 +71,8 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
         val o2:TextView=itemView.findViewById(R.id.o2)
         val pr:TextView=itemView.findViewById(R.id.pr)
         val pi:TextView=itemView.findViewById(R.id.pi)
+        val face:ImageView=itemView.findViewById(R.id.head)
+        val way:TextView=itemView.findViewById(R.id.way)
         override fun onClick(view: View) {}
 
         init {
@@ -80,8 +89,4 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
         fun onUserItemClick(userBean: UserBean?, position: Int)
     }
 
-    // data is passed into the constructor
-    init {
-        mContext = context
-    }
 }

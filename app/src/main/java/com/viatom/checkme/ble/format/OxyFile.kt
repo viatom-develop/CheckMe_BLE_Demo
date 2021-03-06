@@ -42,10 +42,12 @@ object OxyFile {
                         second
                     )
                     way = toUInt(setRange(start + 7, 1))
+                    if(way>2)way=2
                     oxy = toUInt(setRange(start + 8, 1))
                     pr = toUInt(setRange(start + 9, 1))
                     pi = toUInt(setRange(start + 10, 1))
                     face = toUInt(setRange(start + 11, 1))
+                    if(face>2)face=2
                 }
 
 
