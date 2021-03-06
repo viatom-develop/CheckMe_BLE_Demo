@@ -11,5 +11,6 @@ data class UserBean(
     var weight: Int = 0,
     var height: Int = 0,
     var pacemakeflag: Int = 0,
-    var medicalId: String = ""
+    var medicalId: String = "",
+    var color:Int =0
 )

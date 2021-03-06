@@ -138,7 +138,7 @@ class BleDataWorker {
             myBleDataManager.connect(it)
                 .useAutoConnect(true)
                 .timeout(10000)
-                .retry(5, 100)
+                .retry(15, 100)
                 .done {
                     Log.i("BLE", "连接成功了.>>.....>>>>")
                     dataScope.launch {

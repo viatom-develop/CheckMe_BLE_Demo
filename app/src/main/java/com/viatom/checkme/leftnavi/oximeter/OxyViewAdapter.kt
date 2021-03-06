@@ -14,11 +14,11 @@ import java.util.*
 
 class OxyViewAdapter(context: Context, r: RecyclerView) :
     RecyclerView.Adapter<OxyViewAdapter.ViewHolder>() {
-    var mOxyData: MutableList<OxyBean>
+    var mOxyData: MutableList<OxyBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mClickListener: userClickListener? = null
     private val mContext: Context
-    private val recyclerView: RecyclerView
+    private val recyclerView: RecyclerView = r
 
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -61,7 +61,9 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         val bleName: TextView = itemView.findViewById(R.id.userName)
-
+        val o2:TextView=itemView.findViewById(R.id.o2)
+        val pr:TextView=itemView.findViewById(R.id.pr)
+        val pi:TextView=itemView.findViewById(R.id.pi)
         override fun onClick(view: View) {}
 
         init {
@@ -80,8 +82,6 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
 
     // data is passed into the constructor
     init {
-        mOxyData = ArrayList()
-        recyclerView = r
         mContext = context
     }
 }
