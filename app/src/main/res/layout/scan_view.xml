@@ -21,7 +21,7 @@
     <TextView
         android:id="@+id/scan_title"
         android:text="Scanning Checkme Device..."
-        android:textColor="#00ff00"
+        android:textColor="#ffa0b000"
         android:typeface="monospace"
         android:padding="20dp"
         android:gravity="center"

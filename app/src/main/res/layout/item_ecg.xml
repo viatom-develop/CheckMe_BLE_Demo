@@ -2,40 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#ff0000a0"
+    android:background="#ffa0b000"
     android:id="@+id/gaga"
     android:layout_height="90dp">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="88dp">
+        android:gravity="center_vertical|start"
+        android:layout_height="55dp">
+        <ImageView
+            android:layout_marginStart="30dp"
+            android:padding="10dp"
+            android:id="@+id/head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ico1" />
         <TextView
             android:id="@+id/way"
+            android:layout_marginStart="30dp"
+            android:textSize="22sp"
             android:gravity="center"
             android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
-
-        <ImageView
-            android:id="@+id/head"
-            android:layout_marginStart="20dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ico1" />
-
-        <TextView
-            android:gravity="center"
-            android:textSize="14sp"
-            android:layout_marginStart="10dp"
-            android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/userName" />
-
     </LinearLayout>
-
+    <TextView
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_marginStart="10dp"
+        android:textColor="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:id="@+id/userName" />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"

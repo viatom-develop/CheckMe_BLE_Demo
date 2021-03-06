@@ -34,7 +34,7 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.ble_scan_view, parent, false);
+        View view = mInflater.inflate(R.layout.item_ble, parent, false);
         return new ViewHolder(view);
     }
 

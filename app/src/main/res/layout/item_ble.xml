@@ -11,12 +11,13 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardBackgroundColor="#ffa0b000"
         app:cardCornerRadius="30dp">
 
         <TextView
             android:id="@+id/ble_name"
             android:textSize="22sp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

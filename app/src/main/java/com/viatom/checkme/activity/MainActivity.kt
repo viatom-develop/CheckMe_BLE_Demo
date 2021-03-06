@@ -180,6 +180,10 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         scan.setCallBack(this)
     }
 
+    override fun onBackPressed() {
+        moveTaskToBack(false)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

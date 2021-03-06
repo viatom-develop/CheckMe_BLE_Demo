@@ -32,7 +32,7 @@ class EcgViewAdapter(context: Context, r: RecyclerView) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         mEcgData[position].apply {
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy \n hh : mm : ss", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
             holder.bleName.text =dateFormat.format(date)
             holder.face.setImageResource(Constant.RESULT_IMG[face])
             holder.way.text=Constant.EcgWay[way-1]

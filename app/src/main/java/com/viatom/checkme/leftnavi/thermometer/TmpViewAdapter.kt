@@ -64,7 +64,6 @@ class TmpViewAdapter(context: Context) :
         View.OnClickListener {
         val tmp:TextView=itemView.findViewById(R.id.tmp)
         val time:TextView=itemView.findViewById(R.id.time)
-        val way:TextView=itemView.findViewById(R.id.way)
         val face:ImageView=itemView.findViewById(R.id.face)
         override fun onClick(view: View) {}
 

@@ -31,12 +31,14 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
     // binds the data to the TextView in each cell
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mUserData[position].apply {
-            holder.bleName.text = name
-            holder.head.setImageResource(Constant.ICO_IMG[ico - 1])
+            holder.userName.text = name
+            holder.userIcon.setImageResource(Constant.ICO_IMG[ico - 1])
             if(color==0){
-                holder.gaga.setBackgroundColor(Color.parseColor("#FF00FF"))
+                holder.userName.setTextSize(30f)
+                holder.userBackground.setBackgroundColor(Color.parseColor("#ffa0b000"))
             }else{
-                holder.gaga.setBackgroundColor(Color.parseColor("#0000F0"))
+                holder.userName.setTextSize(20f)
+                holder.userBackground.setBackgroundColor(Color.parseColor("#ff606000"))
             }
 
         }
@@ -67,9 +69,9 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        var bleName: TextView = itemView.findViewById(R.id.userName)
-        var gaga: LinearLayout = itemView.findViewById(R.id.gaga)
-        var head: ImageView = itemView.findViewById(R.id.head)
+        var userName: TextView = itemView.findViewById(R.id.userName)
+        var userBackground: LinearLayout = itemView.findViewById(R.id.gaga)
+        var userIcon: ImageView = itemView.findViewById(R.id.head)
         override fun onClick(view: View) {
             setUserColor(layoutPosition)
             mClickListener?.apply {
