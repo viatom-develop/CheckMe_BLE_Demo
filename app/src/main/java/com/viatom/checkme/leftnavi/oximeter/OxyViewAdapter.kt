@@ -1,4 +1,4 @@
-package com.viatom.checkme.leftnavi.pulseOximeter
+package com.viatom.checkme.leftnavi.oximeter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.bean.OxyBean
 import com.viatom.checkme.bean.UserBean
-import com.viatom.checkme.utils.Constant
 import java.text.SimpleDateFormat
 import java.util.*
 

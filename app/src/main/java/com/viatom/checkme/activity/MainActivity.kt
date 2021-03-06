@@ -34,7 +34,7 @@ import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
 import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
-import com.viatom.checkme.leftnavi.pulseOximeter.PulseOximiterFragment
+import com.viatom.checkme.leftnavi.oximeter.OximiterFragment
 import com.viatom.checkme.leftnavi.thermometer.ThermometerFragment
 import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.viewmodel.LeftHead
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 fragmentA.switch(id)
             } else if (fragmentA is PedometerFragment) {
                 fragmentA.switch(id)
-            } else if (fragmentA is PulseOximiterFragment) {
+            } else if (fragmentA is OximiterFragment) {
                 fragmentA.switch(id)
             } else if (fragmentA is ThermometerFragment) {
                 fragmentA.switch(id)
