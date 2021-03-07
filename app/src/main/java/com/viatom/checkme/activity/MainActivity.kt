@@ -289,6 +289,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     @ExperimentalUnsignedTypes
     fun offline(view: View) {
+        scan.stop()
         runOnUiThread {
             scan_title.visibility = GONE
             ble_table.visibility = GONE
