@@ -23,4 +23,7 @@ class DailyCheckViewModel : ViewModel() {
         MutableLiveData<Int>()
     }
 
+    val waveVisible: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>()
+    }
 }

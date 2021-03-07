@@ -34,12 +34,25 @@ class DailyCheckFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_dailycheck, container, false)
         val r: RecyclerView = root.findViewById(R.id.daily_list)
         val pro: ProgressBar = root.findViewById(R.id.pro)
+        val wave:RecyclerView=root.findViewById(R.id.ecg_list)
+
+
+        val linearLayoutManagerWave = LinearLayoutManager(context)
+        linearLayoutManagerWave.orientation = RecyclerView.VERTICAL
+        wave.layoutManager=linearLayoutManagerWave
+        val waveAdapter=WaveAdapter(requireContext(),wave)
+        wave.adapter=waveAdapter
 
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        dailyViewAdapter = DailyViewAdapter(requireContext(), r)
+
         r.layoutManager = linearLayoutManager
+        dailyViewAdapter = DailyViewAdapter(requireContext(), r,wave,waveAdapter)
         r.adapter = dailyViewAdapter
+
+
+
+
 
         model.done.observe(viewLifecycleOwner, {
             if (it) {
@@ -55,6 +68,14 @@ class DailyCheckFragment : Fragment() {
 
         model.progress.observe(viewLifecycleOwner, {
             pro.progress = it
+        })
+
+        model.waveVisible.observe(viewLifecycleOwner,{
+            wave.visibility=if(it){
+                View.VISIBLE
+            }else{
+                View.GONE
+            }
         })
 
         switch(MainActivity.currentId)

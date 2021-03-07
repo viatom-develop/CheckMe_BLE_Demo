@@ -17,15 +17,15 @@ object DlcFile {
             for (k in 0 until size) {
                 start = k * 17
                 val year: Int = toUInt(setRange(start, 2))
-                val month: Int = toUInt(setRange(start + 2, 1)) - 1
+                val month: Int = toUInt(setRange(start + 2, 1))
                 val date: Int = toUInt(setRange(start + 3, 1))
                 val hour: Int = toUInt(setRange(start + 4, 1))
                 val minute: Int = toUInt(setRange(start + 5, 1))
                 val second: Int = toUInt(setRange(start + 6, 1))
                 val calendar = Calendar.getInstance()
                 calendar[Calendar.YEAR] = year
-                calendar[Calendar.MONTH] = month
-                calendar[Calendar.DATE] = date
+                calendar[Calendar.MONTH] = month-1
+                calendar[Calendar.DATE] = date-1
                 calendar[Calendar.HOUR] = hour
                 calendar[Calendar.MINUTE] = minute
                 calendar[Calendar.SECOND] = second
@@ -35,7 +35,7 @@ object DlcFile {
                     timeString = String.format(
                         "%04d%02d%02d%02d%02d%02d",
                         year,
-                        month + 1,
+                        month,
                         date,
                         hour,
                         minute,

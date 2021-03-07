@@ -14,6 +14,7 @@ import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.bean.DlcBean
 import com.viatom.checkme.bean.UserBean
 import com.viatom.checkme.ble.constant.BTConstant
+import com.viatom.checkme.ble.format.EcgWaveFile
 import com.viatom.checkme.utils.Constant
 import kotlinx.android.synthetic.main.right_drawer.*
 import kotlinx.coroutines.MainScope
@@ -22,7 +23,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DailyViewAdapter(context: Context, var r: RecyclerView) :
+class DailyViewAdapter(context: Context, var r: RecyclerView,val wave:RecyclerView,val waveAdapter: WaveAdapter) :
     RecyclerView.Adapter<DailyViewAdapter.ViewHolder>() {
     var mDlcData: MutableList<DlcBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
@@ -91,12 +92,24 @@ class DailyViewAdapter(context: Context, var r: RecyclerView) :
         val f3:ImageView=itemView.findViewById(R.id.f3)
         val download:ImageView=itemView.findViewById(R.id.download)
 
+        @ExperimentalUnsignedTypes
         override fun onClick(view: View) {
             MainScope().launch {
-                if(!MainActivity.isOffline)
-                MainActivity.bleWorker.getFile(mDlcData[adapterPosition].timeString)
+                val file=File(Constant.getPathX(mDlcData[adapterPosition].timeString))
+                if(!file.exists()){
+                    if(!MainActivity.isOffline)
+                        MainActivity.bleWorker.getFile(mDlcData[adapterPosition].timeString)
+                }
+                val file2=File(Constant.getPathX(mDlcData[adapterPosition].timeString))
+                if(file2.exists()){
+                    waveAdapter.data= EcgWaveFile.EcgWaveInfo(file2.readBytes())
+//                    waveAdapter.notifyDataSetChanged()
+                }
+
+                wave.visibility=View.VISIBLE
             }
             r.visibility=View.GONE
+
         }
 
         init {
