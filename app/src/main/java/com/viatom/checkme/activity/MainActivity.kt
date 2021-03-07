@@ -43,6 +43,7 @@ import kotlinx.android.synthetic.main.scan_view.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import java.io.File
+import java.lang.Thread.sleep
 import java.text.SimpleDateFormat
 import java.util.Locale.ENGLISH
 
@@ -284,6 +285,33 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             bleList.add(BleBean(name, bluetoothDevice))
             bleViewAdapter.addDevice(name, bluetoothDevice)
         }
+    }
+
+    @ExperimentalUnsignedTypes
+    fun offline(view: View) {
+        runOnUiThread {
+            scan_title.visibility = GONE
+            ble_table.visibility = GONE
+            ble_panel.visibility = VISIBLE
+            scan_layout.visibility = GONE
+        }
+        MainActivity.loading=false
+        val file=File(Constant.getPathX("usr.dat"))
+        if(file.exists()){
+            val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
+            userTemp.apply {
+                userInfo = UserFile.UserInfo(this)
+                for (user in userInfo.user) {
+                    userAdapter.addUser(user)
+                }
+                sleep(300)
+                userAdapter.setUserColor(0)
+                onUserItemClick(userAdapter.mUserData[0], 0)
+                loading = false
+            }
+        }
+        UiChannel.progressChannel.close()
+
     }
 
 }
