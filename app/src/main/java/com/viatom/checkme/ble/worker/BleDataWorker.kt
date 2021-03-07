@@ -23,6 +23,7 @@ import kotlin.experimental.inv
 
 class BleDataWorker {
     private var pool: ByteArray? = null
+
     private val fileChannel = Channel<Int>(Channel.CONFLATED)
     private val connectChannel = Channel<String>(Channel.CONFLATED)
     private lateinit var myBleDataManager: BleDataManager
@@ -35,6 +36,14 @@ class BleDataWorker {
     var fileData: ByteArray? = null
     var currentFileName = ""
     var result = 1;
+    var currentFileSize=0
+
+
+    companion object{
+        val fileProgressChannel = Channel<FileProgress>(Channel.CONFLATED)
+    }
+    data class FileProgress(var name:String="",var progress:Int=0,var success:Boolean=false)
+
 
     @ExperimentalUnsignedTypes
     private val comeData = BleDataManager.onNotifyListener { _, data ->
@@ -69,7 +78,8 @@ class BleDataWorker {
                 val bleResponse = FDAResponse.CheckMeResponse(temp)
                 if (cmdState == 1) {
                     fileData = null
-                    pkgTotal =toUInt(bleResponse.content) / 512
+                    currentFileSize=toUInt(bleResponse.content)
+                    pkgTotal =currentFileSize/ 512
                     if (bleResponse.cmd == 1) {
                         result = 1
                         val pkg = EndReadPkg()
@@ -87,6 +97,11 @@ class BleDataWorker {
                 } else if (cmdState == 2) {
                     bleResponse.content.apply {
                         fileData = add(fileData, this)
+                        fileData?.let {
+                            dataScope.launch {
+                                fileProgressChannel.send(FileProgress(currentFileName,it.size*100/currentFileSize,true))
+                            }
+                        }
                     }
 
                     if (currentPkg > pkgTotal) {
@@ -110,6 +125,7 @@ class BleDataWorker {
                     currentPkg = 0
                     cmdState = 0
                     dataScope.launch {
+                        fileProgressChannel.send(FileProgress(currentFileName,100,result==0))
                         fileChannel.send(result)
                     }
                 }

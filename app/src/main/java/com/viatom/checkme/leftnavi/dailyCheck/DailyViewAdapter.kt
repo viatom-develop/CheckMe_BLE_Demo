@@ -13,20 +13,21 @@ import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.bean.DlcBean
 import com.viatom.checkme.bean.UserBean
+import com.viatom.checkme.ble.constant.BTConstant
 import com.viatom.checkme.utils.Constant
 import kotlinx.android.synthetic.main.right_drawer.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DailyViewAdapter(context: Context, r: RecyclerView) :
+class DailyViewAdapter(context: Context, var r: RecyclerView) :
     RecyclerView.Adapter<DailyViewAdapter.ViewHolder>() {
-    var mDlcData: MutableList<DlcBean>
-    private val mInflater: LayoutInflater
+    var mDlcData: MutableList<DlcBean> = ArrayList()
+    private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mClickListener: userClickListener? = null
-    private val mContext: Context
-    private val recyclerView: RecyclerView
+
 
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,6 +47,12 @@ class DailyViewAdapter(context: Context, r: RecyclerView) :
             holder.f1.setImageResource(Constant.RESULT_IMG[eface])
             holder.f2.setImageResource(Constant.RESULT_IMG[oface])
             holder.f3.setImageResource(Constant.RESULT_IMG[bpiFace])
+            val file=File(Constant.getPathX(timeString))
+            holder.download.visibility=if (file.exists()){
+                View.INVISIBLE
+            }else{
+                View.VISIBLE
+            }
         }
 
     }
@@ -82,11 +89,14 @@ class DailyViewAdapter(context: Context, r: RecyclerView) :
         val f1:ImageView=itemView.findViewById(R.id.f1)
         val f2:ImageView=itemView.findViewById(R.id.f2)
         val f3:ImageView=itemView.findViewById(R.id.f3)
+        val download:ImageView=itemView.findViewById(R.id.download)
 
         override fun onClick(view: View) {
             MainScope().launch {
+                if(!MainActivity.isOffline)
                 MainActivity.bleWorker.getFile(mDlcData[adapterPosition].timeString)
             }
+            r.visibility=View.GONE
         }
 
         init {
@@ -104,11 +114,5 @@ class DailyViewAdapter(context: Context, r: RecyclerView) :
         fun onUserItemClick(userBean: UserBean?, position: Int)
     }
 
-    // data is passed into the constructor
-    init {
-        mInflater = LayoutInflater.from(context)
-        mDlcData = ArrayList()
-        recyclerView = r
-        mContext = context
-    }
+
 }

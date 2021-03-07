@@ -128,13 +128,29 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+            android:gravity="end"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:textSize="14sp"
-            android:textColor="#ffffff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/userName" />
+            <ImageView
+                android:id="@+id/download"
+                android:src="@drawable/ic_baseline_arrow_circle_down_24"
+
+                android:layout_width="30dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userName" />
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

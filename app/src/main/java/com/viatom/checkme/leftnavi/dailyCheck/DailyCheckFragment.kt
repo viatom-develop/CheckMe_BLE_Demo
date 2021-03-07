@@ -13,9 +13,9 @@ import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.ble.format.DlcFile
+import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.utils.Constant
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
 
 
@@ -23,6 +23,7 @@ class DailyCheckFragment : Fragment() {
 
     private val model: DailyCheckViewModel by viewModels()
     lateinit var dailyViewAdapter: DailyViewAdapter
+
     @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,18 +53,33 @@ class DailyCheckFragment : Fragment() {
             dailyViewAdapter.addAll(it)
         })
 
-        model.progress.observe(viewLifecycleOwner,{
-            pro.progress=it
+        model.progress.observe(viewLifecycleOwner, {
+            pro.progress = it
         })
 
         switch(MainActivity.currentId)
         MainScope().launch {
+
             if (MainActivity.loading) {
-                for(k in UiChannel.progressChannel){
-                    model.progress.value=k
+                for (k in UiChannel.progressChannel) {
+                    model.progress.value = k
                 }
             }
             model.done.value = false
+
+            BleDataWorker.fileProgressChannel.receive()
+
+            for (k in BleDataWorker.fileProgressChannel) {
+                model.progress.value = k.progress
+                model.done.value = true
+                if(k.progress==100){
+                    delay(300)
+                    break
+                }
+            }
+            model.done.value = false
+
+
         }
         return root
     }

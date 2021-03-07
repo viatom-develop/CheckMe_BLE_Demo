@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     UserViewAdapter.userClickListener,
     BleScanManager.Scan {
     companion object {
+        var isOffline=false
         var loading = true
         var currentId = ""
         val bleWorker = BleDataWorker()
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     //-------------8 files
     var downloadNumber = 8
     var currentNumber = 0
-    var userfileName = arrayOf(
+    private var userfileName = arrayOf(
         "dlc.dat",
         "spc.dat",
         "hrv.dat",
@@ -289,6 +290,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     @ExperimentalUnsignedTypes
     fun offline(view: View) {
+        isOffline=true
         scan.stop()
         runOnUiThread {
             scan_title.visibility = GONE
