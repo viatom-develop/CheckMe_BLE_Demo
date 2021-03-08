@@ -14,4 +14,32 @@
 
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
+    <string name="viatom_tech">Viatom Tech</string>
+    <string name="hr">HR</string>
+    <string name="o2">O2</string>
+    <string name="pi">PI</string>
+    <string name="bpi">BPI</string>
+    <string name="o2x">O2:</string>
+    <string name="prx">PR:</string>
+    <string name="pix">PI:</string>
+    <string name="steps">steps</string>
+    <string name="km">km</string>
+    <string name="km_h">km/h</string>
+    <string name="kcal">kcal</string>
+    <string name="fat_g">Fat(g):</string>
+    <string name="min">min</string>
+    <string name="user_list">User List</string>
+    <string name="name">Name</string>
+    <string name="sex">Sex</string>
+    <string name="birthday">Birthday</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="medical_id">Medical ID</string>
+    <string name="pacemaker">Pacemaker</string>
+    <string name="scanning_checkme_device">Scanning Checkme Device...</string>
+    <string name="offline_mode">Offline Mode</string>
 </resources>

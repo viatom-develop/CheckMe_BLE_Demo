@@ -220,9 +220,9 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             bindingRight.apply {
                 rName.text = name
                 if (sex == 0) {
-                    rSex.text = "Male"
+                    rSex.text = getString(R.string.male)
                 } else {
-                    rSex.text = "Female"
+                    rSex.text = getString(R.string.female)
                 }
                 val dateFormat = SimpleDateFormat("MMM. d, yyyy", ENGLISH)
                 rBirthday.text = dateFormat.format(birthday)
@@ -230,9 +230,9 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 rHeight.text = height.toString()
                 rMedicalID.text = medicalId
                 if (pacemakeflag == 0) {
-                    rPacemaker.text = "NO"
+                    rPacemaker.text = getString(R.string.no)
                 } else {
-                    rPacemaker.text = "YES"
+                    rPacemaker.text = getString(R.string.yes)
                 }
             }
 

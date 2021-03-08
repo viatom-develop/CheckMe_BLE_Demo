@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center"
-                android:text="HR" />
+                android:text="@string/hr" />
 
             <TextView
                 android:id="@+id/ecg"
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center"
-                android:text="O2" />
+                android:text="@string/o2" />
 
             <TextView
                 android:id="@+id/o2"
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center"
-                android:text="PI" />
+                android:text="@string/pi" />
 
             <TextView
                 android:id="@+id/pi"
@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:gravity="center"
-                android:text="BPI" />
+                android:text="@string/bpi" />
 
             <TextView
                 android:id="@+id/bpi"
@@ -152,8 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end"
-            android:orientation="vertical"
-            android:paddingEnd="10dp">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/download"

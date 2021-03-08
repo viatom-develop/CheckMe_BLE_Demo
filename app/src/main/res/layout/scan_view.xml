@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="20dp"
-        android:text="Scanning Checkme Device..."
+        android:text="@string/scanning_checkme_device"
         android:textColor="#ffa0b000"
         android:textSize="16sp"
         android:typeface="monospace" />
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:onClick="offline"
             android:padding="20sp"
-            android:text="Offline Mode"
+            android:text="@string/offline_mode"
             android:textAllCaps="false"
             android:textSize="26sp" />
     </LinearLayout>

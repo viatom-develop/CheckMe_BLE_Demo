@@ -12,7 +12,7 @@
         android:background="@color/black"
         android:gravity="center"
         android:padding="10dp"
-        android:text="User List"
+        android:text="@string/user_list"
         android:textColor="#87CEEB"
         android:textSize="26sp" />
 
@@ -38,49 +38,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
-                android:text="Name"
+                android:text="@string/name"
                 android:textColor="#b0b0b0" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
-                android:text="Sex"
+                android:text="@string/sex"
                 android:textColor="#b0b0b0" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
-                android:text="Birthday"
+                android:text="@string/birthday"
                 android:textColor="#b0b0b0" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
-                android:text="Weight"
+                android:text="@string/weight"
                 android:textColor="#b0b0b0" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
-                android:text="Height"
+                android:text="@string/height"
                 android:textColor="#b0b0b0" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
-                android:text="Medical ID"
+                android:text="@string/medical_id"
                 android:textColor="#b0b0b0" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
-                android:text="Pacemaker"
+                android:text="@string/pacemaker"
                 android:textColor="#b0b0b0" />
         </LinearLayout>
 

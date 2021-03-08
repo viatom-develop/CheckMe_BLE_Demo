@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="O2:"
+                android:text="@string/o2x"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:text="PR:"
+                android:text="@string/prx"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:text="PI:"
+                android:text="@string/pix"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
