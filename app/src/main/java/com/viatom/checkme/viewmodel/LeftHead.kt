@@ -11,4 +11,8 @@ class LeftHead : ViewModel() {
     val headName: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
+
+    /*val currentFragment: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }*/
 }

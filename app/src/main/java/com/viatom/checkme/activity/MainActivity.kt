@@ -38,6 +38,7 @@ import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
 import com.viatom.checkme.leftnavi.oximeter.OximiterFragment
 import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
+import com.viatom.checkme.leftnavi.sleepMonitor.SleepFragment
 import com.viatom.checkme.leftnavi.thermometer.TmpFragment
 import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.viewmodel.LeftHead
@@ -93,9 +94,11 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
 
     lateinit var userInfo: UserInfo
-    lateinit var leftHeadIcon: ImageView
+    private lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
-
+    lateinit var iconSync: ImageView
+    lateinit var nameTop:TextView
+    lateinit var title:TextView
 
     private suspend fun readUser() {
         userChannel.receive()
@@ -124,15 +127,24 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     private fun addLiveDateObserver() {
         model.headIcon.observe(this, {
+            iconSync.setImageResource(Constant.ICO_IMG[it - 1])
             leftHeadIcon.setImageResource(Constant.ICO_IMG[it - 1])
         })
         model.headName.observe(this, {
             leftName.text = it
+            nameTop.text=it
         })
+
+    /*    model.currentFragment.observe(this,{
+            title.text=it
+        })*/
     }
 
     private fun initDrawer() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
+        iconSync=findViewById(R.id.icon_sync)
+        nameTop=findViewById(R.id.userTop)
+        title=findViewById(R.id.title)
         setSupportActionBar(toolbar)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -161,6 +173,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             drawerLayout.closeDrawer(GravityCompat.START)
             drawerLayout.openDrawer(GravityCompat.END)
         }
+        iconSync.setOnClickListener {  drawerLayout.closeDrawer(GravityCompat.START)
+            drawerLayout.openDrawer(GravityCompat.END) }
     }
 
 
@@ -204,6 +218,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         initVar()
         initView()
         initScan()
+
     }
 
 
@@ -236,18 +251,28 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 }
             }
 
+
             val fragmentCurrent = mMainNavFragment.childFragmentManager.primaryNavigationFragment
             if (fragmentCurrent is DailyCheckFragment) {
+//                model.currentFragment.value=getString(R.string.daily_check)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is EcgRecorderFragment) {
+//                model.currentFragment.value=getString(R.string.ecg_recorder)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is PedometerFragment) {
+//                model.currentFragment.value=getString(R.string.pedometer)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is OximiterFragment) {
+//                model.currentFragment.value=getString(R.string.pulse_oximeter)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is TmpFragment) {
+//                model.currentFragment.value=getString(R.string.thermometer)
+                fragmentCurrent.switch(id)
+            }else if(fragmentCurrent is SleepFragment){
+//                model.currentFragment.value=getString(R.string.sleep_monitor)
                 fragmentCurrent.switch(id)
             }
+
             currentId = id
         }
 

@@ -16,7 +16,38 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#ff000000"
-            app:popupTheme="@style/Theme.MyApplication.PopupOverlay" />
+            app:popupTheme="@style/Theme.MyApplication.PopupOverlay" >
+            <RelativeLayout
+                android:background="#00000000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:visibility="gone"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:textSize="20sp"
+                    android:text="Check me"
+                    android:textColor="@color/white"
+                    android:id="@+id/title"
+                    android:gravity="center"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/icon_sync"
+                    android:padding="10dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/userTop"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:layout_toStartOf="@+id/icon_sync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

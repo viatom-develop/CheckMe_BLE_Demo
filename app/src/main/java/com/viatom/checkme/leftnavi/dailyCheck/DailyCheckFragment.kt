@@ -54,10 +54,7 @@ class DailyCheckFragment : Fragment() {
         val o2Button: TextView = root.findViewById(R.id.o2button)
         val backButton: ImageView = root.findViewById(R.id.back_button)
 
-        backButton.setOnClickListener {
-            waveLayout.visibility = GONE
-            r.visibility = View.VISIBLE
-        }
+
 
         ecgButton.setOnClickListener {
             ecgButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -106,7 +103,12 @@ class DailyCheckFragment : Fragment() {
         )
         r.adapter = dailyViewAdapter
 
+        backButton.setOnClickListener {
+            waveLayout.visibility = GONE
+            r.visibility = View.VISIBLE
+            dailyViewAdapter.notifyDataSetChanged()
 
+        }
 
 
 

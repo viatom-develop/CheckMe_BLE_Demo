@@ -42,4 +42,12 @@
     <string name="pacemaker">Pacemaker</string>
     <string name="scanning_checkme_device">Scanning Checkme Device...</string>
     <string name="offline_mode">Offline Mode</string>
+    <string name="sleep_monitor">Sleep Monitor</string>
+    <string name="my_device">My Device</string>
+    <string name="about">About</string>
+    <string name="pedometer">Pedometer</string>
+    <string name="thermometer">Thermometer</string>
+    <string name="pulse_oximeter">Pulse Oximeter</string>
+    <string name="ecg_recorder">ECG Recorder</string>
+    <string name="daily_check">Daily Check</string>
 </resources>
