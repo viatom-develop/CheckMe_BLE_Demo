@@ -33,9 +33,9 @@ class EcgViewAdapter(context: Context, r: RecyclerView) :
 
         mEcgData[position].apply {
             val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
-            holder.bleName.text =dateFormat.format(date)
+            holder.bleName.text = dateFormat.format(date)
             holder.face.setImageResource(Constant.RESULT_IMG[face])
-            holder.way.text=Constant.EcgWay[way-1]
+            holder.way.text = Constant.EcgWay[way - 1]
         }
     }
 
@@ -47,7 +47,7 @@ class EcgViewAdapter(context: Context, r: RecyclerView) :
     fun addAll(userBean: ArrayList<*>?) {
         mEcgData.clear()
         if (userBean != null) {
-            for(k in userBean){
+            for (k in userBean) {
                 mEcgData.add(k as EcgBean)
             }
         }
@@ -63,8 +63,8 @@ class EcgViewAdapter(context: Context, r: RecyclerView) :
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         val bleName: TextView = itemView.findViewById(R.id.userName)
-        val way: TextView=itemView.findViewById(R.id.way)
-        val face:ImageView=itemView.findViewById(R.id.head)
+        val way: TextView = itemView.findViewById(R.id.way)
+        val face: ImageView = itemView.findViewById(R.id.head)
         override fun onClick(view: View) {}
 
         init {

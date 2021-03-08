@@ -13,6 +13,7 @@ class WaveView : View {
     var canvas: Canvas? = null
     var data: IntArray? = null
     val wave_paint = Paint()
+
     constructor(context: Context?) : super(context) {
         init(null, 0)
     }
@@ -34,6 +35,7 @@ class WaveView : View {
         wave_paint.style = Paint.Style.STROKE
         wave_paint.strokeWidth = 2.0f
     }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         Log.e("sdfds", "开始了的附近开了多少积分多少圣诞快乐积分   $width    $height")
@@ -46,12 +48,15 @@ class WaveView : View {
         canvas.drawColor(getColor(R.color.black))
         data?.apply {
             val p = Path()
-            p.moveTo(0f,height*1/2-this[0].toFloat()/1000 )
-           /* for((index,m) in this.withIndex()){
-                p.lineTo(index.toFloat()*width/size,height/4+m.toFloat()/500)
-            }*/
-            for(index in 0 until size){
-                p.lineTo(index.toFloat()*width/size,height*1/2-this[index].toFloat()/1000)
+            p.moveTo(0f, height * 1 / 2 - this[0].toFloat() / 1000)
+            /* for((index,m) in this.withIndex()){
+                 p.lineTo(index.toFloat()*width/size,height/4+m.toFloat()/500)
+             }*/
+            for (index in 0 until size) {
+                p.lineTo(
+                    index.toFloat() * width / size,
+                    height * 1 / 2 - this[index].toFloat() / 1000
+                )
             }
             canvas.drawPath(p, wave_paint)
         }

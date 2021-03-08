@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,7 +20,9 @@ import com.viatom.checkme.ble.format.DlcFile
 import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.utils.Constant
-import kotlinx.coroutines.*
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 
 
@@ -25,7 +30,6 @@ class DailyCheckFragment : Fragment() {
 
     private val model: DailyCheckViewModel by viewModels()
     lateinit var dailyViewAdapter: DailyViewAdapter
-
 
 
     @ExperimentalUnsignedTypes
@@ -38,21 +42,21 @@ class DailyCheckFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_dailycheck, container, false)
         val r: RecyclerView = root.findViewById(R.id.daily_list)
         val pro: ProgressBar = root.findViewById(R.id.pro)
-        val wave:RecyclerView=root.findViewById(R.id.ecg_list)
-        val waveLayout:LinearLayout=root.findViewById(R.id.wavelayout)
-        val hr:TextView=root.findViewById(R.id.p1)
-        val st:TextView=root.findViewById(R.id.p2)
-        val qrs:TextView=root.findViewById(R.id.p3)
-        val pvcs:TextView=root.findViewById(R.id.p4)
-        val qtc:TextView=root.findViewById(R.id.p5)
-        val qt:TextView=root.findViewById(R.id.p6)
-        val ecgButton:TextView=root.findViewById(R.id.ecg_button)
-        val o2Button:TextView=root.findViewById(R.id.o2button)
-        val backButton:ImageView=root.findViewById(R.id.back_button)
+        val wave: RecyclerView = root.findViewById(R.id.ecg_list)
+        val waveLayout: LinearLayout = root.findViewById(R.id.wavelayout)
+        val hr: TextView = root.findViewById(R.id.p1)
+        val st: TextView = root.findViewById(R.id.p2)
+        val qrs: TextView = root.findViewById(R.id.p3)
+        val pvcs: TextView = root.findViewById(R.id.p4)
+        val qtc: TextView = root.findViewById(R.id.p5)
+        val qt: TextView = root.findViewById(R.id.p6)
+        val ecgButton: TextView = root.findViewById(R.id.ecg_button)
+        val o2Button: TextView = root.findViewById(R.id.o2button)
+        val backButton: ImageView = root.findViewById(R.id.back_button)
 
         backButton.setOnClickListener {
-            waveLayout.visibility=GONE
-            r.visibility=View.VISIBLE
+            waveLayout.visibility = GONE
+            r.visibility = View.VISIBLE
         }
 
         ecgButton.setOnClickListener {
@@ -84,9 +88,9 @@ class DailyCheckFragment : Fragment() {
 
         val linearLayoutManagerWave = LinearLayoutManager(context)
         linearLayoutManagerWave.orientation = RecyclerView.VERTICAL
-        wave.layoutManager=linearLayoutManagerWave
-        val waveAdapter=WaveAdapter(requireContext(), wave)
-        wave.adapter=waveAdapter
+        wave.layoutManager = linearLayoutManagerWave
+        val waveAdapter = WaveAdapter(requireContext(), wave)
+        wave.adapter = waveAdapter
 
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
@@ -157,7 +161,7 @@ class DailyCheckFragment : Fragment() {
             for (k in BleDataWorker.fileProgressChannel) {
                 model.progress.value = k.progress
                 model.done.value = true
-                if(k.progress==100){
+                if (k.progress == 100) {
                     delay(300)
                     break
                 }

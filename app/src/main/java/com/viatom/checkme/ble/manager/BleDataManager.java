@@ -27,18 +27,45 @@ public class BleDataManager extends BleManager {
 
     private onNotifyListener listener;
 
-    public void setNotifyListener(onNotifyListener listener) {
-        this.listener = listener;
-    }
-
     public BleDataManager(@NonNull final Context context) {
         super(context);
+    }
+
+    public void setNotifyListener(onNotifyListener listener) {
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     protected BleManagerGattCallback getGattCallback() {
         return new MyManagerGattCallback();
+    }
+
+    private void getInfo() {
+//        sendCmd(Er1BleCmd.getInfo());
+    }
+
+    private void syncTime() {
+
+    }
+
+    public void sendCmd(byte[] bytes) {
+
+        writeCharacteristic(write_char, bytes)
+                .split()
+                .done(device -> {
+//                    LogUtils.d(device.getName() + " send: " + ByteArrayKt.bytesToHex(bytes));
+                })
+                .enqueue();
+    }
+
+    @Override
+    public void log(final int priority, @NonNull final String message) {
+
+    }
+
+    public interface onNotifyListener {
+        void onNotify(BluetoothDevice device, Data data);
     }
 
     /**
@@ -115,33 +142,5 @@ public class BleDataManager extends BleManager {
             write_char = null;
             notify_char = null;
         }
-    }
-
-    private void getInfo() {
-//        sendCmd(Er1BleCmd.getInfo());
-    }
-
-    private void syncTime() {
-
-    }
-
-    public void sendCmd(byte[] bytes) {
-
-        writeCharacteristic(write_char, bytes)
-                .split()
-                .done(device -> {
-//                    LogUtils.d(device.getName() + " send: " + ByteArrayKt.bytesToHex(bytes));
-                })
-                .enqueue();
-    }
-
-    public interface onNotifyListener {
-        void onNotify(BluetoothDevice device, Data data);
-    }
-
-
-    @Override
-    public void log(final int priority, @NonNull final String message) {
-
     }
 }

@@ -13,25 +13,25 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:paddingBottom="15dp"
         android:id="@+id/imageView"
         android:layout_width="95dp"
         android:layout_height="95dp"
         android:contentDescription="@string/nav_header_desc"
+        android:paddingBottom="15dp"
         app:srcCompat="@drawable/ico1" />
 
     <TextView
         android:id="@+id/userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        android:padding="15dp"
-        android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="15dp"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text=""
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/white"
+        android:textSize="22sp" />
 
 
 </LinearLayout>

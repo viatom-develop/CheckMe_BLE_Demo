@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -35,12 +34,12 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
 
         mOxyData[position].apply {
             val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
-            holder.bleName.text =dateFormat.format(date)
-            holder.o2.text=oxy.toString()
-            holder.pr.text=pr.toString()
-            holder.pi.text=pi.toString()
+            holder.bleName.text = dateFormat.format(date)
+            holder.o2.text = oxy.toString()
+            holder.pr.text = pr.toString()
+            holder.pi.text = pi.toString()
             holder.face.setImageResource(Constant.RESULT_IMG[face])
-            holder.way.text=Constant.OxyWay[way]
+            holder.way.text = Constant.OxyWay[way]
         }
     }
 
@@ -52,7 +51,7 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
     fun addAll(userBean: ArrayList<*>?) {
         mOxyData.clear()
         if (userBean != null) {
-            for(k in userBean){
+            for (k in userBean) {
                 mOxyData.add(k as OxyBean)
             }
         }
@@ -68,11 +67,11 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         val bleName: TextView = itemView.findViewById(R.id.userName)
-        val o2:TextView=itemView.findViewById(R.id.o2)
-        val pr:TextView=itemView.findViewById(R.id.pr)
-        val pi:TextView=itemView.findViewById(R.id.pi)
-        val face:ImageView=itemView.findViewById(R.id.head)
-        val way:TextView=itemView.findViewById(R.id.way)
+        val o2: TextView = itemView.findViewById(R.id.o2)
+        val pr: TextView = itemView.findViewById(R.id.pr)
+        val pi: TextView = itemView.findViewById(R.id.pi)
+        val face: ImageView = itemView.findViewById(R.id.head)
+        val way: TextView = itemView.findViewById(R.id.way)
         override fun onClick(view: View) {}
 
         init {

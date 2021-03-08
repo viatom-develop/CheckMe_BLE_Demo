@@ -42,10 +42,10 @@ object PedFile {
                         second
                     )
                     step = toUInt(setRange(start + 7, 4))
-                    dis = toUInt(setRange(start + 11, 4)).toFloat()/100f
-                    speed = toUInt(setRange(start + 15, 4)).toFloat()/10f
-                    cal = toUInt(setRange(start + 19, 4)).toFloat()/100f
-                    fat = toUInt(setRange(start + 23, 2)).toFloat()/100f
+                    dis = toUInt(setRange(start + 11, 4)).toFloat() / 100f
+                    speed = toUInt(setRange(start + 15, 4)).toFloat() / 10f
+                    cal = toUInt(setRange(start + 19, 4)).toFloat() / 100f
+                    fat = toUInt(setRange(start + 23, 2)).toFloat() / 100f
                     time = toUInt(setRange(start + 25, 2))
                 }
             }

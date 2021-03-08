@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.R
 import com.viatom.checkme.adapter.BleViewAdapter
 import com.viatom.checkme.adapter.UserViewAdapter
@@ -31,10 +30,11 @@ import com.viatom.checkme.bean.UserBean
 import com.viatom.checkme.ble.format.UserFile
 import com.viatom.checkme.ble.manager.BleScanManager
 import com.viatom.checkme.ble.worker.BleDataWorker
+import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
-import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
 import com.viatom.checkme.leftnavi.oximeter.OximiterFragment
+import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
 import com.viatom.checkme.leftnavi.thermometer.TmpFragment
 import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.viewmodel.LeftHead
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     UserViewAdapter.userClickListener,
     BleScanManager.Scan {
     companion object {
-        var isOffline=false
+        var isOffline = false
         var loading = true
         var currentId = ""
         val bleWorker = BleDataWorker()
@@ -97,14 +97,14 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
         userTemp.apply {
             userInfo = UserFile.UserInfo(this)
-            val total=userInfo.user.size*userfileName.size+1
-            var tIndex=1
-            UiChannel.progressChannel.send(tIndex*100/total)
+            val total = userInfo.user.size * userfileName.size + 1
+            var tIndex = 1
+            UiChannel.progressChannel.send(tIndex * 100 / total)
             for (user in userInfo.user) {
                 for (f in userfileName) {
                     bleWorker.getFile(user.id + f)
                     tIndex++
-                    UiChannel.progressChannel.send(tIndex*100/total)
+                    UiChannel.progressChannel.send(tIndex * 100 / total)
                 }
                 userAdapter.addUser(user)
             }
@@ -291,7 +291,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     @ExperimentalUnsignedTypes
     fun offline(view: View) {
-        isOffline=true
+        isOffline = true
         scan.stop()
         runOnUiThread {
             scan_title.visibility = GONE
@@ -299,9 +299,9 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             ble_panel.visibility = VISIBLE
             scan_layout.visibility = GONE
         }
-        MainActivity.loading=false
-        val file=File(Constant.getPathX("usr.dat"))
-        if(file.exists()){
+        MainActivity.loading = false
+        val file = File(Constant.getPathX("usr.dat"))
+        if (file.exists()) {
             val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
             userTemp.apply {
                 userInfo = UserFile.UserInfo(this)

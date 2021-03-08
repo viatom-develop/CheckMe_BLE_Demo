@@ -17,6 +17,7 @@ import java.io.File
 class OximiterFragment : Fragment() {
     private val model: OximiterViewModel by viewModels()
     lateinit var oxyViewAdapter: OxyViewAdapter
+
     @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +38,6 @@ class OximiterFragment : Fragment() {
         switch(MainActivity.currentId)
         return root
     }
-
 
 
     @ExperimentalUnsignedTypes

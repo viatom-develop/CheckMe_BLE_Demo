@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.MainActivity"
     android:id="@+id/scan_layout"
-    android:visibility="visible"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#87CEEB"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".activity.MainActivity">
 
     <TextView
-        android:background="#ff000000"
-        android:text="@string/app_name"
-        android:gravity="center"
-        android:textColor="#87CEEB"
-        android:textSize="22sp"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:background="#ff000000"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="#87CEEB"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/scan_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="20dp"
         android:text="Scanning Checkme Device..."
         android:textColor="#ffa0b000"
-        android:typeface="monospace"
-        android:padding="20dp"
-        android:gravity="center"
         android:textSize="16sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:typeface="monospace" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ble_table"
@@ -35,11 +35,11 @@
         android:layout_height="350dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@drawable/panel_bg"
         android:id="@+id/ble_panel"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="350dp" />
+        android:layout_height="350dp"
+        android:background="@drawable/panel_bg"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/notifyVal"
@@ -52,19 +52,19 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center">
 
         <Button
-            android:onClick="offline"
-            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
+            android:onClick="offline"
             android:padding="20sp"
-            android:text="Offline Mode" />
+            android:text="Offline Mode"
+            android:textAllCaps="false"
+            android:textSize="26sp" />
     </LinearLayout>
 
 

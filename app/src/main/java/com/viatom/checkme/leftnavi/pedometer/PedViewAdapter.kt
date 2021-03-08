@@ -28,13 +28,13 @@ class PedViewAdapter(context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mPedData[position].apply {
             val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
-            holder.recordTime.text =dateFormat.format(date)
-            holder.step.text=step.toString()
-            holder.dis.text=dis.toString()
-            holder.speed.text=speed.toString()
-            holder.cal.text=cal.toString()
-            holder.fat.text=fat.toString()
-            holder.time.text=time.toString()
+            holder.recordTime.text = dateFormat.format(date)
+            holder.step.text = step.toString()
+            holder.dis.text = dis.toString()
+            holder.speed.text = speed.toString()
+            holder.cal.text = cal.toString()
+            holder.fat.text = fat.toString()
+            holder.time.text = time.toString()
         }
     }
 
@@ -46,7 +46,7 @@ class PedViewAdapter(context: Context) :
     fun addAll(userBean: ArrayList<*>?) {
         mPedData.clear()
         if (userBean != null) {
-            for(m in userBean){
+            for (m in userBean) {
                 mPedData.add(m as PedBean)
             }
         }
@@ -61,13 +61,13 @@ class PedViewAdapter(context: Context) :
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        val recordTime:TextView=itemView.findViewById(R.id.recordTime)
-        val step:TextView=itemView.findViewById(R.id.step)
-        val dis:TextView=itemView.findViewById(R.id.dis)
-        val speed:TextView=itemView.findViewById(R.id.speed)
-        val cal:TextView=itemView.findViewById(R.id.cal)
-        val fat:TextView=itemView.findViewById(R.id.fat)
-        val time:TextView=itemView.findViewById(R.id.time)
+        val recordTime: TextView = itemView.findViewById(R.id.recordTime)
+        val step: TextView = itemView.findViewById(R.id.step)
+        val dis: TextView = itemView.findViewById(R.id.dis)
+        val speed: TextView = itemView.findViewById(R.id.speed)
+        val cal: TextView = itemView.findViewById(R.id.cal)
+        val fat: TextView = itemView.findViewById(R.id.fat)
+        val time: TextView = itemView.findViewById(R.id.time)
         override fun onClick(view: View) {}
 
         init {

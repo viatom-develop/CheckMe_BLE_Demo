@@ -1,11 +1,11 @@
 package com.viatom.checkme.utils;
 
 public class HexString {
+    private final static char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
     private HexString() {
         // Utility class.
     }
-
-    private final static char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
 
     public static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];

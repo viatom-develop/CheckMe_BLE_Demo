@@ -19,6 +19,7 @@ class PedometerFragment : Fragment() {
 
     private val model: PedViewModel by viewModels()
     lateinit var pedViewAdapter: PedViewAdapter
+
     @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,6 @@ class PedometerFragment : Fragment() {
         switch(MainActivity.currentId)
         return root
     }
-
 
 
     @ExperimentalUnsignedTypes

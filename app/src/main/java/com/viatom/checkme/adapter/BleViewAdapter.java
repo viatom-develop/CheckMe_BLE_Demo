@@ -57,6 +57,15 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
         return mBleData.size();
     }
 
+    // allows clicks events to be caught
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+
+    public interface ItemClickListener {
+        void onScanItemClick(BluetoothDevice bluetoothDevice);
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView bleName;
@@ -72,15 +81,5 @@ public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHold
             if (mClickListener != null)
                 mClickListener.onScanItemClick(mBleData.get(getAdapterPosition()).getBluetoothDevice());
         }
-    }
-
-
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    public interface ItemClickListener {
-        void onScanItemClick(BluetoothDevice bluetoothDevice);
     }
 }

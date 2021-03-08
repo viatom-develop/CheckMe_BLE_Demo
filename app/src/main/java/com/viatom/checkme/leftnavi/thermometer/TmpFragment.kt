@@ -19,6 +19,7 @@ class TmpFragment : Fragment() {
 
     private val model: TmpViewModel by viewModels()
     lateinit var tmpViewAdapter: TmpViewAdapter
+
     @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,

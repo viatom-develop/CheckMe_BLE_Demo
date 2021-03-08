@@ -1,12 +1,10 @@
 package com.viatom.checkme.leftnavi.thermometer
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
@@ -32,8 +30,8 @@ class TmpViewAdapter(context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mTmpData[position].apply {
             val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
-            holder.time.text =dateFormat.format(date)
-            holder.tmp.text=Constant.TmpWay[way]+":  "+tmp.toString()+" ℃"
+            holder.time.text = dateFormat.format(date)
+            holder.tmp.text = Constant.TmpWay[way] + ":  " + tmp.toString() + " ℃"
             holder.face.setImageResource(Constant.RESULT_IMG[face])
         }
     }
@@ -46,13 +44,12 @@ class TmpViewAdapter(context: Context) :
     fun addAll(userBean: ArrayList<*>?) {
         mTmpData.clear()
         if (userBean != null) {
-            for(m in userBean){
+            for (m in userBean) {
                 mTmpData.add(m as TmpBean)
             }
         }
         notifyDataSetChanged()
     }
-
 
 
     // total number of cells
@@ -62,9 +59,9 @@ class TmpViewAdapter(context: Context) :
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        val tmp:TextView=itemView.findViewById(R.id.tmp)
-        val time:TextView=itemView.findViewById(R.id.time)
-        val face:ImageView=itemView.findViewById(R.id.face)
+        val tmp: TextView = itemView.findViewById(R.id.tmp)
+        val time: TextView = itemView.findViewById(R.id.time)
+        val face: ImageView = itemView.findViewById(R.id.face)
         override fun onClick(view: View) {}
 
         init {

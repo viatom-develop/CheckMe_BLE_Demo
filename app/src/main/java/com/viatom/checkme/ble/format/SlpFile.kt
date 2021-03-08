@@ -41,13 +41,13 @@ object SlpFile {
                         minute,
                         second
                     )
-                    time=toUInt(setRange(start + 7, 4))
-                    lowTime=toUInt(setRange(start + 11, 2))
-                    lowCount=toUInt(setRange(start + 13, 2))
-                    minO2=toUInt(setRange(start +15, 1))
-                    meanO2=toUInt(setRange(start + 16, 1))
+                    time = toUInt(setRange(start + 7, 4))
+                    lowTime = toUInt(setRange(start + 11, 2))
+                    lowCount = toUInt(setRange(start + 13, 2))
+                    minO2 = toUInt(setRange(start + 15, 1))
+                    meanO2 = toUInt(setRange(start + 16, 1))
                     face = toUInt(setRange(start + 17, 1))
-                    if(face>2)face=2
+                    if (face > 2) face = 2
                 }
             }
 

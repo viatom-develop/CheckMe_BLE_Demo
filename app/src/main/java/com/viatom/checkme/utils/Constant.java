@@ -12,12 +12,12 @@ public class Constant {
             R.drawable.ico6, R.drawable.ico7, R.drawable.ico8, R.drawable.ico9,
             R.drawable.ico10};
 
-    public final static int[] RESULT_IMG = { R.drawable.smile, R.drawable.cry,
-            R.drawable.none };
+    public final static int[] RESULT_IMG = {R.drawable.smile, R.drawable.cry,
+            R.drawable.none};
 
-    public final static String[] EcgWay = { "Hand-Hand","Hand-Chest","1-Lead","2-Lead" };
-    public final static String[] OxyWay = { "Internal","External","" };
-    public final static String[] TmpWay = { "Body","Thing","" };
+    public final static String[] EcgWay = {"Hand-Hand", "Hand-Chest", "1-Lead", "2-Lead"};
+    public final static String[] OxyWay = {"Internal", "External", ""};
+    public final static String[] TmpWay = {"Body", "Thing", ""};
     public static String filePath;
 
     public static String getPathX(String s) {

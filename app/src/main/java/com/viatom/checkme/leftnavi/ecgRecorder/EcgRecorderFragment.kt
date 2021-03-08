@@ -18,6 +18,7 @@ class EcgRecorderFragment : Fragment() {
 
     private val model: EcgRecorderViewModel by viewModels()
     lateinit var ecgViewAdapter: EcgViewAdapter
+
     @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +38,6 @@ class EcgRecorderFragment : Fragment() {
         switch(MainActivity.currentId)
         return root
     }
-
 
 
     @ExperimentalUnsignedTypes

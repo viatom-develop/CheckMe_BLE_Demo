@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.ble.format.SlpFile
-import com.viatom.checkme.ble.format.TmpFile
 import com.viatom.checkme.utils.Constant
 import java.io.File
 
@@ -20,6 +19,7 @@ class SleepFragment : Fragment() {
 
     private val model: SleepViewModel by viewModels()
     lateinit var sleepViewAdapter: SleepViewAdapter
+
     @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,

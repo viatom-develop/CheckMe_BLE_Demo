@@ -2,134 +2,134 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
     <TextView
-        android:background="@color/black"
-        android:gravity="center"
-        android:text="User List"
-        android:textSize="26sp"
-        android:textColor="#87CEEB"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp" />
+        android:background="@color/black"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="User List"
+        android:textColor="#87CEEB"
+        android:textSize="26sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/right_user"
-        android:background="#87CEEB"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_height="0dp" />
+        android:background="#87CEEB" />
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_height="0dp">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
                 android:text="Name"
-                android:textColor="#b0b0b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#b0b0b0" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
                 android:text="Sex"
-                android:textColor="#b0b0b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#b0b0b0" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
                 android:text="Birthday"
-                android:textColor="#b0b0b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#b0b0b0" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
                 android:text="Weight"
-                android:textColor="#b0b0b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#b0b0b0" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
                 android:text="Height"
-                android:textColor="#b0b0b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#b0b0b0" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
                 android:text="Medical ID"
-                android:textColor="#b0b0b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#b0b0b0" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="@dimen/right_padding"
                 android:text="Pacemaker"
-                android:textColor="#b0b0b0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textColor="#b0b0b0" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/rName"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/right_padding"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/right_padding" />
 
             <TextView
                 android:id="@+id/rSex"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/right_padding"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/right_padding" />
 
             <TextView
                 android:id="@+id/rBirthday"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/right_padding"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/right_padding" />
 
             <TextView
                 android:id="@+id/rWeight"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/right_padding"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/right_padding" />
 
             <TextView
                 android:id="@+id/rHeight"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/right_padding"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/right_padding" />
 
             <TextView
                 android:id="@+id/rMedicalID"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/right_padding"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/right_padding" />
 
             <TextView
                 android:id="@+id/rPacemaker"
                 android:layout_width="wrap_content"
-                android:padding="@dimen/right_padding"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:padding="@dimen/right_padding" />
 
         </LinearLayout>
 

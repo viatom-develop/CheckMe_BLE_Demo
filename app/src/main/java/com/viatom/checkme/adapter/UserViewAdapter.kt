@@ -33,10 +33,10 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
         mUserData[position].apply {
             holder.userName.text = name
             holder.userIcon.setImageResource(Constant.ICO_IMG[ico - 1])
-            if(color==0){
+            if (color == 0) {
                 holder.userName.setTextSize(30f)
                 holder.userBackground.setBackgroundColor(Color.parseColor("#ffa0b000"))
-            }else{
+            } else {
                 holder.userName.setTextSize(20f)
                 holder.userBackground.setBackgroundColor(Color.parseColor("#ff606000"))
             }
@@ -46,17 +46,16 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
     }
 
 
-
     fun addUser(userBean: UserBean) {
         mUserData.add(userBean)
     }
 
-    fun setUserColor(i:Int){
-        for((j,m) in mUserData.withIndex()){
-            if(j!=i){
-                m.color=1
-            }else{
-                m.color=0
+    fun setUserColor(i: Int) {
+        for ((j, m) in mUserData.withIndex()) {
+            if (j != i) {
+                m.color = 1
+            } else {
+                m.color = 0
             }
         }
         notifyDataSetChanged()
@@ -75,7 +74,7 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
         override fun onClick(view: View) {
             setUserColor(layoutPosition)
             mClickListener?.apply {
-                onUserItemClick(mUserData[layoutPosition],layoutPosition)
+                onUserItemClick(mUserData[layoutPosition], layoutPosition)
             }
         }
 

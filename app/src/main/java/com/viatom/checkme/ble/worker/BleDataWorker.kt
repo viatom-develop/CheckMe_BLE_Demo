@@ -36,13 +36,18 @@ class BleDataWorker {
     var fileData: ByteArray? = null
     var currentFileName = ""
     var result = 1;
-    var currentFileSize=0
+    var currentFileSize = 0
 
 
-    companion object{
+    companion object {
         val fileProgressChannel = Channel<FileProgress>(Channel.CONFLATED)
     }
-    data class FileProgress(var name:String="",var progress:Int=0,var success:Boolean=false)
+
+    data class FileProgress(
+        var name: String = "",
+        var progress: Int = 0,
+        var success: Boolean = false
+    )
 
 
     @ExperimentalUnsignedTypes
@@ -78,8 +83,8 @@ class BleDataWorker {
                 val bleResponse = FDAResponse.CheckMeResponse(temp)
                 if (cmdState == 1) {
                     fileData = null
-                    currentFileSize=toUInt(bleResponse.content)
-                    pkgTotal =currentFileSize/ 512
+                    currentFileSize = toUInt(bleResponse.content)
+                    pkgTotal = currentFileSize / 512
                     if (bleResponse.cmd == 1) {
                         result = 1
                         val pkg = EndReadPkg()
@@ -99,7 +104,13 @@ class BleDataWorker {
                         fileData = add(fileData, this)
                         fileData?.let {
                             dataScope.launch {
-                                fileProgressChannel.send(FileProgress(currentFileName,it.size*100/currentFileSize,true))
+                                fileProgressChannel.send(
+                                    FileProgress(
+                                        currentFileName,
+                                        it.size * 100 / currentFileSize,
+                                        true
+                                    )
+                                )
                             }
                         }
                     }
@@ -125,7 +136,7 @@ class BleDataWorker {
                     currentPkg = 0
                     cmdState = 0
                     dataScope.launch {
-                        fileProgressChannel.send(FileProgress(currentFileName,100,result==0))
+                        fileProgressChannel.send(FileProgress(currentFileName, 100, result == 0))
                         fileChannel.send(result)
                     }
                 }

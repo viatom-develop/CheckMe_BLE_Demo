@@ -3,7 +3,6 @@ package com.viatom.checkme.leftnavi.sleepMonitor
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.viatom.checkme.bean.SlpBean
-import com.viatom.checkme.bean.TmpBean
 
 class SleepViewModel : ViewModel() {
 
