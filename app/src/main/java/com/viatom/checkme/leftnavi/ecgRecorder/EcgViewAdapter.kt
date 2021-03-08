@@ -16,11 +16,11 @@ import java.util.*
 
 class EcgViewAdapter(context: Context, r: RecyclerView) :
     RecyclerView.Adapter<EcgViewAdapter.ViewHolder>() {
-    var mEcgData: MutableList<EcgBean>
+    var mEcgData: MutableList<EcgBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private var mClickListener: userClickListener? = null
-    private val mContext: Context
-    private val recyclerView: RecyclerView
+
+
+    private val recyclerView: RecyclerView = r
 
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +32,7 @@ class EcgViewAdapter(context: Context, r: RecyclerView) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         mEcgData[position].apply {
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy   hh : mm : ss", Locale.ENGLISH)
             holder.bleName.text = dateFormat.format(date)
             holder.face.setImageResource(Constant.RESULT_IMG[face])
             holder.way.text = Constant.EcgWay[way - 1]
@@ -62,7 +62,7 @@ class EcgViewAdapter(context: Context, r: RecyclerView) :
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        val bleName: TextView = itemView.findViewById(R.id.userName)
+        val bleName: TextView = itemView.findViewById(R.id.getTime)
         val way: TextView = itemView.findViewById(R.id.way)
         val face: ImageView = itemView.findViewById(R.id.head)
         override fun onClick(view: View) {}
@@ -72,19 +72,5 @@ class EcgViewAdapter(context: Context, r: RecyclerView) :
         }
     }
 
-    // allows clicks events to be caught
-    fun setClickListener(userClickListener: userClickListener?) {
-        mClickListener = userClickListener
-    }
 
-    interface userClickListener {
-        fun onUserItemClick(userBean: UserBean?, position: Int)
-    }
-
-    // data is passed into the constructor
-    init {
-        mEcgData = ArrayList()
-        recyclerView = r
-        mContext = context
-    }
 }

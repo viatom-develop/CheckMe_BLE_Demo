@@ -6,35 +6,36 @@
     android:background="#ffa0b000"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:gravity="center_vertical|start"
         android:orientation="horizontal">
 
+
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:id="@+id/way"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
         <ImageView
             android:id="@+id/head"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="30dp"
+            android:layout_toStartOf="@+id/way"
             android:padding="10dp"
             android:src="@drawable/ico1" />
-
-        <TextView
-            android:id="@+id/way"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/getTime"
         android:layout_width="match_parent"
         android:layout_height="33dp"
-        android:layout_marginStart="10dp"
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="14sp" />

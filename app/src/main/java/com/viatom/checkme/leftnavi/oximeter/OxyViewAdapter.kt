@@ -66,7 +66,7 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        val bleName: TextView = itemView.findViewById(R.id.userName)
+        val bleName: TextView = itemView.findViewById(R.id.getTime)
         val o2: TextView = itemView.findViewById(R.id.o2)
         val pr: TextView = itemView.findViewById(R.id.pr)
         val pi: TextView = itemView.findViewById(R.id.pi)

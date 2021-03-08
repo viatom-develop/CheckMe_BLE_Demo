@@ -92,7 +92,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/userName"
+                android:id="@+id/getTime"
                 android:layout_width="280dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"

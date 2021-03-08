@@ -34,10 +34,10 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
             holder.userName.text = name
             holder.userIcon.setImageResource(Constant.ICO_IMG[ico - 1])
             if (color == 0) {
-                holder.userName.setTextSize(30f)
+                holder.userName.textSize = 20f
                 holder.userBackground.setBackgroundColor(Color.parseColor("#ffa0b000"))
             } else {
-                holder.userName.setTextSize(20f)
+                holder.userName.textSize = 15f
                 holder.userBackground.setBackgroundColor(Color.parseColor("#ff606000"))
             }
 
@@ -69,7 +69,7 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         var userName: TextView = itemView.findViewById(R.id.userName)
-        var userBackground: LinearLayout = itemView.findViewById(R.id.gaga)
+        var userBackground: LinearLayout = itemView.findViewById(R.id.userItemBackground)
         var userIcon: ImageView = itemView.findViewById(R.id.head)
         override fun onClick(view: View) {
             setUserColor(layoutPosition)

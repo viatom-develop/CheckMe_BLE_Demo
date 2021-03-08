@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gaga"
+    android:id="@+id/userItemBackground"
     android:layout_width="match_parent"
     android:layout_height="90dp"
     android:background="#ff0000a0"
@@ -23,8 +23,9 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:gravity="center_vertical|start"
+            android:layout_marginStart="20dp"
+            android:paddingTop="20dp"
+            android:gravity="top|start"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
