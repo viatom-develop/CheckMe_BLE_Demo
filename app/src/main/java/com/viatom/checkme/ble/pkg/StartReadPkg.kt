@@ -1,37 +1,24 @@
-package com.viatom.checkme.ble.pkg;
+package com.viatom.checkme.ble.pkg
 
+import com.viatom.checkme.ble.constant.BTConstant
+import com.viatom.checkme.utils.CRCUtils
+import kotlin.experimental.inv
 
-import com.viatom.checkme.ble.constant.BTConstant;
-import com.viatom.checkme.utils.CRCUtils;
-import com.viatom.checkme.utils.LogUtils;
+class StartReadPkg(fileName: String?) {
+    val buf: ByteArray = ByteArray(BTConstant.COMMON_PKG_LENGTH + fileName!!.length + 1)
 
-public class StartReadPkg {
-    private byte[] buf;
-
-    public StartReadPkg(String fileName) {
-        if (fileName == null || fileName.length() > BTConstant.BT_READ_FILE_NAME_MAX_LENGTH) {
-            LogUtils.d("File name error");
-            return;
+    init {
+        buf[0] = 0xAA.toByte()
+        buf[1] = BTConstant.CMD_WORD_START_READ
+        buf[2] = BTConstant.CMD_WORD_START_READ.inv()
+        buf[3] = 0 //Package number, the default is 0
+        buf[4] = 0
+        buf[5] = (buf.size - BTConstant.COMMON_PKG_LENGTH).toByte() //data chunk size
+        buf[6] = (buf.size - BTConstant.COMMON_PKG_LENGTH shr 8).toByte()
+        val tempFileName = fileName!!.toCharArray()
+        for (i in tempFileName.indices) {
+            buf[i + 7] = tempFileName[i].toByte()
         }
-        //+1 as character '\0'
-        buf = new byte[BTConstant.COMMON_PKG_LENGTH + fileName.length() + 1];
-        buf[0] = (byte) 0xAA;
-        buf[1] = BTConstant.CMD_WORD_START_READ;
-        buf[2] = ~BTConstant.CMD_WORD_START_READ;
-        buf[3] = 0;//Package number, the default is 0
-        buf[4] = 0;
-        buf[5] = (byte) (buf.length - BTConstant.COMMON_PKG_LENGTH);//data chunk size
-        buf[6] = (byte) ((buf.length - BTConstant.COMMON_PKG_LENGTH) >> 8);
-
-        char[] tempFileName = fileName.toCharArray();
-        for (int i = 0; i < tempFileName.length; i++) {
-            buf[i + 7] = (byte) tempFileName[i];
-        }
-        buf[buf.length - 1] = CRCUtils.calCRC8(buf);
+        buf[buf.size - 1] = CRCUtils.calCRC8(buf)
     }
-
-    public byte[] getBuf() {
-        return buf;
-    }
-
 }

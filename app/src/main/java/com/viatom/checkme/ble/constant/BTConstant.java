@@ -10,8 +10,8 @@ public class BTConstant {
     public final static int READ_CONTENT_ACK_PKG_FRONT_LENGTH = 8;
     public final static int GET_INFO_ACK_PKG_LENGTH = 8 + 256;
 
-    public final static int ACK_CMD_OK = 0;
-    public final static int ACK_CMD_BAD = 1;
+    public final static byte ACK_CMD_OK = 0;
+    public final static byte ACK_CMD_BAD = 1;
 
     // Bluetooth Max file name length
     public final static byte BT_WRITE_FILE_NAME_MAX_LENGTH = 30;

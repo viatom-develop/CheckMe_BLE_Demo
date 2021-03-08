@@ -4,8 +4,8 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.util.Log
 import com.viatom.checkme.ble.manager.BleDataManager
+import com.viatom.checkme.ble.pkg.CheckMeResponse
 import com.viatom.checkme.ble.pkg.EndReadPkg
-import com.viatom.checkme.ble.pkg.FDAResponse
 import com.viatom.checkme.ble.pkg.ReadContentPkg
 import com.viatom.checkme.ble.pkg.StartReadPkg
 import com.viatom.checkme.utils.CRCUtils
@@ -56,14 +56,14 @@ class BleDataWorker {
                 pool = add(pool, this)
             }
             pool?.apply {
-                pool = hasResponse(pool)
+                pool = poccessDataPool(pool)
             }
         }
 
     }
 
 
-    private fun hasResponse(bytes: ByteArray?): ByteArray? {
+    private fun poccessDataPool(bytes: ByteArray?): ByteArray? {
         val bytesLeft: ByteArray? = bytes
 
         if (bytes == null || bytes.size < 8) {
@@ -82,7 +82,7 @@ class BleDataWorker {
 
             val temp: ByteArray = bytes.copyOfRange(i, i + 8 + len)
             if (temp.last() == CRCUtils.calCRC8(temp)) {
-                val bleResponse = FDAResponse.CheckMeResponse(temp)
+                val bleResponse = CheckMeResponse(temp)
                 if (cmdState == 1) {
                     fileData = null
                     currentFileSize = toUInt(bleResponse.content)
@@ -148,7 +148,7 @@ class BleDataWorker {
                         bytes.size
                     )
 
-                return hasResponse(tempBytes)
+                return poccessDataPool(tempBytes)
             }
         }
 
