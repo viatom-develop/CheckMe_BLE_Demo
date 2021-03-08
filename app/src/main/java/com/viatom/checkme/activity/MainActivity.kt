@@ -214,13 +214,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
 
     override fun onUserItemClick(userBean: UserBean?, position: Int) {
-        dataScope.launch {
-            val x=bleWorker.getDeviceInfo()
-            for(k in x.json.keys()){
-                Log.e("JSON","json key     $k")
-            }
-
-        }
         userBean?.apply {
             model.headIcon.value = ico
             model.headName.value = name
