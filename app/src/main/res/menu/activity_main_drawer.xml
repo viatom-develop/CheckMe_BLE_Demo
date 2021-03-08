@@ -25,6 +25,10 @@
             android:icon="@drawable/step_l"
             android:title="Pedometer" />
         <item
+            android:id="@+id/nav_51"
+            android:icon="@drawable/slm_l"
+            android:title="Sleep Monitor" />
+        <item
             android:id="@+id/nav_6"
             android:icon="@drawable/update_l"
             android:title="My Device" />

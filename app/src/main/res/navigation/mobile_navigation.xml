@@ -33,6 +33,11 @@
         android:label="Pedometer"
         tools:layout="@layout/fragment_pedometer" />
     <fragment
+        android:id="@+id/nav_51"
+        android:name="com.viatom.checkme.leftnavi.sleepMonitor.SleepFragment"
+        android:label="Sleep Monitor"
+        tools:layout="@layout/fragment_sleepmonitor" />
+    <fragment
         android:id="@+id/nav_6"
         android:name="com.viatom.checkme.leftnavi.mydevice.MyDeviceFragment"
         android:label="My Device"

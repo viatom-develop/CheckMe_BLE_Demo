@@ -1,4 +1,4 @@
-package com.viatom.checkme.leftnavi.thermometer
+package com.viatom.checkme.leftnavi.sleepMonitor
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,30 +10,31 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
+import com.viatom.checkme.ble.format.SlpFile
 import com.viatom.checkme.ble.format.TmpFile
 import com.viatom.checkme.utils.Constant
 import java.io.File
 
 
-class TmpFragment : Fragment() {
+class SleepFragment : Fragment() {
 
-    private val model: TmpViewModel by viewModels()
-    lateinit var tmpViewAdapter: TmpViewAdapter
+    private val model: SleepViewModel by viewModels()
+    lateinit var sleepViewAdapter: SleepViewAdapter
     @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_thermometer, container, false)
+        val root = inflater.inflate(R.layout.fragment_sleepmonitor, container, false)
         val r: RecyclerView = root.findViewById(R.id.sleeplist)
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        tmpViewAdapter = TmpViewAdapter(requireContext())
+        sleepViewAdapter = SleepViewAdapter(requireContext())
         r.layoutManager = linearLayoutManager
-        r.adapter = tmpViewAdapter
+        r.adapter = sleepViewAdapter
         model.list.observe(viewLifecycleOwner, {
-            tmpViewAdapter.addAll(it)
+            sleepViewAdapter.addAll(it)
         })
         switch(MainActivity.currentId)
         return root
@@ -44,11 +45,11 @@ class TmpFragment : Fragment() {
     fun switch(s: String) {
         val file = File(Constant.getPathX(s + "tmp.dat"))
         if (file.exists()) {
-            val temp = file.readBytes()
+            val slp = file.readBytes()
 
-            temp.let {
-                val f = TmpFile.TmpInfo(it)
-                model.list.value = f.Tmp
+            slp.let {
+                val f = SlpFile.SlpInfo(it)
+                model.list.value = f.Slp
             }
 
         } else {

@@ -16,6 +16,7 @@ import com.viatom.checkme.bean.DlcBean
 import com.viatom.checkme.bean.UserBean
 import com.viatom.checkme.ble.constant.BTConstant
 import com.viatom.checkme.ble.format.EcgWaveFile
+import com.viatom.checkme.ble.format.OxyFile
 import com.viatom.checkme.utils.Constant
 import kotlinx.android.synthetic.main.right_drawer.*
 import kotlinx.coroutines.MainScope
@@ -31,6 +32,8 @@ class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
     private var mClickListener: userClickListener? = null
     @ExperimentalUnsignedTypes
     var data:EcgWaveFile.EcgWaveInfo?=null
+    var data2:OxyFile.OxyInfo?=null
+
 
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

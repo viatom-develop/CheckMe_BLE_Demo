@@ -141,6 +141,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 R.id.nav_3,
                 R.id.nav_4,
                 R.id.nav_5,
+                R.id.nav_51,
                 R.id.nav_6,
                 R.id.nav_7
             ), drawerLayout

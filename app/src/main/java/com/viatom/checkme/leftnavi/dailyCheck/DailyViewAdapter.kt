@@ -106,6 +106,7 @@ class DailyViewAdapter(context: Context, var r: RecyclerView,val wave:RecyclerVi
                 if(file2.exists()){
                     val info= EcgWaveFile.EcgWaveInfo(file2.readBytes())
                     waveAdapter.data=info
+                    waveAdapter.notifyDataSetChanged()
                     model.waveResult.value=info
                     waveLayout.visibility=View.VISIBLE
                 }
