@@ -9,11 +9,13 @@
     tools:openDrawer="start">
 
     <include
+
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <include
+        android:id="@+id/scanView"
         layout="@layout/scan_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -36,6 +38,7 @@
         android:fitsSystemWindows="true">
 
         <include
+            android:id="@+id/rightDrawer"
             layout="@layout/right_drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

@@ -19,7 +19,7 @@ class EcgRecorderFragment : Fragment() {
     private val model: EcgRecorderViewModel by viewModels()
     lateinit var ecgViewAdapter: EcgViewAdapter
 
-    @ExperimentalUnsignedTypes
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +40,6 @@ class EcgRecorderFragment : Fragment() {
     }
 
 
-    @ExperimentalUnsignedTypes
     fun switch(s: String) {
         val file = File(Constant.getPathX(s + "ecg.dat"))
         if (file.exists()) {

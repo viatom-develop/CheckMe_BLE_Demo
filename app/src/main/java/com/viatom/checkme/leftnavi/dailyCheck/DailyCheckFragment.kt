@@ -33,7 +33,6 @@ class DailyCheckFragment : Fragment() {
     lateinit var dailyViewAdapter: DailyViewAdapter
 
 
-    @ExperimentalUnsignedTypes
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,8 +60,8 @@ class DailyCheckFragment : Fragment() {
         }
 
         ecgButton.setOnClickListener {
-            ecgButton.setTextColor(getResources().getColor(R.color.white))
-            o2Button.setTextColor(getResources().getColor(R.color.black))
+            ecgButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            o2Button.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             ecgButton.background = ContextCompat.getDrawable(
                 requireContext(),
                 R.drawable.button_circle_shape
@@ -73,8 +72,8 @@ class DailyCheckFragment : Fragment() {
             )
         }
         o2Button.setOnClickListener {
-            ecgButton.setTextColor(getResources().getColor(R.color.black))
-            o2Button.setTextColor(getResources().getColor(R.color.white))
+            ecgButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
+            o2Button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             ecgButton.background = ContextCompat.getDrawable(
                 requireContext(),
                 R.drawable.button_circle_shape_white
@@ -175,7 +174,6 @@ class DailyCheckFragment : Fragment() {
     }
 
 
-    @ExperimentalUnsignedTypes
     fun switch(s: String) {
         val file = File(Constant.getPathX(s + "dlc.dat"))
         if (file.exists()) {

@@ -1,12 +1,11 @@
 package com.viatom.checkme.ble.format
 
-import com.vaca.x1.utils.toUInt
 import com.viatom.checkme.bean.EcgBean
+import com.viatom.checkme.utils.toUInt
 import java.util.*
 
 
-@ExperimentalUnsignedTypes
-class EcgInfo (var bytes: ByteArray) {
+class EcgInfo(var bytes: ByteArray) {
     var size: Int = bytes.size / 10
     var ecg: ArrayList<EcgBean> = arrayListOf<EcgBean>()
 

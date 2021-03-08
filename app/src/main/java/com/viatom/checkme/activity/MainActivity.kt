@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothDevice
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -30,6 +29,9 @@ import com.viatom.checkme.bean.UserBean
 import com.viatom.checkme.ble.format.UserInfo
 import com.viatom.checkme.ble.manager.BleScanManager
 import com.viatom.checkme.ble.worker.BleDataWorker
+import com.viatom.checkme.databinding.ActivityMainBinding
+import com.viatom.checkme.databinding.RightDrawerBinding
+import com.viatom.checkme.databinding.ScanViewBinding
 import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
@@ -38,8 +40,7 @@ import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
 import com.viatom.checkme.leftnavi.thermometer.TmpFragment
 import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.viewmodel.LeftHead
-import kotlinx.android.synthetic.main.right_drawer.*
-import kotlinx.android.synthetic.main.scan_view.*
+
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import java.io.File
@@ -61,6 +62,9 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         val uiScope = CoroutineScope(Dispatchers.Main)
     }
 
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var bindingScan: ScanViewBinding
+    private lateinit var bindingRight: RightDrawerBinding
     lateinit var mMainNavFragment: Fragment
     private lateinit var appBarConfiguration: AppBarConfiguration
     private val bleList: MutableList<BleBean> = ArrayList()
@@ -86,12 +90,12 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     lateinit var userAdapter: UserViewAdapter
     private val model: LeftHead by viewModels()
 
-    @ExperimentalUnsignedTypes
+
     lateinit var userInfo: UserInfo
     lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
 
-    @ExperimentalUnsignedTypes
+
     private suspend fun readUser() {
         userChannel.receive()
         val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
@@ -160,16 +164,16 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
 
     private fun initView() {
-        ble_table.layoutManager = GridLayoutManager(this, 2);
+        bindingScan.bleTable.layoutManager = GridLayoutManager(this, 2);
         bleViewAdapter = BleViewAdapter(this)
-        ble_table.adapter = bleViewAdapter
+        bindingScan.bleTable.adapter = bleViewAdapter
         bleViewAdapter.setClickListener(this)
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
-        userAdapter = UserViewAdapter(this, right_user)
-        right_user.adapter = userAdapter
-        right_user.layoutManager = linearLayoutManager
+        userAdapter = UserViewAdapter(this, bindingRight.rightUser)
+        bindingRight.rightUser.adapter = userAdapter
+        bindingRight.rightUser.layoutManager = linearLayoutManager
         userAdapter.setClickListener(this)
     }
 
@@ -178,7 +182,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     }
 
 
-    fun initScan() {
+    private fun initScan() {
         scan.initScan(this)
         scan.setCallBack(this)
     }
@@ -189,7 +193,11 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        bindingScan = binding.scanView
+        bindingRight = binding.rightDrawer
+        val view = binding.root
+        setContentView(view)
         initDrawer()
         addLiveDateObserver()
         initVar()
@@ -203,39 +211,41 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    @ExperimentalUnsignedTypes
+
     override fun onUserItemClick(userBean: UserBean?, position: Int) {
         userBean?.apply {
             model.headIcon.value = ico
             model.headName.value = name
-            rName.text = name
-            if (sex == 0) {
-                rSex.text = "Male"
-            } else {
-                rSex.text = "Female"
-            }
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy", ENGLISH)
-            rBirthday.text = dateFormat.format(birthday)
-            rWeight.text = weight.toString()
-            rHeight.text = height.toString()
-            rMedicalID.text = medicalId
-            if (pacemakeflag == 0) {
-                rPacemaker.text = "NO"
-            } else {
-                rPacemaker.text = "YES"
+            bindingRight.apply {
+                rName.text = name
+                if (sex == 0) {
+                    rSex.text = "Male"
+                } else {
+                    rSex.text = "Female"
+                }
+                val dateFormat = SimpleDateFormat("MMM. d, yyyy", ENGLISH)
+                rBirthday.text = dateFormat.format(birthday)
+                rWeight.text = weight.toString()
+                rHeight.text = height.toString()
+                rMedicalID.text = medicalId
+                if (pacemakeflag == 0) {
+                    rPacemaker.text = "NO"
+                } else {
+                    rPacemaker.text = "YES"
+                }
             }
 
-            val fragmentA = mMainNavFragment.childFragmentManager.primaryNavigationFragment
-            if (fragmentA is DailyCheckFragment) {
-                fragmentA.switch(id)
-            } else if (fragmentA is EcgRecorderFragment) {
-                fragmentA.switch(id)
-            } else if (fragmentA is PedometerFragment) {
-                fragmentA.switch(id)
-            } else if (fragmentA is OximiterFragment) {
-                fragmentA.switch(id)
-            } else if (fragmentA is TmpFragment) {
-                fragmentA.switch(id)
+            val fragmentCurrent = mMainNavFragment.childFragmentManager.primaryNavigationFragment
+            if (fragmentCurrent is DailyCheckFragment) {
+                fragmentCurrent.switch(id)
+            } else if (fragmentCurrent is EcgRecorderFragment) {
+                fragmentCurrent.switch(id)
+            } else if (fragmentCurrent is PedometerFragment) {
+                fragmentCurrent.switch(id)
+            } else if (fragmentCurrent is OximiterFragment) {
+                fragmentCurrent.switch(id)
+            } else if (fragmentCurrent is TmpFragment) {
+                fragmentCurrent.switch(id)
             }
             currentId = id
         }
@@ -243,15 +253,16 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     }
 
 
-    @ExperimentalUnsignedTypes
     override fun onScanItemClick(bluetoothDevice: BluetoothDevice?) {
         scan.stop()
         bleWorker.initWorker(this, bluetoothDevice)
         runOnUiThread {
-            scan_title.visibility = GONE
-            ble_table.visibility = GONE
-            ble_panel.visibility = VISIBLE
-            scan_layout.visibility = GONE
+            bindingScan.apply {
+                scanTitle.visibility = GONE
+                bleTable.visibility = GONE
+                scanLayout.visibility = GONE
+            }
+
         }
         dataScope.launch {
             val a = withTimeoutOrNull(10000) {
@@ -279,7 +290,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         if (!(name.contains("Checkme"))) return;
         var z: Int = 0;
         for (ble in bleList) run {
-            if (ble.name.equals(bluetoothDevice.name)) {
+            if (ble.name == bluetoothDevice.name) {
                 z = 1
             }
         }
@@ -289,22 +300,24 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         }
     }
 
-    @ExperimentalUnsignedTypes
-    fun offline(view: View) {
+
+    fun View.offline() {
         isOffline = true
         scan.stop()
         runOnUiThread {
-            scan_title.visibility = GONE
-            ble_table.visibility = GONE
-            ble_panel.visibility = VISIBLE
-            scan_layout.visibility = GONE
+            bindingScan.apply {
+                scanTitle.visibility = GONE
+                bleTable.visibility = GONE
+                scanLayout.visibility = GONE
+            }
+
         }
         MainActivity.loading = false
         val file = File(Constant.getPathX("usr.dat"))
         if (file.exists()) {
             val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
             userTemp.apply {
-                userInfo =UserInfo(this)
+                userInfo = UserInfo(this)
                 for (user in userInfo.user) {
                     userAdapter.addUser(user)
                 }

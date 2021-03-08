@@ -7,6 +7,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.viatom.checkme.R
 
 class WaveView : View {
@@ -15,11 +16,11 @@ class WaveView : View {
     val wave_paint = Paint()
 
     constructor(context: Context?) : super(context) {
-        init(null, 0)
+        init()
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        init(attrs, 0)
+        init()
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyle: Int) : super(
@@ -27,10 +28,10 @@ class WaveView : View {
         attrs,
         defStyle
     ) {
-        init(attrs, defStyle)
+        init()
     }
 
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
+    private fun init() {
         wave_paint.color = getColor(R.color.white)
         wave_paint.style = Paint.Style.STROKE
         wave_paint.strokeWidth = 2.0f
@@ -65,6 +66,6 @@ class WaveView : View {
     }
 
     private fun getColor(resource_id: Int): Int {
-        return resources.getColor(resource_id)
+        return ContextCompat.getColor(context, resource_id)
     }
 }

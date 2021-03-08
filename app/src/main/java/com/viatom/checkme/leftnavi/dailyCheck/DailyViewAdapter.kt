@@ -96,7 +96,7 @@ class DailyViewAdapter(
         val f3: ImageView = itemView.findViewById(R.id.f3)
         val download: ImageView = itemView.findViewById(R.id.download)
 
-        @ExperimentalUnsignedTypes
+
         override fun onClick(view: View) {
             val file = File(Constant.getPathX(mDlcData[adapterPosition].timeString))
             val exist = file.exists()

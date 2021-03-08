@@ -20,7 +20,7 @@ class SleepFragment : Fragment() {
     private val model: SleepViewModel by viewModels()
     lateinit var sleepViewAdapter: SleepViewAdapter
 
-    @ExperimentalUnsignedTypes
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +41,6 @@ class SleepFragment : Fragment() {
     }
 
 
-    @ExperimentalUnsignedTypes
     fun switch(s: String) {
         val file = File(Constant.getPathX(s + "tmp.dat"))
         if (file.exists()) {

@@ -1,9 +1,8 @@
 package com.viatom.checkme.ble.format
 
-import com.vaca.x1.utils.toUInt
+import com.viatom.checkme.utils.toUInt
 
 
-@ExperimentalUnsignedTypes
 class EcgWaveInfo constructor(var bytes: ByteArray) {
 
     var hrSize: Int = toUInt(bytes.copyOfRange(0, 2))

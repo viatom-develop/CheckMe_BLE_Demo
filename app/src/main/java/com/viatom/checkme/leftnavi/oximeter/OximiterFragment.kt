@@ -18,7 +18,7 @@ class OximiterFragment : Fragment() {
     private val model: OximiterViewModel by viewModels()
     lateinit var oxyViewAdapter: OxyViewAdapter
 
-    @ExperimentalUnsignedTypes
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +40,6 @@ class OximiterFragment : Fragment() {
     }
 
 
-    @ExperimentalUnsignedTypes
     fun switch(s: String) {
         val file = File(Constant.getPathX(s + "oxi.dat"))
         if (file.exists()) {

@@ -3,8 +3,6 @@ package com.viatom.checkme.ble.worker
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.util.Log
-import com.vaca.x1.utils.add
-import com.vaca.x1.utils.toUInt
 import com.viatom.checkme.ble.manager.BleDataManager
 import com.viatom.checkme.ble.pkg.EndReadPkg
 import com.viatom.checkme.ble.pkg.FDAResponse
@@ -12,6 +10,8 @@ import com.viatom.checkme.ble.pkg.ReadContentPkg
 import com.viatom.checkme.ble.pkg.StartReadPkg
 import com.viatom.checkme.utils.CRCUtils
 import com.viatom.checkme.utils.Constant
+import com.viatom.checkme.utils.add
+import com.viatom.checkme.utils.toUInt
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -50,7 +50,7 @@ class BleDataWorker {
         var success: Boolean = false
     )
 
-    private val comeData = object:BleDataManager.OnNotifyListener{
+    private val comeData = object : BleDataManager.OnNotifyListener {
         override fun onNotify(device: BluetoothDevice?, data: Data?) {
             data?.value?.apply {
                 pool = add(pool, this)
@@ -63,7 +63,6 @@ class BleDataWorker {
     }
 
 
-    @ExperimentalUnsignedTypes
     private fun hasResponse(bytes: ByteArray?): ByteArray? {
         val bytesLeft: ByteArray? = bytes
 
@@ -160,7 +159,7 @@ class BleDataWorker {
         myBleDataManager.sendCmd(bs)
     }
 
-    @ExperimentalUnsignedTypes
+
     fun initWorker(context: Context, bluetoothDevice: BluetoothDevice?) {
         myBleDataManager = BleDataManager(context)
         myBleDataManager.setNotifyListener(comeData)

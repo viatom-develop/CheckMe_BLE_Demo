@@ -1,10 +1,10 @@
 package com.viatom.checkme.ble.format
 
-import com.vaca.x1.utils.toUInt
 import com.viatom.checkme.bean.TmpBean
+import com.viatom.checkme.utils.toUInt
 import java.util.*
 
-@ExperimentalUnsignedTypes
+
 class TmpInfo constructor(var bytes: ByteArray) {
     var size: Int = bytes.size / 11
     var Tmp: ArrayList<TmpBean> = arrayListOf<TmpBean>()

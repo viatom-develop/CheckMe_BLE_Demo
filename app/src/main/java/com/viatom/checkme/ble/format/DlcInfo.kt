@@ -1,11 +1,10 @@
 package com.viatom.checkme.ble.format
 
-import com.vaca.x1.utils.toUInt
 import com.viatom.checkme.bean.DlcBean
+import com.viatom.checkme.utils.toUInt
 import java.util.*
 
 
-@ExperimentalUnsignedTypes
 class DlcInfo(var bytes: ByteArray) {
     var size: Int = bytes.size / 17
     var dlc: ArrayList<DlcBean> = arrayListOf<DlcBean>()

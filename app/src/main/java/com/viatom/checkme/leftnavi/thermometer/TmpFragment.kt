@@ -20,7 +20,7 @@ class TmpFragment : Fragment() {
     private val model: TmpViewModel by viewModels()
     lateinit var tmpViewAdapter: TmpViewAdapter
 
-    @ExperimentalUnsignedTypes
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +41,6 @@ class TmpFragment : Fragment() {
     }
 
 
-    @ExperimentalUnsignedTypes
     fun switch(s: String) {
         val file = File(Constant.getPathX(s + "tmp.dat"))
         if (file.exists()) {

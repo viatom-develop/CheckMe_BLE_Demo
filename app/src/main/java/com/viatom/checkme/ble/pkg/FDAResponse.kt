@@ -1,11 +1,11 @@
 package com.viatom.checkme.ble.pkg
 
-import com.vaca.x1.utils.toUInt
+import com.viatom.checkme.utils.toUInt
+import com.viatom.checkme.utils.unsigned
 
 object FDAResponse {
 
 
-    @ExperimentalUnsignedTypes
     class CheckMeResponse constructor(var bytes: ByteArray) {
         var cmd: Int
         var pkgNo: Int
@@ -13,7 +13,7 @@ object FDAResponse {
         var content: ByteArray
 
         init {
-            cmd = (bytes[1].toUInt() and 0xFFu).toInt()
+            cmd = bytes[1].unsigned()
             pkgNo = toUInt(bytes.copyOfRange(3, 5))
             len = toUInt(bytes.copyOfRange(5, 7))
             content = bytes.copyOfRange(7, 7 + len)

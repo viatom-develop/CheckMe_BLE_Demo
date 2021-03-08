@@ -1,10 +1,10 @@
 package com.viatom.checkme.ble.format
 
-import com.vaca.x1.utils.toUInt
 import com.viatom.checkme.bean.OxyBean
+import com.viatom.checkme.utils.toUInt
 import java.util.*
 
-@ExperimentalUnsignedTypes
+
 class OxyInfo constructor(var bytes: ByteArray) {
     var size: Int = bytes.size / 12
     var Oxy: ArrayList<OxyBean> = arrayListOf<OxyBean>()

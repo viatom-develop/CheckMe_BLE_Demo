@@ -20,9 +20,9 @@ class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mClickListener: userClickListener? = null
 
-    @ExperimentalUnsignedTypes
+
     var data: EcgWaveInfo? = null
-    @ExperimentalUnsignedTypes
+
     var data2: OxyInfo? = null
 
 
@@ -33,7 +33,7 @@ class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
     }
 
     // binds the data to the TextView in each cell
-    @ExperimentalUnsignedTypes
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.re.measure(0, 0)
         val waveView = WaveView(context)
@@ -60,7 +60,7 @@ class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
 
 
     // total number of cells
-    @ExperimentalUnsignedTypes
+
     override fun getItemCount(): Int {
         return data?.waveViewSize ?: 0
     }
