@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     lateinit var leftName: TextView
     lateinit var iconSync: ImageView
     lateinit var nameTop:TextView
-    lateinit var title:TextView
+
 
     private suspend fun readUser() {
         userChannel.receive()
@@ -135,16 +135,13 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             nameTop.text=it
         })
 
-    /*    model.currentFragment.observe(this,{
-            title.text=it
-        })*/
+
     }
 
     private fun initDrawer() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         iconSync=findViewById(R.id.icon_sync)
         nameTop=findViewById(R.id.userTop)
-        title=findViewById(R.id.title)
         setSupportActionBar(toolbar)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -254,22 +251,16 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
             val fragmentCurrent = mMainNavFragment.childFragmentManager.primaryNavigationFragment
             if (fragmentCurrent is DailyCheckFragment) {
-//                model.currentFragment.value=getString(R.string.daily_check)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is EcgRecorderFragment) {
-//                model.currentFragment.value=getString(R.string.ecg_recorder)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is PedometerFragment) {
-//                model.currentFragment.value=getString(R.string.pedometer)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is OximiterFragment) {
-//                model.currentFragment.value=getString(R.string.pulse_oximeter)
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is TmpFragment) {
-//                model.currentFragment.value=getString(R.string.thermometer)
                 fragmentCurrent.switch(id)
             }else if(fragmentCurrent is SleepFragment){
-//                model.currentFragment.value=getString(R.string.sleep_monitor)
                 fragmentCurrent.switch(id)
             }
 

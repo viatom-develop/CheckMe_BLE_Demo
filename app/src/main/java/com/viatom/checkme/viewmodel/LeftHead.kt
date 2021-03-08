@@ -12,7 +12,5 @@ class LeftHead : ViewModel() {
         MutableLiveData<String>()
     }
 
-    /*val currentFragment: MutableLiveData<String> by lazy {
-        MutableLiveData<String>()
-    }*/
+
 }
