@@ -195,8 +195,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        bindingScan = binding.scanView
-        bindingRight = binding.rightDrawer
+        binding.scanView.also { bindingScan = it }
+        binding.rightDrawer.also { bindingRight = it }
         val view = binding.root
         setContentView(view)
         initDrawer()
