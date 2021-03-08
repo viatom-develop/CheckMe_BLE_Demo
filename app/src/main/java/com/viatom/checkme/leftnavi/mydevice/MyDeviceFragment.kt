@@ -29,14 +29,17 @@ class MyDeviceFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_mydevice, container, false)
         val text:TextView=root.findViewById(R.id.text)
         MainScope().launch {
-            val info=MainActivity.bleWorker.getDeviceInfo()
-            val json=info.json
-            var s:String=""
-            for(k in json.keys()){
-                s+="$k: "
-                s+="${json.get(k)} \n"
+            if(!MainActivity.isOffline){
+                val info=MainActivity.bleWorker.getDeviceInfo()
+                val json=info.json
+                var s:String=""
+                for(k in json.keys()){
+                    s+="$k: "
+                    s+="${json.get(k)} \n"
+                }
+                text.text=s
             }
-            text.text=s
+
 
         }
 

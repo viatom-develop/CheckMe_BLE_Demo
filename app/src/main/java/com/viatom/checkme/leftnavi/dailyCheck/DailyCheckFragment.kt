@@ -163,12 +163,15 @@ class DailyCheckFragment : Fragment() {
             for (k in BleDataWorker.fileProgressChannel) {
                 model.progress.value = k.progress
                 model.done.value = true
-                if (k.progress == 100) {
+                if (k.progress == -100) {
                     delay(300)
-                    break
+                    model.done.value = false
+                }else{
+                    if(model.done.value==false)
+                    model.done.value = true
                 }
             }
-            model.done.value = false
+
 
 
         }

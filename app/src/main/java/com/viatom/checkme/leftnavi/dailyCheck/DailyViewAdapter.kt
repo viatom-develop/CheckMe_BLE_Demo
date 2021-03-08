@@ -13,6 +13,7 @@ import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.bean.DlcBean
 import com.viatom.checkme.bean.UserBean
 import com.viatom.checkme.ble.format.EcgWaveInfo
+import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.utils.Constant
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -107,6 +108,7 @@ class DailyViewAdapter(
                     }
                 }
                 val file2 = File(Constant.getPathX(mDlcData[adapterPosition].timeString))
+                BleDataWorker.fileProgressChannel.send(BleDataWorker.FileProgress(progress = -100))
                 if (file2.exists()) {
                     val info = EcgWaveInfo(file2.readBytes())
                     waveAdapter.data = info
