@@ -19,7 +19,7 @@ object EcgWaveFile {
         var hrList:IntArray= IntArray(hrSize/2)
         var waveList:IntArray= IntArray(waveSize/2)
         var waveIntSize=waveSize/2
-        val total=500
+        val total=1000
         var waveViewSize=waveIntSize/total
 
 
@@ -31,13 +31,13 @@ object EcgWaveFile {
                 hrList[index]=toUInt(setRange(index*2+22,2))
             }
             for(index in 0 until waveSize/2){
-                val a=bytes[23+index*2+hrSize].toInt()
+              /*  val a=bytes[23+index*2+hrSize].toInt()
                 if(a<-79){
                     waveList[index]=(a+256)*256
                 }else{
                     waveList[index]=a*256
-                }
-//                waveList[index]=bytes[23+index*2+hrSize].toInt()*256//+bytes[22+index*2+hrSize].toUByte().toInt()
+                }*/
+                waveList[index]=bytes[23+index*2+hrSize].toInt()*256+bytes[22+index*2+hrSize].toInt()
             }
         }
 

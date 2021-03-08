@@ -25,7 +25,7 @@ object DlcFile {
                 val calendar = Calendar.getInstance()
                 calendar[Calendar.YEAR] = year
                 calendar[Calendar.MONTH] = month-1
-                calendar[Calendar.DATE] = date-1
+                calendar[Calendar.DATE] = date
                 calendar[Calendar.HOUR] = hour
                 calendar[Calendar.MINUTE] = minute
                 calendar[Calendar.SECOND] = second

@@ -3,17 +3,19 @@ package com.viatom.checkme.leftnavi.dailyCheck
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.ProgressBar
+import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
 import com.viatom.checkme.ble.format.DlcFile
 import com.viatom.checkme.ble.worker.BleDataWorker
+import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.utils.Constant
 import kotlinx.coroutines.*
 import java.io.File
@@ -23,6 +25,8 @@ class DailyCheckFragment : Fragment() {
 
     private val model: DailyCheckViewModel by viewModels()
     lateinit var dailyViewAdapter: DailyViewAdapter
+
+
 
     @ExperimentalUnsignedTypes
     override fun onCreateView(
@@ -35,19 +39,67 @@ class DailyCheckFragment : Fragment() {
         val r: RecyclerView = root.findViewById(R.id.daily_list)
         val pro: ProgressBar = root.findViewById(R.id.pro)
         val wave:RecyclerView=root.findViewById(R.id.ecg_list)
+        val waveLayout:LinearLayout=root.findViewById(R.id.wavelayout)
+        val hr:TextView=root.findViewById(R.id.p1)
+        val st:TextView=root.findViewById(R.id.p2)
+        val qrs:TextView=root.findViewById(R.id.p3)
+        val pvcs:TextView=root.findViewById(R.id.p4)
+        val qtc:TextView=root.findViewById(R.id.p5)
+        val qt:TextView=root.findViewById(R.id.p6)
+        val ecgButton:TextView=root.findViewById(R.id.ecg_button)
+        val o2Button:TextView=root.findViewById(R.id.o2button)
+        val backButton:ImageView=root.findViewById(R.id.back_button)
 
+        backButton.setOnClickListener {
+            waveLayout.visibility=GONE
+            r.visibility=View.VISIBLE
+        }
+
+        ecgButton.setOnClickListener {
+            ecgButton.setTextColor(getResources().getColor(R.color.white))
+            o2Button.setTextColor(getResources().getColor(R.color.black))
+            ecgButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.button_circle_shape
+            )
+            o2Button.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.button_circle_shape_white
+            )
+        }
+        o2Button.setOnClickListener {
+            ecgButton.setTextColor(getResources().getColor(R.color.black))
+            o2Button.setTextColor(getResources().getColor(R.color.white))
+            ecgButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.button_circle_shape_white
+            )
+            o2Button.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.button_circle_shape
+            )
+        }
+
+        ecgButton.callOnClick()
 
         val linearLayoutManagerWave = LinearLayoutManager(context)
         linearLayoutManagerWave.orientation = RecyclerView.VERTICAL
         wave.layoutManager=linearLayoutManagerWave
-        val waveAdapter=WaveAdapter(requireContext(),wave)
+        val waveAdapter=WaveAdapter(requireContext(), wave)
         wave.adapter=waveAdapter
 
         val linearLayoutManager = LinearLayoutManager(context)
         linearLayoutManager.orientation = RecyclerView.VERTICAL
 
         r.layoutManager = linearLayoutManager
-        dailyViewAdapter = DailyViewAdapter(requireContext(), r,wave,waveAdapter)
+        dailyViewAdapter = DailyViewAdapter(
+            requireContext(),
+            r,
+            wave,
+            waveAdapter,
+            waveLayout,
+            model
+        )
         r.adapter = dailyViewAdapter
 
 
@@ -70,13 +122,25 @@ class DailyCheckFragment : Fragment() {
             pro.progress = it
         })
 
-        model.waveVisible.observe(viewLifecycleOwner,{
-            wave.visibility=if(it){
+        model.waveVisible.observe(viewLifecycleOwner, {
+            wave.visibility = if (it) {
                 View.VISIBLE
-            }else{
+            } else {
                 View.GONE
             }
         })
+
+
+        model.waveResult.observe(viewLifecycleOwner, {
+            hr.text = "HR: " + it.hr.toString() + " bpm"
+            st.text = "ST: " + it.st.toString() + " mV"
+            qrs.text = "QRS: " + it.hr.toString() + " ms"
+            pvcs.text = "PVCS: " + it.hr.toString()
+            qtc.text = "QTC: " + it.hr.toString() + " ms"
+            qt.text = "QT: " + it.hr.toString() + " ms"
+
+        })
+
 
         switch(MainActivity.currentId)
         MainScope().launch {

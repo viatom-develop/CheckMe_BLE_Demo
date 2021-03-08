@@ -46,15 +46,16 @@ class WaveView : View {
         canvas.drawColor(getColor(R.color.black))
         data?.apply {
             val p = Path()
-            p.moveTo(0f,height*3/4-this[0].toFloat()/500 )
+            p.moveTo(0f,height*1/2-this[0].toFloat()/1000 )
            /* for((index,m) in this.withIndex()){
                 p.lineTo(index.toFloat()*width/size,height/4+m.toFloat()/500)
             }*/
             for(index in 0 until size){
-                p.lineTo(index.toFloat()*width/size,height*3/4-this[index].toFloat()/500)
+                p.lineTo(index.toFloat()*width/size,height*1/2-this[index].toFloat()/1000)
             }
             canvas.drawPath(p, wave_paint)
         }
+
 
     }
 

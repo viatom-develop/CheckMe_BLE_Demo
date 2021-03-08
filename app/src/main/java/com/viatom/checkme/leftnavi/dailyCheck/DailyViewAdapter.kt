@@ -23,7 +23,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DailyViewAdapter(context: Context, var r: RecyclerView,val wave:RecyclerView,val waveAdapter: WaveAdapter) :
+class DailyViewAdapter(context: Context, var r: RecyclerView,val wave:RecyclerView,val waveAdapter: WaveAdapter,val waveLayout: LinearLayout,val model: DailyCheckViewModel) :
     RecyclerView.Adapter<DailyViewAdapter.ViewHolder>() {
     var mDlcData: MutableList<DlcBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
@@ -94,21 +94,29 @@ class DailyViewAdapter(context: Context, var r: RecyclerView,val wave:RecyclerVi
 
         @ExperimentalUnsignedTypes
         override fun onClick(view: View) {
+            val file=File(Constant.getPathX(mDlcData[adapterPosition].timeString))
+            val exist=file.exists()
             MainScope().launch {
-                val file=File(Constant.getPathX(mDlcData[adapterPosition].timeString))
-                if(!file.exists()){
-                    if(!MainActivity.isOffline)
+                if(!exist){
+                    if(!MainActivity.isOffline){
                         MainActivity.bleWorker.getFile(mDlcData[adapterPosition].timeString)
+                    }
                 }
                 val file2=File(Constant.getPathX(mDlcData[adapterPosition].timeString))
                 if(file2.exists()){
-                    waveAdapter.data= EcgWaveFile.EcgWaveInfo(file2.readBytes())
-//                    waveAdapter.notifyDataSetChanged()
+                    val info= EcgWaveFile.EcgWaveInfo(file2.readBytes())
+                    waveAdapter.data=info
+                    model.waveResult.value=info
+                    waveLayout.visibility=View.VISIBLE
                 }
 
-                wave.visibility=View.VISIBLE
             }
             r.visibility=View.GONE
+            if(!exist){
+                if(MainActivity.isOffline){
+                    r.visibility=View.VISIBLE
+                }
+            }
 
         }
 

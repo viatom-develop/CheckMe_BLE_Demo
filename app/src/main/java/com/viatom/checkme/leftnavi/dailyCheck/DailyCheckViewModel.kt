@@ -3,6 +3,7 @@ package com.viatom.checkme.leftnavi.dailyCheck
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.viatom.checkme.bean.DlcBean
+import com.viatom.checkme.ble.format.EcgWaveFile
 
 class DailyCheckViewModel : ViewModel() {
 
@@ -25,5 +26,9 @@ class DailyCheckViewModel : ViewModel() {
 
     val waveVisible: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
+    }
+
+    val waveResult: MutableLiveData<EcgWaveFile.EcgWaveInfo> by lazy {
+        MutableLiveData<EcgWaveFile.EcgWaveInfo>()
     }
 }
