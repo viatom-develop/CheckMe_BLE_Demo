@@ -1,7 +1,6 @@
 package com.viatom.checkme.leftnavi.mydevice
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,17 +26,17 @@ class MyDeviceFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_mydevice, container, false)
-        val text:TextView=root.findViewById(R.id.text)
+        val text: TextView = root.findViewById(R.id.text)
         MainScope().launch {
-            if(!MainActivity.isOffline){
-                val info=MainActivity.bleWorker.getDeviceInfo()
-                val json=info.json
-                var s:String=""
-                for(k in json.keys()){
-                    s+="$k: "
-                    s+="${json.get(k)} \n"
+            if (!MainActivity.isOffline) {
+                val info = MainActivity.bleWorker.getDeviceInfo()
+                val json = info.json
+                var s: String = ""
+                for (k in json.keys()) {
+                    s += "$k: "
+                    s += "${json.get(k)} \n"
                 }
-                text.text=s
+                text.text = s
             }
 
 

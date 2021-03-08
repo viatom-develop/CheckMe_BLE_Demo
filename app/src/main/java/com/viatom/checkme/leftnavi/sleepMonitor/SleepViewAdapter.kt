@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.bean.SlpBean
-import com.viatom.checkme.bean.UserBean
 import com.viatom.checkme.utils.Constant
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,7 +59,8 @@ class SleepViewAdapter(context: Context) :
         return mSlpData.size
     }
 
-    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder internal constructor(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
 
         val time: TextView = itemView.findViewById(R.id.time)
         val face: ImageView = itemView.findViewById(R.id.face)

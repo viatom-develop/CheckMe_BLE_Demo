@@ -2,7 +2,6 @@ package com.viatom.checkme.activity
 
 import android.bluetooth.BluetoothDevice
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.widget.ImageView
@@ -42,7 +41,6 @@ import com.viatom.checkme.leftnavi.sleepMonitor.SleepFragment
 import com.viatom.checkme.leftnavi.thermometer.TmpFragment
 import com.viatom.checkme.utils.Constant
 import com.viatom.checkme.viewmodel.LeftHead
-
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import java.io.File
@@ -97,7 +95,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     private lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
     lateinit var iconSync: ImageView
-    lateinit var nameTop:TextView
+    lateinit var nameTop: TextView
 
 
     private suspend fun readUser() {
@@ -132,7 +130,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         })
         model.headName.observe(this, {
             leftName.text = it
-            nameTop.text=it
+            nameTop.text = it
         })
 
 
@@ -140,8 +138,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     private fun initDrawer() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
-        iconSync=findViewById(R.id.icon_sync)
-        nameTop=findViewById(R.id.userTop)
+        iconSync = findViewById(R.id.icon_sync)
+        nameTop = findViewById(R.id.userTop)
         setSupportActionBar(toolbar)
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -170,8 +168,10 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             drawerLayout.closeDrawer(GravityCompat.START)
             drawerLayout.openDrawer(GravityCompat.END)
         }
-        iconSync.setOnClickListener {  drawerLayout.closeDrawer(GravityCompat.START)
-            drawerLayout.openDrawer(GravityCompat.END) }
+        iconSync.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.START)
+            drawerLayout.openDrawer(GravityCompat.END)
+        }
     }
 
 
@@ -260,7 +260,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is TmpFragment) {
                 fragmentCurrent.switch(id)
-            }else if(fragmentCurrent is SleepFragment){
+            } else if (fragmentCurrent is SleepFragment) {
                 fragmentCurrent.switch(id)
             }
 

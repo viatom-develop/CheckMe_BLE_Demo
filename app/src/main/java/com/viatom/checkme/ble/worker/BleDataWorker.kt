@@ -3,9 +3,9 @@ package com.viatom.checkme.ble.worker
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.util.Log
-import com.viatom.checkme.ble.manager.BleDataManager
 import com.viatom.checkme.ble.format.CheckMeResponse
 import com.viatom.checkme.ble.format.DeviceInfo
+import com.viatom.checkme.ble.manager.BleDataManager
 import com.viatom.checkme.ble.pkg.EndReadPkg
 import com.viatom.checkme.ble.pkg.GetDeviceInfoPkg
 import com.viatom.checkme.ble.pkg.ReadContentPkg
@@ -85,7 +85,7 @@ class BleDataWorker {
             val temp: ByteArray = bytes.copyOfRange(i, i + 8 + len)
             if (temp.last() == CRCUtils.calCRC8(temp)) {
 
-                if(cmdState in 1..3){
+                if (cmdState in 1..3) {
                     val bleResponse = CheckMeResponse(temp)
                     if (cmdState == 1) {
                         fileData = null
@@ -142,18 +142,22 @@ class BleDataWorker {
                         currentPkg = 0
                         cmdState = 0
                         dataScope.launch {
-                            fileProgressChannel.send(FileProgress(currentFileName, 100, result == 0))
+                            fileProgressChannel.send(
+                                FileProgress(
+                                    currentFileName,
+                                    100,
+                                    result == 0
+                                )
+                            )
                             fileChannel.send(result)
                         }
                     }
-                }else if(cmdState==4){
-                    val deviceInfo=DeviceInfo(temp)
+                } else if (cmdState == 4) {
+                    val deviceInfo = DeviceInfo(temp)
                     dataScope.launch {
                         deviceChannel.send(deviceInfo)
                     }
                 }
-
-
 
 
                 val tempBytes: ByteArray? =
@@ -207,10 +211,10 @@ class BleDataWorker {
         }
     }
 
-    suspend fun getDeviceInfo(): DeviceInfo{
+    suspend fun getDeviceInfo(): DeviceInfo {
         mutex.withLock {
             cmdState = 4
-            val pkg =GetDeviceInfoPkg()
+            val pkg = GetDeviceInfoPkg()
             sendCmd(pkg.buf)
             return deviceChannel.receive()
         }

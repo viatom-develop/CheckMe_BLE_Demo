@@ -1,4 +1,4 @@
-package com.viatom.checkme.leftnavi.dailyCheck
+package com.viatom.checkme.leftnavi.wave
 
 import android.content.Context
 import android.graphics.Canvas
@@ -54,10 +54,14 @@ class WaveView : View {
                  p.lineTo(index.toFloat()*width/size,height/4+m.toFloat()/500)
              }*/
             for (index in 0 until size) {
-                p.lineTo(
-                    index.toFloat() * width / size,
-                    height * 1 / 2 - this[index].toFloat() / 1000
-                )
+                val a= height * 1 / 2 - this[index].toFloat() / 1000
+                if(a in 0.0..300.0){
+                    p.lineTo(
+                        index.toFloat() * width / size,
+                        a
+                    )
+                }
+
             }
             canvas.drawPath(p, wave_paint)
         }

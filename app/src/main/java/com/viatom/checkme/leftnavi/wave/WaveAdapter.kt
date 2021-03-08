@@ -1,4 +1,4 @@
-package com.viatom.checkme.leftnavi.dailyCheck
+package com.viatom.checkme.leftnavi.wave
 
 import android.content.Context
 import android.view.LayoutInflater

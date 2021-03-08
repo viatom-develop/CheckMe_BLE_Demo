@@ -14,6 +14,7 @@ import com.viatom.checkme.bean.DlcBean
 import com.viatom.checkme.bean.UserBean
 import com.viatom.checkme.ble.format.EcgWaveInfo
 import com.viatom.checkme.ble.worker.BleDataWorker
+import com.viatom.checkme.leftnavi.wave.WaveAdapter
 import com.viatom.checkme.utils.Constant
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch

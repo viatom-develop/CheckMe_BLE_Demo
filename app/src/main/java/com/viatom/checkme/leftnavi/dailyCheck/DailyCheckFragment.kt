@@ -20,6 +20,7 @@ import com.viatom.checkme.ble.format.DlcInfo
 
 import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.leftnavi.UiChannel
+import com.viatom.checkme.leftnavi.wave.WaveAdapter
 import com.viatom.checkme.utils.Constant
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -166,12 +167,11 @@ class DailyCheckFragment : Fragment() {
                 if (k.progress == -100) {
                     delay(300)
                     model.done.value = false
-                }else{
-                    if(model.done.value==false)
-                    model.done.value = true
+                } else {
+                    if (model.done.value == false)
+                        model.done.value = true
                 }
             }
-
 
 
         }

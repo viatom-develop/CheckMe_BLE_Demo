@@ -63,7 +63,8 @@
                 android:padding="7dp"
                 android:text="O2"
                 android:textColor="#222222"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout

@@ -50,7 +50,7 @@ class EcgWaveInfo constructor(var bytes: ByteArray) {
             result[k] = if (k + index * total < waveList.size) {
                 waveList[k + index * total]
             } else {
-                0
+                1000000
             }
 
         }
