@@ -18,6 +18,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import no.nordicsemi.android.ble.data.Data
 import java.io.File
 import kotlin.experimental.inv
 
@@ -49,16 +50,18 @@ class BleDataWorker {
         var success: Boolean = false
     )
 
+    private val comeData = object:BleDataManager.OnNotifyListener{
+        override fun onNotify(device: BluetoothDevice?, data: Data?) {
+            data?.value?.apply {
+                pool = add(pool, this)
+            }
+            pool?.apply {
+                pool = hasResponse(pool)
+            }
+        }
 
-    @ExperimentalUnsignedTypes
-    private val comeData = BleDataManager.onNotifyListener { _, data ->
-        data?.value?.apply {
-            pool = add(pool, this)
-        }
-        pool?.apply {
-            pool = hasResponse(pool)
-        }
     }
+
 
     @ExperimentalUnsignedTypes
     private fun hasResponse(bytes: ByteArray?): ByteArray? {

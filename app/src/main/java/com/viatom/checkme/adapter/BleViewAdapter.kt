@@ -1,85 +1,67 @@
-package com.viatom.checkme.adapter;
+package com.viatom.checkme.adapter
 
-import android.bluetooth.BluetoothDevice;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.bluetooth.BluetoothDevice
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.viatom.checkme.R
+import com.viatom.checkme.bean.BleBean
+import java.util.*
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.viatom.checkme.R;
-import com.viatom.checkme.bean.BleBean;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class BleViewAdapter extends RecyclerView.Adapter<BleViewAdapter.ViewHolder> {
-    private List<BleBean> mBleData;
-    private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
-    private Context mContext;
-
-    // data is passed into the constructor
-    public BleViewAdapter(Context context) {
-        this.mInflater = LayoutInflater.from(context);
-        this.mBleData = new ArrayList<>();
-        mContext = context;
-    }
-
+class BleViewAdapter(context: Context) : RecyclerView.Adapter<BleViewAdapter.ViewHolder>() {
+    private val mBleData: MutableList<BleBean>
+    private val mInflater: LayoutInflater = LayoutInflater.from(context)
+    private var mClickListener: ItemClickListener? = null
+    private val mContext: Context
 
     // inflates the cell layout from xml when needed
-    @Override
-    @NonNull
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_ble, parent, false);
-        return new ViewHolder(view);
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = mInflater.inflate(R.layout.item_ble, parent, false)
+        return ViewHolder(view)
     }
 
     // binds the data to the TextView in each cell
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bleName.setText(mBleData.get(position).getName());
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bleName.text = mBleData[position].name
     }
 
-    public void addDevice(String name, BluetoothDevice bluetoothDevice) {
-        mBleData.add(new BleBean(name, bluetoothDevice));
-        notifyDataSetChanged();
+    fun addDevice(name: String?, bluetoothDevice: BluetoothDevice?) {
+        mBleData.add(BleBean(name!!, bluetoothDevice!!))
+        notifyDataSetChanged()
     }
-
 
     // total number of cells
-    @Override
-    public int getItemCount() {
-        return mBleData.size();
+    override fun getItemCount(): Int {
+        return mBleData.size
     }
 
     // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
+    fun setClickListener(itemClickListener: ItemClickListener?) {
+        mClickListener = itemClickListener
     }
 
-
-    public interface ItemClickListener {
-        void onScanItemClick(BluetoothDevice bluetoothDevice);
+    interface ItemClickListener {
+        fun onScanItemClick(bluetoothDevice: BluetoothDevice?)
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView bleName;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            bleName = itemView.findViewById(R.id.ble_name);
-            itemView.setOnClickListener(this);
+    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+        var bleName: TextView = itemView.findViewById(R.id.ble_name)
+        override fun onClick(view: View) {
+            if (mClickListener != null) mClickListener!!.onScanItemClick(mBleData[adapterPosition].bluetoothDevice)
         }
 
-        @Override
-        public void onClick(View view) {
-            if (mClickListener != null)
-                mClickListener.onScanItemClick(mBleData.get(getAdapterPosition()).getBluetoothDevice());
+        init {
+            itemView.setOnClickListener(this)
         }
+    }
+
+    // data is passed into the constructor
+    init {
+        mBleData = ArrayList()
+        mContext = context
     }
 }
