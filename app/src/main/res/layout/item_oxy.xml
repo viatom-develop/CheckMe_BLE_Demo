@@ -16,9 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center_vertical|start">
 
             <ImageView
+                android:layout_marginStart="30dp"
                 android:id="@+id/head"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
@@ -79,24 +80,24 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center_vertical|start">
 
             <TextView
+                android:layout_marginStart="30dp"
                 android:id="@+id/way"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/userName"
-                android:layout_width="0dp"
+                android:layout_marginStart="20dp"
+                android:gravity="center"
+                android:layout_width="280dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:gravity="right|bottom"
                 android:padding="5dp"
                 android:textColor="#ffffff"
                 android:textSize="14sp" />

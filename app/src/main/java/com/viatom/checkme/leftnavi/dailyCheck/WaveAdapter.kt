@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.bean.DlcBean
 import com.viatom.checkme.bean.UserBean
-import com.viatom.checkme.ble.format.EcgWaveFile
-import com.viatom.checkme.ble.format.OxyFile
+import com.viatom.checkme.ble.format.EcgWaveInfo
+import com.viatom.checkme.ble.format.OxyInfo
+
 import java.util.*
 
 class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
@@ -20,8 +21,9 @@ class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
     private var mClickListener: userClickListener? = null
 
     @ExperimentalUnsignedTypes
-    var data: EcgWaveFile.EcgWaveInfo? = null
-    var data2: OxyFile.OxyInfo? = null
+    var data: EcgWaveInfo? = null
+    @ExperimentalUnsignedTypes
+    var data2: OxyInfo? = null
 
 
     // inflates the cell layout from xml when needed
@@ -31,6 +33,7 @@ class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
     }
 
     // binds the data to the TextView in each cell
+    @ExperimentalUnsignedTypes
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.re.measure(0, 0)
         val waveView = WaveView(context)

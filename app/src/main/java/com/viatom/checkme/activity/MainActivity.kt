@@ -27,7 +27,7 @@ import com.viatom.checkme.adapter.BleViewAdapter
 import com.viatom.checkme.adapter.UserViewAdapter
 import com.viatom.checkme.bean.BleBean
 import com.viatom.checkme.bean.UserBean
-import com.viatom.checkme.ble.format.UserFile
+import com.viatom.checkme.ble.format.UserInfo
 import com.viatom.checkme.ble.manager.BleScanManager
 import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.leftnavi.UiChannel
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     private val model: LeftHead by viewModels()
 
     @ExperimentalUnsignedTypes
-    lateinit var userInfo: UserFile.UserInfo
+    lateinit var userInfo: UserInfo
     lateinit var leftHeadIcon: ImageView
     lateinit var leftName: TextView
 
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         userChannel.receive()
         val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
         userTemp.apply {
-            userInfo = UserFile.UserInfo(this)
+            userInfo = UserInfo(this)
             val total = userInfo.user.size * userfileName.size + 1
             var tIndex = 1
             UiChannel.progressChannel.send(tIndex * 100 / total)
@@ -304,7 +304,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         if (file.exists()) {
             val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
             userTemp.apply {
-                userInfo = UserFile.UserInfo(this)
+                userInfo =UserInfo(this)
                 for (user in userInfo.user) {
                     userAdapter.addUser(user)
                 }

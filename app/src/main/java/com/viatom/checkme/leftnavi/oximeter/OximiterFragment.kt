@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
-import com.viatom.checkme.ble.format.OxyFile
+import com.viatom.checkme.ble.format.OxyInfo
 import com.viatom.checkme.utils.Constant
 import java.io.File
 
@@ -47,7 +47,7 @@ class OximiterFragment : Fragment() {
             val temp = file.readBytes()
             if (!temp.isEmpty()) {
                 temp.let {
-                    val f = OxyFile.OxyInfo(it)
+                    val f = OxyInfo(it)
                     model.list.value = f.Oxy
                 }
             }

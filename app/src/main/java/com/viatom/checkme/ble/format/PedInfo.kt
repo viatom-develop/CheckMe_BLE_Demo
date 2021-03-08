@@ -1,21 +1,20 @@
 package com.viatom.checkme.ble.format
 
 import com.vaca.x1.utils.toUInt
-import com.viatom.checkme.bean.SlpBean
+import com.viatom.checkme.bean.PedBean
 import java.util.*
 
-object SlpFile {
     @ExperimentalUnsignedTypes
-    class SlpInfo constructor(var bytes: ByteArray) {
-        var size: Int = bytes.size / 18
-        var Slp: ArrayList<SlpBean> = arrayListOf<SlpBean>()
+    class PedInfo constructor(var bytes: ByteArray) {
+        var size: Int = bytes.size / 27
+        var Ped: ArrayList<PedBean> = arrayListOf<PedBean>()
 
 
         init {
 
             var start: Int
             for (k in 0 until size) {
-                start = k * 18
+                start = k * 27
                 val year: Int = toUInt(setRange(start, 2))
                 val month: Int = toUInt(setRange(start + 2, 1)) - 1
                 val date: Int = toUInt(setRange(start + 3, 1))
@@ -29,8 +28,8 @@ object SlpFile {
                 calendar[Calendar.HOUR] = hour
                 calendar[Calendar.MINUTE] = minute
                 calendar[Calendar.SECOND] = second
-                Slp.add(SlpBean())
-                Slp[k].apply {
+                Ped.add(PedBean())
+                Ped[k].apply {
                     this.date = calendar.time
                     timeString = String.format(
                         "%04d%02d%02d%02d%02d%02d",
@@ -41,13 +40,12 @@ object SlpFile {
                         minute,
                         second
                     )
-                    time = toUInt(setRange(start + 7, 4))
-                    lowTime = toUInt(setRange(start + 11, 2))
-                    lowCount = toUInt(setRange(start + 13, 2))
-                    minO2 = toUInt(setRange(start + 15, 1))
-                    meanO2 = toUInt(setRange(start + 16, 1))
-                    face = toUInt(setRange(start + 17, 1))
-                    if (face > 2) face = 2
+                    step = toUInt(setRange(start + 7, 4))
+                    dis = toUInt(setRange(start + 11, 4)).toFloat() / 100f
+                    speed = toUInt(setRange(start + 15, 4)).toFloat() / 10f
+                    cal = toUInt(setRange(start + 19, 4)).toFloat() / 100f
+                    fat = toUInt(setRange(start + 23, 2)).toFloat() / 100f
+                    time = toUInt(setRange(start + 25, 2))
                 }
             }
 
@@ -61,4 +59,3 @@ object SlpFile {
 
     }
 
-}

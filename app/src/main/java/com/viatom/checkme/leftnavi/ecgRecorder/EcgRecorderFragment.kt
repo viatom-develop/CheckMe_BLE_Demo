@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
-import com.viatom.checkme.ble.format.EcgFile
+import com.viatom.checkme.ble.format.EcgInfo
 import com.viatom.checkme.utils.Constant
 import java.io.File
 
@@ -47,7 +47,7 @@ class EcgRecorderFragment : Fragment() {
             val temp = file.readBytes()
 
             temp.let {
-                val f = EcgFile.EcgInfo(it)
+                val f = EcgInfo(it)
                 model.list.value = f.ecg
             }
 

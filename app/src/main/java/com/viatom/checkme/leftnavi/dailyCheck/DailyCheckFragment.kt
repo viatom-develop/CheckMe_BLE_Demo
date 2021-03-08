@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
-import com.viatom.checkme.ble.format.DlcFile
+import com.viatom.checkme.ble.format.DlcInfo
+
 import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.utils.Constant
@@ -180,7 +181,7 @@ class DailyCheckFragment : Fragment() {
         if (file.exists()) {
             val temp = file.readBytes()
             temp.let {
-                val f = DlcFile.DlcInfo(it)
+                val f = DlcInfo(it)
                 model.list.value = f.dlc
             }
         } else {

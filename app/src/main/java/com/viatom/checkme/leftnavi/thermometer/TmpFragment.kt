@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
 import com.viatom.checkme.activity.MainActivity
-import com.viatom.checkme.ble.format.TmpFile
+import com.viatom.checkme.ble.format.TmpInfo
 import com.viatom.checkme.utils.Constant
 import java.io.File
 
@@ -48,7 +48,7 @@ class TmpFragment : Fragment() {
             val temp = file.readBytes()
 
             temp.let {
-                val f = TmpFile.TmpInfo(it)
+                val f = TmpInfo(it)
                 model.list.value = f.Tmp
             }
 
