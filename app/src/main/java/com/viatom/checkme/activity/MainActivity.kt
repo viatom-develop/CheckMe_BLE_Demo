@@ -2,6 +2,7 @@ package com.viatom.checkme.activity
 
 import android.bluetooth.BluetoothDevice
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.widget.ImageView
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     //-------------8 files
     var downloadNumber = 8
     var currentNumber = 0
-    private var userfileName = arrayOf(
+    private var userFileName = arrayOf(
         "dlc.dat",
         "spc.dat",
         "hrv.dat",
@@ -101,11 +102,11 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
         userTemp.apply {
             userInfo = UserInfo(this)
-            val total = userInfo.user.size * userfileName.size + 1
+            val total = userInfo.user.size * userFileName.size + 1
             var tIndex = 1
             UiChannel.progressChannel.send(tIndex * 100 / total)
             for (user in userInfo.user) {
-                for (f in userfileName) {
+                for (f in userFileName) {
                     bleWorker.getFile(user.id + f)
                     tIndex++
                     UiChannel.progressChannel.send(tIndex * 100 / total)
@@ -213,6 +214,13 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
 
     override fun onUserItemClick(userBean: UserBean?, position: Int) {
+        dataScope.launch {
+            val x=bleWorker.getDeviceInfo()
+            for(k in x.json.keys()){
+                Log.e("JSON","json key     $k")
+            }
+
+        }
         userBean?.apply {
             model.headIcon.value = ico
             model.headName.value = name

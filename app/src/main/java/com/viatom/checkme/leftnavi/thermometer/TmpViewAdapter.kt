@@ -29,7 +29,7 @@ class TmpViewAdapter(context: Context) :
     // binds the data to the TextView in each cell
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mTmpData[position].apply {
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy   hh : mm : ss", Locale.ENGLISH)
             holder.time.text = dateFormat.format(date)
             holder.tmp.text = Constant.TmpWay[way] + ":  " + tmp.toString() + " ℃"
             holder.face.setImageResource(Constant.RESULT_IMG[face])

@@ -27,7 +27,7 @@ class PedViewAdapter(context: Context) :
     // binds the data to the TextView in each cell
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mPedData[position].apply {
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy   hh : mm : ss", Locale.ENGLISH)
             holder.recordTime.text = dateFormat.format(date)
             holder.step.text = step.toString()
             holder.dis.text = dis.toString()

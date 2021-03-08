@@ -18,7 +18,6 @@ class SleepViewAdapter(context: Context) :
     RecyclerView.Adapter<SleepViewAdapter.ViewHolder>() {
     var mSlpData: MutableList<SlpBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private var mClickListener: userClickListener? = null
 
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,11 +31,11 @@ class SleepViewAdapter(context: Context) :
             val dateFormat = SimpleDateFormat("MMM. d, yyyy   hh : mm : ss", Locale.ENGLISH)
             holder.time.text = dateFormat.format(date)
             holder.face.setImageResource(Constant.RESULT_IMG[face])
-            holder.lastTime.text = "duration: " + time.toString() + " s"
-            holder.minO2.text = "min o2: " + minO2.toString()
-            holder.meanO2.text = "mean o2: " + meanO2.toString()
-            holder.lowTime.text = "low Time: " + lowTime.toString()
-            holder.lowCount.text = "low count: " + lowCount.toString()
+            holder.lastTime.text = "Duration: " + time.toString() + " s"
+            holder.minO2.text = "Min: " + minO2.toString()
+            holder.meanO2.text = "Mean: " + meanO2.toString()
+            holder.lowTime.text = "Low time: " + lowTime.toString()
+            holder.lowCount.text = "Low count: " + lowCount.toString()
         }
     }
 
@@ -61,8 +60,7 @@ class SleepViewAdapter(context: Context) :
         return mSlpData.size
     }
 
-    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
+    inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val time: TextView = itemView.findViewById(R.id.time)
         val face: ImageView = itemView.findViewById(R.id.face)
@@ -71,24 +69,8 @@ class SleepViewAdapter(context: Context) :
         val meanO2: TextView = itemView.findViewById(R.id.mean)
         val lowTime: TextView = itemView.findViewById(R.id.lowTime)
         val lowCount: TextView = itemView.findViewById(R.id.lowCount)
-        override fun onClick(view: View) {}
-
-        init {
-            itemView.setOnClickListener(this)
-        }
-    }
-
-    // allows clicks events to be caught
-    fun setClickListener(userClickListener: userClickListener?) {
-        mClickListener = userClickListener
-    }
-
-    interface userClickListener {
-        fun onUserItemClick(userBean: UserBean?, position: Int)
-    }
-
-    // data is passed into the constructor
-    init {
 
     }
+
+
 }

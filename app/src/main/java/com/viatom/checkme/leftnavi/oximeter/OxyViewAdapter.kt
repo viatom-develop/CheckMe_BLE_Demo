@@ -33,7 +33,7 @@ class OxyViewAdapter(context: Context, r: RecyclerView) :
         holder.bleName.text = mOxyData[position].timeString
 
         mOxyData[position].apply {
-            val dateFormat = SimpleDateFormat("MMM. d, yyyy | hh : mm : ss", Locale.ENGLISH)
+            val dateFormat = SimpleDateFormat("MMM. d, yyyy   hh : mm : ss", Locale.ENGLISH)
             holder.bleName.text = dateFormat.format(date)
             holder.o2.text = oxy.toString()
             holder.pr.text = pr.toString()
