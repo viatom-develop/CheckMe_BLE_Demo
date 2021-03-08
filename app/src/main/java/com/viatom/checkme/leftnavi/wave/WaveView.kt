@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.viatom.checkme.R
@@ -39,7 +38,6 @@ class WaveView : View {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        Log.e("sdfds", "开始了的附近开了多少积分多少圣诞快乐积分   $width    $height")
         this.canvas = canvas
         drawWave(canvas)
     }
@@ -54,8 +52,8 @@ class WaveView : View {
                  p.lineTo(index.toFloat()*width/size,height/4+m.toFloat()/500)
              }*/
             for (index in 0 until size) {
-                val a= height * 1 / 2 - this[index].toFloat() / 1000
-                if(a in 0.0..300.0){
+                val a = height * 1 / 2 - this[index].toFloat() / 1000
+                if (a in 0.0..width.toDouble()) {
                     p.lineTo(
                         index.toFloat() * width / size,
                         a
