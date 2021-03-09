@@ -72,7 +72,7 @@ class BleDataManager(context: Context) : BleManager(context) {
             // You may enqueue multiple operations. A queue ensures that all operations are
             // performed one after another, but it is not required.
             beginAtomicRequestQueue()
-                .add(requestMtu(203) // Remember, GATT needs 3 bytes extra. This will allow packet size of 244 bytes.
+                .add(requestMtu(103) // Remember, GATT needs 3 bytes extra. This will allow packet size of 244 bytes.
                     .with { _: BluetoothDevice?, mtu: Int ->
                         log(
                             Log.INFO,

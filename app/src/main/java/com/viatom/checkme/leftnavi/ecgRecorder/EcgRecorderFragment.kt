@@ -133,7 +133,7 @@ class EcgRecorderFragment : Fragment() {
 
 
     fun switch(s: String) {
-        val file = File(Constant.getPathX(s + "ecg.dat"))
+        val file = File(Constant.getPathX("ecg.dat"))
         if (file.exists()) {
             val temp = file.readBytes()
 
