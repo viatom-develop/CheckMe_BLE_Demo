@@ -73,17 +73,19 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     private val userChannel = Channel<Int>(Channel.CONFLATED)
 
     //-------------8 files
-    var downloadNumber = 8
-    var currentNumber = 0
+
+
     private var userFileName = arrayOf(
         "dlc.dat",
-        "spc.dat",
-        "hrv.dat",
+        "ped.dat",
+    )
+    private var commonFileName = arrayOf(
+        "bpcal.dat",
         "ecg.dat",
         "oxi.dat",
         "tmp.dat",
         "slm.dat",
-        "ped.dat"
+        "nibp.dat"
     )
     var currentUser = 0
 
@@ -103,7 +105,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         val userTemp = File(Constant.getPathX("usr.dat")).readBytes()
         userTemp.apply {
             userInfo = UserInfo(this)
-            val total = userInfo.user.size * userFileName.size + 1
+
+            val total = userInfo.user.size * 2 + 6 + 1
             var tIndex = 1
             UiChannel.progressChannel.send(tIndex * 100 / total)
             for (user in userInfo.user) {
@@ -114,6 +117,14 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 }
                 userAdapter.addUser(user)
             }
+            for (f in commonFileName) {
+                bleWorker.getFile(f)
+                tIndex++
+                UiChannel.progressChannel.send(tIndex * 100 / total)
+            }
+
+
+
             delay(300)
             UiChannel.progressChannel.close()
             userAdapter.setUserColor(0)
