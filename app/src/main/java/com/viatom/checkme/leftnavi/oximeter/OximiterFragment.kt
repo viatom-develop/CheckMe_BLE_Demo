@@ -41,7 +41,7 @@ class OximiterFragment : Fragment() {
 
 
     fun switch(s: String) {
-        val file = File(Constant.getPathX(s + "oxi.dat"))
+        val file = File(Constant.getPathX("oxi.dat"))
         if (file.exists()) {
             val temp = file.readBytes()
             if (!temp.isEmpty()) {
