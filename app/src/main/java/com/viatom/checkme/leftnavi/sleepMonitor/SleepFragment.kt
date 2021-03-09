@@ -42,7 +42,7 @@ class SleepFragment : Fragment() {
 
 
     fun switch(s: String) {
-        val file = File(Constant.getPathX(s + "tmp.dat"))
+        val file = File(Constant.getPathX( "tmp.dat"))
         if (file.exists()) {
             val slp = file.readBytes()
 

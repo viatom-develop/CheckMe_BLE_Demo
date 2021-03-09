@@ -42,7 +42,7 @@ class TmpFragment : Fragment() {
 
 
     fun switch(s: String) {
-        val file = File(Constant.getPathX(s + "tmp.dat"))
+        val file = File(Constant.getPathX("tmp.dat"))
         if (file.exists()) {
             val temp = file.readBytes()
 
