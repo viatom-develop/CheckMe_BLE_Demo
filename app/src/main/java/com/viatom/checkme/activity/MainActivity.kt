@@ -238,14 +238,9 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 }
                 val dateFormat = SimpleDateFormat("MMM. d, yyyy", ENGLISH)
                 rBirthday.text = dateFormat.format(birthday)
-                rWeight.text = weight.toString()
-                rHeight.text = height.toString()
-                rMedicalID.text = medicalId
-                if (pacemakeflag == 0) {
-                    rPacemaker.text = getString(R.string.no)
-                } else {
-                    rPacemaker.text = getString(R.string.yes)
-                }
+                rWeight.text = weight.toString()+" kg"
+                rHeight.text = height.toString()+" cm"
+
             }
 
 

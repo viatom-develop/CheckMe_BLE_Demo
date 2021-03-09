@@ -12,7 +12,7 @@ import com.viatom.checkme.R
 class WaveView : View {
     var canvas: Canvas? = null
     var data: IntArray? = null
-    val wave_paint = Paint()
+    private val wavePaint = Paint()
 
     constructor(context: Context?) : super(context) {
         init()
@@ -31,9 +31,12 @@ class WaveView : View {
     }
 
     private fun init() {
-        wave_paint.color = getColor(R.color.white)
-        wave_paint.style = Paint.Style.STROKE
-        wave_paint.strokeWidth = 2.0f
+        wavePaint.apply {
+            color = getColor(R.color.white)
+            style = Paint.Style.STROKE
+            strokeWidth = 2.0f
+        }
+
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -48,9 +51,6 @@ class WaveView : View {
         data?.apply {
             val p = Path()
             p.moveTo(0f, height * 1 / 2 - this[0].toFloat() / 1000)
-            /* for((index,m) in this.withIndex()){
-                 p.lineTo(index.toFloat()*width/size,height/4+m.toFloat()/500)
-             }*/
             for (index in 0 until size) {
                 val a = height * 1 / 2 - this[index].toFloat() / 1000
                 if (a in 0.0..width.toDouble()) {
@@ -61,7 +61,7 @@ class WaveView : View {
                 }
 
             }
-            canvas.drawPath(p, wave_paint)
+            canvas.drawPath(p, wavePaint)
         }
 
 
