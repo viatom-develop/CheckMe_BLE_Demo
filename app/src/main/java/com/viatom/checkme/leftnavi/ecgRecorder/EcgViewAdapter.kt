@@ -16,6 +16,7 @@ import com.viatom.checkme.ble.worker.BleDataWorker
 import com.viatom.checkme.leftnavi.wave.WaveAdapter
 import com.viatom.checkme.utils.Constant
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
@@ -94,6 +95,9 @@ class EcgViewAdapter(
                     }
                 }
                 val file2 = File(Constant.getPathX(mEcgData[adapterPosition].timeString))
+                delay(100)
+                BleDataWorker.fileProgressChannel.send(BleDataWorker.FileProgress(progress = 0))
+                delay(100)
                 BleDataWorker.fileProgressChannel.send(BleDataWorker.FileProgress(progress = -100))
                 if (file2.exists()) {
                     val info = EcgWaveInfo(file2.readBytes())
