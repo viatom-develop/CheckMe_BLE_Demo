@@ -1,5 +1,6 @@
 package com.viatom.checkme.ble.format
 
+import com.viatom.checkme.leftnavi.wave.ECGInnerItem
 import com.viatom.checkme.utils.toUInt
 
 
@@ -21,21 +22,22 @@ class EcgWaveInfo constructor(var bytes: ByteArray) {
 
 
     init {
-        if (waveViewSize * total < waveIntSize) {
-            waveViewSize++
-        }
+
         for (index in 0 until hrSize / 2) {
             hrList[index] = toUInt(setRange(index * 2 + 22, 2))
         }
-        for (index in 0 until waveSize / 2) {
-            /*  val a=bytes[23+index*2+hrSize].toInt()
-              if(a<-79){
-                  waveList[index]=(a+256)*256
-              }else{
-                  waveList[index]=a*256
-              }*/
-            waveList[index] =
-                bytes[23 + index * 2 + hrSize].toInt() * 256 + bytes[22 + index * 2 + hrSize].toInt()
+//        for (index in 0 until waveSize / 2) {
+
+//            waveList[index] =
+//                bytes[23 + index * 2 + hrSize].toInt() * 256 + bytes[22 + index * 2 + hrSize].toInt()
+//        }
+
+
+        waveList=ECGInnerItem(bytes).ecgData
+        waveIntSize=waveList.size
+        waveViewSize=waveIntSize/total
+        if (waveViewSize * total < waveIntSize) {
+            waveViewSize++
         }
     }
 
