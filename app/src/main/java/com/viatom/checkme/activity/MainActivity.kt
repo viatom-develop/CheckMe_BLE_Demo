@@ -82,8 +82,10 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         "ecg.dat",
         "oxi.dat",
         "tmp.dat",
+        "bpi.dat",
         "slm.dat",
-        "ped.dat"
+        "ped.dat",
+        "nibp.dat"
     )
     var currentUser = 0
 
@@ -114,6 +116,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 }
                 userAdapter.addUser(user)
             }
+
             delay(300)
             UiChannel.progressChannel.close()
             userAdapter.setUserColor(0)
