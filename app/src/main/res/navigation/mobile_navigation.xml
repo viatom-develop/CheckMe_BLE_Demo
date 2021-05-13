@@ -47,4 +47,8 @@
         android:name="com.viatom.checkme.leftnavi.about.AboutFragment"
         android:label="About"
         tools:layout="@layout/fragment_about" />
+    <fragment
+        android:id="@+id/bpFragment"
+        android:name="com.viatom.checkme.leftnavi.bp.BpFragment"
+        android:label="Blood Pressure" />
 </navigation>

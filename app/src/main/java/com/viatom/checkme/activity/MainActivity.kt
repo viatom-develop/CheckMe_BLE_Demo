@@ -33,6 +33,7 @@ import com.viatom.checkme.databinding.ActivityMainBinding
 import com.viatom.checkme.databinding.RightDrawerBinding
 import com.viatom.checkme.databinding.ScanViewBinding
 import com.viatom.checkme.leftnavi.UiChannel
+import com.viatom.checkme.leftnavi.bp.BpFragment
 import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
 import com.viatom.checkme.leftnavi.oximeter.OximiterFragment
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
     private var userFileName = arrayOf(
         "dlc.dat",
         "ped.dat",
+        "nibp.dat",
     )
     private var commonFileName = arrayOf(
         "bpcal.dat",
@@ -85,7 +87,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         "oxi.dat",
         "tmp.dat",
         "slm.dat",
-        "nibp.dat"
     )
     var currentUser = 0
 
@@ -160,6 +161,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_1,
+                R.id.bpFragment,
                 R.id.nav_2,
                 R.id.nav_3,
                 R.id.nav_4,
@@ -267,6 +269,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             } else if (fragmentCurrent is TmpFragment) {
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is SleepFragment) {
+                fragmentCurrent.switch(id)
+            }else if(fragmentCurrent is BpFragment){
                 fragmentCurrent.switch(id)
             }
 
