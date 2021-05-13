@@ -50,9 +50,9 @@ class WaveView : View {
         canvas.drawColor(getColor(R.color.black))
         data?.apply {
             val p = Path()
-            p.moveTo(0f, height * 1 / 2 - this[0].toFloat() / 1000)
+            p.moveTo(0f, height * 1 / 2 - this[0].toFloat() / 5)
             for (index in 0 until size) {
-                val a = height * 1 / 2 - this[index].toFloat() / 1000
+                val a = height * 1 / 2 - this[index].toFloat() / 5
                 if (a in 0.0..width.toDouble()) {
                     p.lineTo(
                         index.toFloat() * width / size,
