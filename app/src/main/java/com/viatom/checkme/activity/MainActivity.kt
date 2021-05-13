@@ -33,6 +33,7 @@ import com.viatom.checkme.databinding.ActivityMainBinding
 import com.viatom.checkme.databinding.RightDrawerBinding
 import com.viatom.checkme.databinding.ScanViewBinding
 import com.viatom.checkme.leftnavi.UiChannel
+import com.viatom.checkme.leftnavi.bp.BpFragment
 import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
 import com.viatom.checkme.leftnavi.oximeter.OximiterFragment
@@ -117,6 +118,10 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 userAdapter.addUser(user)
             }
 
+//            val xx=File(Constant.getPathX("2nibp.dat")).readBytes()
+//            for(k in xx){
+//                println("fuck"+k.toUByte().toInt().toString())
+//            }
             delay(300)
             UiChannel.progressChannel.close()
             userAdapter.setUserColor(0)
@@ -152,6 +157,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_1,
+                R.id.bpFragment,
                 R.id.nav_2,
                 R.id.nav_3,
                 R.id.nav_4,
@@ -264,6 +270,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             } else if (fragmentCurrent is TmpFragment) {
                 fragmentCurrent.switch(id)
             } else if (fragmentCurrent is SleepFragment) {
+                fragmentCurrent.switch(id)
+            }else if(fragmentCurrent is BpFragment){
                 fragmentCurrent.switch(id)
             }
 

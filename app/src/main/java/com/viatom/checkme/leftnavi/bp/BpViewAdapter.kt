@@ -7,47 +7,47 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
-import com.viatom.checkme.bean.PedBean
+import com.viatom.checkme.bean.BpBean
 import com.viatom.checkme.bean.UserBean
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BpViewAdapter(context: Context) :
     RecyclerView.Adapter<BpViewAdapter.ViewHolder>() {
-    var mPedData: MutableList<PedBean> = ArrayList()
+    var mBpData: MutableList<BpBean> = ArrayList()
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mClickListener: UserClickListener? = null
 
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = mInflater.inflate(R.layout.item_ped, parent, false)
+        val view = mInflater.inflate(R.layout.item_bp, parent, false)
         return ViewHolder(view)
     }
 
     // binds the data to the TextView in each cell
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        mPedData[position].apply {
+        mBpData[position].apply {
             val dateFormat = SimpleDateFormat("MMM. d, yyyy   hh : mm : ss", Locale.ENGLISH)
-            holder.recordTime.text = dateFormat.format(date)
-            holder.step.text = step.toString()
-            holder.dis.text = dis.toString()
-            holder.speed.text = speed.toString()
-            holder.cal.text = cal.toString()
-            holder.fat.text = fat.toString()
-            holder.time.text = time.toString()
+            holder.let {
+                it.recordTime.text = dateFormat.format(date)
+                it.pr.text="pulseRate: $pr"
+                it.dia.text="dia: $dia"
+                it.sys.text="sys: $sys"
+            }
+
         }
     }
 
-    fun add(userBean: PedBean) {
-        mPedData.add(userBean)
+    fun add(userBean: BpBean) {
+        mBpData.add(userBean)
         notifyDataSetChanged()
     }
 
     fun addAll(userBean: ArrayList<*>?) {
-        mPedData.clear()
+        mBpData.clear()
         if (userBean != null) {
             for (m in userBean) {
-                mPedData.add(m as PedBean)
+                mBpData.add(0,m as BpBean)
             }
         }
         notifyDataSetChanged()
@@ -56,18 +56,15 @@ class BpViewAdapter(context: Context) :
 
     // total number of cells
     override fun getItemCount(): Int {
-        return mPedData.size
+        return mBpData.size
     }
 
     inner class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         val recordTime: TextView = itemView.findViewById(R.id.recordTime)
-        val step: TextView = itemView.findViewById(R.id.step)
-        val dis: TextView = itemView.findViewById(R.id.dis)
-        val speed: TextView = itemView.findViewById(R.id.speed)
-        val cal: TextView = itemView.findViewById(R.id.cal)
-        val fat: TextView = itemView.findViewById(R.id.fat)
-        val time: TextView = itemView.findViewById(R.id.time)
+        val sys: TextView = itemView.findViewById(R.id.sys)
+        val dia: TextView = itemView.findViewById(R.id.dia)
+        val pr: TextView = itemView.findViewById(R.id.pr)
         override fun onClick(view: View) {}
 
         init {
