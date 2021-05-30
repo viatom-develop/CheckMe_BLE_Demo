@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.tencent.bugly.crashreport.CrashReport
 import com.viatom.checkme.R
 import com.viatom.checkme.adapter.BleViewAdapter
 import com.viatom.checkme.adapter.UserViewAdapter
@@ -228,7 +229,6 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         initVar()
         initView()
         initScan()
-
     }
 
 

@@ -52,4 +52,5 @@ dependencies {
     implementation 'no.nordicsemi.android:ble:2.2.4'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+    implementation "com.tencent.bugly:crashreport:3.3.92"
 }
