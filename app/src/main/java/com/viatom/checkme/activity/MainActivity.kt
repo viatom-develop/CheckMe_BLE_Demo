@@ -119,10 +119,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 userAdapter.addUser(user)
             }
 
-//            val xx=File(Constant.getPathX("2nibp.dat")).readBytes()
-//            for(k in xx){
-//                println("fuck"+k.toUByte().toInt().toString())
-//            }
+
             delay(300)
             UiChannel.progressChannel.close()
             userAdapter.setUserColor(0)
