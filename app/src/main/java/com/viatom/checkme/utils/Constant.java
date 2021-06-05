@@ -25,9 +25,10 @@ public class Constant {
     }
 
     public static void initVar(Context context) {
-        File[] fs = context.getExternalFilesDirs(null);
-        if (fs != null && fs.length >= 1) {
-            filePath = fs[0].getAbsolutePath() + "/";
-        }
+//        File[] fs = context.getExternalFilesDirs(null);
+//        if (fs != null && fs.length >= 1) {
+//            filePath = fs[0].getAbsolutePath() + "/";
+//        }
+        filePath=context.getFilesDir().getAbsolutePath() + "/"
     }
 }
