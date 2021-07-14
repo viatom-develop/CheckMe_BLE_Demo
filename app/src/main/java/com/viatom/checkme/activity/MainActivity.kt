@@ -37,6 +37,7 @@ import com.viatom.checkme.leftnavi.UiChannel
 import com.viatom.checkme.leftnavi.bp.BpFragment
 import com.viatom.checkme.leftnavi.dailyCheck.DailyCheckFragment
 import com.viatom.checkme.leftnavi.ecgRecorder.EcgRecorderFragment
+import com.viatom.checkme.leftnavi.glucose.GluFragment
 import com.viatom.checkme.leftnavi.oximeter.OximiterFragment
 import com.viatom.checkme.leftnavi.pedometer.PedometerFragment
 import com.viatom.checkme.leftnavi.sleepMonitor.SleepFragment
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         "dlc.dat",
         "ped.dat",
         "nibp.dat",
+        "glu.dat"
     )
     private var commonFileName = arrayOf(
         "bpcal.dat",
@@ -165,6 +167,7 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
                 R.id.bpFragment,
                 R.id.nav_2,
                 R.id.nav_3,
+                R.id.nav_32,
                 R.id.nav_4,
                 R.id.nav_5,
                 R.id.nav_51,
@@ -271,6 +274,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
             } else if (fragmentCurrent is SleepFragment) {
                 fragmentCurrent.switch(id)
             }else if(fragmentCurrent is BpFragment){
+                fragmentCurrent.switch(id)
+            }else if(fragmentCurrent is GluFragment){
                 fragmentCurrent.switch(id)
             }
 

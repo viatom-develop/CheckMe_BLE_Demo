@@ -21,6 +21,10 @@
             android:icon="@drawable/spo2_l"
             android:title="@string/pulse_oximeter" />
         <item
+            android:id="@+id/nav_32"
+            android:icon="@drawable/ic_baseline_wb_sunny_24"
+            android:title="@string/glucose_meters" />
+        <item
             android:id="@+id/nav_4"
             android:icon="@drawable/temp_l"
             android:title="@string/thermometer" />
