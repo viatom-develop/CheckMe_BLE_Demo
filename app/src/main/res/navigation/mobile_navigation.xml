@@ -23,6 +23,11 @@
         android:label="Pulse Oximeter"
         tools:layout="@layout/fragment_pulseoximeter" />
     <fragment
+        android:id="@+id/nav_32"
+        android:name="com.viatom.checkme.leftnavi.glucose.GluFragment"
+        android:label="@string/glucose_meters"
+        tools:layout="@layout/fragment_glu" />
+    <fragment
         android:id="@+id/nav_4"
         android:name="com.viatom.checkme.leftnavi.thermometer.TmpFragment"
         android:label="Thermometer"
