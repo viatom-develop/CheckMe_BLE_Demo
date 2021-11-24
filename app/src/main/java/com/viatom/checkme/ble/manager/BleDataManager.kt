@@ -43,21 +43,22 @@ class BleDataManager(context: Context) : BleManager(context) {
                 write_char = service.getCharacteristic(write_uuid)
                 notify_char = service.getCharacteristic(notify_uuid)
             }
-            // Validate properties
-            var notify = false
-            if (notify_char != null) {
-                val properties = notify_char!!.properties
-                notify = properties and BluetoothGattCharacteristic.PROPERTY_NOTIFY != 0
-            }
-            var writeRequest = false
-            if (write_char != null) {
-                val properties = write_char!!.properties
-                writeRequest =
-                    properties and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE != 0
-                write_char!!.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
-            }
+//            // Validate properties
+//            var notify = false
+//            if (notify_char != null) {
+//                val properties = notify_char!!.properties
+//                notify = properties and BluetoothGattCharacteristic.PROPERTY_NOTIFY != 0
+//            }
+//            var writeRequest = false
+//            if (write_char != null) {
+//                val properties = write_char!!.properties
+//                writeRequest =
+//                    properties and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE != 0
+//                write_char!!.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
+//            }
             // Return true if all required services have been found
-            return write_char != null && notify_char != null && notify && writeRequest
+       //     return write_char != null && notify_char != null && notify && writeRequest
+            return true
         }
 
         // If you have any optional services, allocate them here. Return true only if
@@ -72,7 +73,7 @@ class BleDataManager(context: Context) : BleManager(context) {
             // You may enqueue multiple operations. A queue ensures that all operations are
             // performed one after another, but it is not required.
             beginAtomicRequestQueue()
-                .add(requestMtu(103) // Remember, GATT needs 3 bytes extra. This will allow packet size of 244 bytes.
+                .add(requestMtu(23) // Remember, GATT needs 3 bytes extra. This will allow packet size of 244 bytes.
                     .with { _: BluetoothDevice?, mtu: Int ->
                         log(
                             Log.INFO,
