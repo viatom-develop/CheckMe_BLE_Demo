@@ -1,5 +1,6 @@
 package com.viatom.checkme.ble.format
 
+import android.util.Log
 import com.viatom.checkme.bean.SlpBean
 import com.viatom.checkme.utils.toUInt
 import java.util.*
@@ -11,6 +12,7 @@ class SlpInfo constructor(var bytes: ByteArray) {
 
 
     init {
+
 
         var start: Int
         for (k in 0 until size) {

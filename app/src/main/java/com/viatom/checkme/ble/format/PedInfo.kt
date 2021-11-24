@@ -1,20 +1,21 @@
 package com.viatom.checkme.ble.format
 
+import android.util.Log
 import com.viatom.checkme.bean.PedBean
 import com.viatom.checkme.utils.toUInt
 import java.util.*
 
 
 class PedInfo constructor(var bytes: ByteArray) {
-    var size: Int = bytes.size / 27
+    var size: Int = bytes.size / 29
     var Ped: ArrayList<PedBean> = arrayListOf<PedBean>()
 
 
     init {
-
+        Log.e("pedoSize",bytes.size.toString())
         var start: Int
         for (k in 0 until size) {
-            start = k * 27
+            start = k * 29
             val year: Int = toUInt(setRange(start, 2))
             val month: Int = toUInt(setRange(start + 2, 1)) - 1
             val date: Int = toUInt(setRange(start + 3, 1))
