@@ -184,8 +184,8 @@ class BleDataWorker {
         bluetoothDevice?.let {
             myBleDataManager.connect(it)
                 .useAutoConnect(true)
-                .timeout(10000)
-                .retry(15, 100)
+
+                .retry(150, 10)
                 .done {
                     Log.i("BLE", "连接成功了.>>.....>>>>")
                     dataScope.launch {
