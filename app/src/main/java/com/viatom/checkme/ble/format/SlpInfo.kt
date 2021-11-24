@@ -1,5 +1,6 @@
 package com.viatom.checkme.ble.format
 
+import android.util.Log
 import com.viatom.checkme.bean.SlpBean
 import com.viatom.checkme.utils.toUInt
 import java.util.*
@@ -8,13 +9,21 @@ import java.util.*
 class SlpInfo constructor(var bytes: ByteArray) {
     var size: Int = bytes.size / 18
     var Slp: ArrayList<SlpBean> = arrayListOf<SlpBean>()
-
+    fun byteArray2String(byteArray: ByteArray): String {
+        var fuc = ""
+        for (b in byteArray) {
+            val st = String.format("%02X", b)
+            fuc += ("$st  ");
+        }
+        return fuc
+    }
 
     init {
 
+        Log.e("sleepSIze",byteArray2String(bytes))
         var start: Int
         for (k in 0 until size) {
-            start = k * 18
+            start = k *18
             val year: Int = toUInt(setRange(start, 2))
             val month: Int = toUInt(setRange(start + 2, 1)) - 1
             val date: Int = toUInt(setRange(start + 3, 1))
