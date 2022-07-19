@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.viatom.checkme.R
@@ -27,6 +28,7 @@ class EcgRecorderFragment : Fragment() {
 
     private val model: EcgRecorderViewModel by viewModels()
     lateinit var ecgViewAdapter: EcgViewAdapter
+
 
 
     override fun onCreateView(
@@ -68,30 +70,34 @@ class EcgRecorderFragment : Fragment() {
 
 
         backButton.setOnClickListener {
+            pro.visibility=View.GONE
             waveLayout.visibility = View.GONE
             r.visibility = View.VISIBLE
             ecgViewAdapter.notifyDataSetChanged()
 
         }
 
-        model.list.observe(viewLifecycleOwner, {
+        model.list.observe(viewLifecycleOwner) {
             ecgViewAdapter.addAll(it)
-        })
+        }
 
 
-        model.done.observe(viewLifecycleOwner, {
+        model.done.observe(viewLifecycleOwner) {
             if (it) {
                 pro.visibility = View.VISIBLE
             } else {
                 pro.visibility = View.GONE
             }
-        })
+        }
 
 
 
-        model.progress.observe(viewLifecycleOwner, {
+        model.progress.observe(viewLifecycleOwner) {
             pro.progress = it
-        })
+
+
+        }
+
 
         model.waveVisible.observe(viewLifecycleOwner, {
             wave.visibility = if (it) {
