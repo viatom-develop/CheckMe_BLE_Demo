@@ -68,6 +68,7 @@ class EcgRecorderFragment : Fragment() {
 
 
         backButton.setOnClickListener {
+            pro.visibility=View.GONE
             waveLayout.visibility = View.GONE
             r.visibility = View.VISIBLE
             ecgViewAdapter.notifyDataSetChanged()
