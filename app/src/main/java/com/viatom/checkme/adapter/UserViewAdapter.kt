@@ -32,7 +32,12 @@ class UserViewAdapter(context: Context, r: RecyclerView) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         mUserData[position].apply {
             holder.userName.text = name
-            holder.userIcon.setImageResource(Constant.ICO_IMG[ico - 1])
+            try {
+                holder.userIcon.setImageResource(Constant.ICO_IMG[ico - 1])
+            }catch (e:Exception){
+
+            }
+
             if (color == 0) {
                 holder.userName.textSize = 20f
                 holder.userBackground.setBackgroundColor(Color.parseColor("#ffa0b000"))

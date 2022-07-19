@@ -48,7 +48,12 @@ class EcgViewAdapter(
         mEcgData[position].apply {
             val dateFormat = SimpleDateFormat("MMM. d, yyyy   hh : mm : ss", Locale.ENGLISH)
             holder.bleName.text = dateFormat.format(date)
-            holder.face.setImageResource(Constant.RESULT_IMG[face])
+            try {
+                holder.face.setImageResource(Constant.RESULT_IMG[face])
+            }catch (e:Exception){
+
+            }
+
             holder.way.text = Constant.EcgWay[way - 1]
             val file = File(Constant.getPathX(timeString))
             holder.download.visibility = if (file.exists()) {

@@ -139,9 +139,16 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
 
     private fun addLiveDateObserver() {
+
         model.headIcon.observe(this, {
-            iconSync.setImageResource(Constant.ICO_IMG[it - 1])
-            leftHeadIcon.setImageResource(Constant.ICO_IMG[it - 1])
+
+            try {
+                iconSync.setImageResource(Constant.ICO_IMG[it - 1])
+                leftHeadIcon.setImageResource(Constant.ICO_IMG[it - 1])
+            }catch (e:Exception){
+
+            }
+
         })
         model.headName.observe(this, {
             leftName.text = it
