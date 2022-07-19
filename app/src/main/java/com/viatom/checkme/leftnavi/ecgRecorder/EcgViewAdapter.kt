@@ -1,6 +1,7 @@
 package com.viatom.checkme.leftnavi.ecgRecorder
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,6 +103,7 @@ class EcgViewAdapter(
                 if (file2.exists()) {
                     val info = EcgWaveInfo(file2.readBytes())
                     waveAdapter.data = info
+                    Log.e("resultEcg",info.result.toString())
                     waveAdapter.notifyDataSetChanged()
                     model.waveResult.value = info
                     waveLayout.visibility = View.VISIBLE

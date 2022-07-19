@@ -105,10 +105,10 @@ class EcgRecorderFragment : Fragment() {
         model.waveResult.observe(viewLifecycleOwner, {
             hr.text = "HR: " + it.hr.toString() + " bpm"
             st.text = "ST: " + it.st.toString() + " mV"
-            qrs.text = "QRS: " + it.hr.toString() + " ms"
-            pvcs.text = "PVCS: " + it.hr.toString()
-            qtc.text = "QTC: " + it.hr.toString() + " ms"
-            qt.text = "QT: " + it.hr.toString() + " ms"
+            qrs.text = "QRS: " + it.qrs.toString() + " ms"
+            pvcs.text = "PVCS: " + it.pvcs.toString()
+            qtc.text = "QTC: " + it.qtc.toString() + " ms"
+            qt.text = "QT: " + it.qt.toString() + " ms"
 
         })
         switch(MainActivity.currentId)

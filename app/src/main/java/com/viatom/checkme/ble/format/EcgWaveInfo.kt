@@ -13,7 +13,8 @@ class EcgWaveInfo constructor(var bytes: ByteArray) {
     var qrs: Int = toUInt(bytes.copyOfRange(10, 12))
     var pvcs: Int = toUInt(bytes.copyOfRange(12, 14))
     var qtc: Int = toUInt(bytes.copyOfRange(14, 16))
-    var qt: Int = toUInt(bytes.copyOfRange(20, 22))
+    var result: Int = toUInt(bytes.copyOfRange(16, 17))
+    var qt: Int = toUInt(bytes.copyOfRange(19, 21))
     var hrList: IntArray = IntArray(hrSize / 2)
     var waveList: IntArray = IntArray(waveSize / 2)
     var waveIntSize = waveSize / 2
