@@ -357,4 +357,8 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     }
 
+    fun disconnectDevice(){
+        bleWorker.disconnect();
+    }
+
 }

@@ -30,7 +30,7 @@ class BleDataWorker {
     private val deviceChannel = Channel<DeviceInfo>(Channel.CONFLATED)
     private val fileChannel = Channel<Int>(Channel.CONFLATED)
     private val connectChannel = Channel<String>(Channel.CONFLATED)
-    private lateinit var myBleDataManager: BleDataManager
+    private  var myBleDataManager: BleDataManager?=null
     private val dataScope = CoroutineScope(Dispatchers.IO)
     private val mutex = Mutex()
 
@@ -175,15 +175,15 @@ class BleDataWorker {
     }
 
     private fun sendCmd(bs: ByteArray) {
-        myBleDataManager.sendCmd(bs)
+        myBleDataManager?.sendCmd(bs)
     }
 
 
     fun initWorker(context: Context, bluetoothDevice: BluetoothDevice?) {
         myBleDataManager = BleDataManager(context)
-        myBleDataManager.setNotifyListener(comeData)
+        myBleDataManager!!.setNotifyListener(comeData)
         bluetoothDevice?.let {
-            myBleDataManager.connect(it)
+            myBleDataManager!!.connect(it)
                 .useAutoConnect(true)
                 .timeout(10000)
                 .retry(15, 100)
@@ -222,7 +222,7 @@ class BleDataWorker {
     }
 
     fun disconnect(){
-        myBleDataManager.disconnect().enqueue();
+        myBleDataManager?.disconnect()?.enqueue();
     }
 
 }
