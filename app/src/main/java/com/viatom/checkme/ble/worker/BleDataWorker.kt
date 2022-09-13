@@ -220,4 +220,8 @@ class BleDataWorker {
         }
     }
 
+    fun disconnect(){
+        myBleDataManager.disconnect().enqueue()
+    }
+
 }
