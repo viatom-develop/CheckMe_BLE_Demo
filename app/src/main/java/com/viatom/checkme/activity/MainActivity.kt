@@ -140,20 +140,20 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
 
     private fun addLiveDateObserver() {
 
-        model.headIcon.observe(this, {
+        model.headIcon.observe(this) {
 
             try {
                 iconSync.setImageResource(Constant.ICO_IMG[it - 1])
                 leftHeadIcon.setImageResource(Constant.ICO_IMG[it - 1])
-            }catch (e:Exception){
+            } catch (e: Exception) {
 
             }
 
-        })
-        model.headName.observe(this, {
+        }
+        model.headName.observe(this) {
             leftName.text = it
             nameTop.text = it
-        })
+        }
 
 
     }
@@ -368,6 +368,10 @@ class MainActivity : AppCompatActivity(), BleViewAdapter.ItemClickListener,
         }
         UiChannel.progressChannel.close()
 
+    }
+
+    fun disconnectDevice(){
+        bleWorker.disconnect();
     }
 
 }
