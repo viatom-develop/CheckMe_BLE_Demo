@@ -41,6 +41,7 @@ unsigned int	gEcgPauseTimeCnt;							// 心跳暂停计时
 unsigned int	gEcgPauseNum;								// 心跳暂停计数，holter模式中每分钟更新
 bool gIsEcgPause;													// 是否心跳暂停
 
+RESP_ALG_RESULT Resp_Result_temp;  // 呼吸率相关参数
 
 // 算法初始化函数
 void EcgAlgInitialize(void)
@@ -65,7 +66,7 @@ void EcgAlgInitialize(void)
 
 	// 实时分析结果初始化
 	EcgAlgGetResult(0, true);
-	
+
 	// 心率计算初始化
 	CalculateHeartRate(true);
 
@@ -75,7 +76,7 @@ void EcgAlgInitialize(void)
 	// 最终分析结果初始化
 	gbFirstExist = false;
 	EcgAlgGetFinalResult(0, true);
-	
+
 	// 这个要单独初始化一次，不在上面的EcgAlgGetResult（）里面初始化
 	gEcgAlgResult.isAsystole = false;
 
@@ -97,6 +98,9 @@ void EcgAlgInitialize(void)
 	gEcgPauseTimeCnt = 0;
 	gIsEcgPause = false;
 	gEcgPauseNum = 0;
+
+	// 呼吸函数初始化
+	RespMain(&Resp_Result_temp,0,1);
 }
 
 void EcgDataInitialize(void)
@@ -157,7 +161,7 @@ int EcgAlgRecalConfig(void)
 
 	// 将QRS波的个数清零
 	gQrsPeakNum = 0;
-	
+
 	gQrsInfo.nAveInterval = 0;
 	gQrsInfo.nAveSlope = 0;
 	gQrsInfo.nAveWidth = 0;
@@ -187,9 +191,6 @@ int EcgAlgRecalConfig(void)
 void EcgAlgAnalysis(int data)
 {
 	int temp_hrv = 0;
-	RESP_ALG_RESULT Resp_Result_temp;  // 呼吸率相关参数
-	float Calibration_temp = 0;   // 
-    bool reset_temp =  0;
 
 	// 初始化算法分析结果相关参数
 	// EcgAlgGetResult(0, true);
@@ -210,12 +211,12 @@ void EcgAlgAnalysis(int data)
 		// 本次滤波未填充算法数据缓存区，不执行后续计算，直接退出
 		return;
 	}
-	
+
 	// 进行QRS波检测
 	if (QrsComplexDetect(false))
 	{
 		// 计算当前呼吸率	    
-        RespMain(&Resp_Result_temp, Calibration_temp, reset_temp);
+		RespMain(&Resp_Result_temp, 0, 0);
 		gEcgAlgResult.RespRate = Resp_Result_temp.RespRate;
 		//printf("Resp_Result_temp.RespRate = %d  \n", Resp_Result_temp.RespRate); // debug   
 
@@ -384,6 +385,7 @@ int EcgAlgGetResult(ECG_ALG_RESULT *alg_result, bool reset)
 		gEcgAlgResult.nQrsPeakPos = 0;
 		gEcgAlgResult.nOntimeHrv = 0;
 
+		gEcgAlgResult.RespRate = 0;
 		return 0;
 	}
 
@@ -451,7 +453,7 @@ int EcgAlgGetDebugInfo(ECG_DEBUG_INFO *debug_info, bool reset)
 	{
 		return 0;
 	}
-	
+
 }
 
 
@@ -463,7 +465,7 @@ int EcgAlgGetDebugQrs(QRS_PEAK *qrs_peak_buff, ECG_NOISETYPE *ecg_noise_buff, in
 	if (reset)
 	{
 	}
-	
+
 	// 噪声检测缓存区赋值
 	for (i = 0; i < gEcgNoiseBuffNum; i++)
 	{
@@ -567,14 +569,14 @@ int SortAndSearch(int org[], int len, int mid)
 	// 冒泡排序
 	for (j = 0; j <= len - 1; j++)
 	{
-		for(i = 0; i < len - 1 - j; i++) 
+		for(i = 0; i < len - 1 - j; i++)
 		{
 			if(value[i] > value[i+1])
 			{
 				temp = value[i];
 				value[i] = value[i + 1];
 				value[i + 1] = temp;
-			}	
+			}
 		}
 	}
 

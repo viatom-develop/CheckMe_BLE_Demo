@@ -38,6 +38,7 @@ class WaveAdapter constructor(val context: Context, var r: RecyclerView) :
         holder.re.measure(0, 0)
         val waveView = WaveView(context)
         waveView.data = data?.getWave(position)
+        waveView.respirationData = data?.getRespiration(position)
         holder.re.addView(waveView)
 
     }

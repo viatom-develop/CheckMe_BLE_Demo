@@ -1,6 +1,7 @@
 package com.viatom.checkme.ble.format
 
 import com.viatom.checkme.leftnavi.wave.ECGInnerItem
+import com.viatom.checkme.utils.EcgRespiration
 import com.viatom.checkme.utils.toUInt
 
 
@@ -17,24 +18,25 @@ class EcgWaveInfo constructor(var bytes: ByteArray) {
     var qt: Int = toUInt(bytes.copyOfRange(19, 21))
     var hrList: IntArray = IntArray(hrSize / 2)
     var waveList: IntArray = IntArray(waveSize / 2)
+    var respirationArray=IntArray(waveSize/2)
     var waveIntSize = waveSize / 2
     val total = 2500
     var waveViewSize = waveIntSize / total
 
 
-    init {
 
+    init {
         for (index in 0 until hrSize / 2) {
             hrList[index] = toUInt(setRange(index * 2 + 22, 2))
         }
-//        for (index in 0 until waveSize / 2) {
-
-//            waveList[index] =
-//                bytes[23 + index * 2 + hrSize].toInt() * 256 + bytes[22 + index * 2 + hrSize].toInt()
-//        }
-
-
         waveList= ECGInnerItem(bytes).ecgData
+        respirationArray=  IntArray(waveList.size)
+        EcgRespiration.initEcgRespiration()
+        for(i in waveList.indices){
+            val result=EcgRespiration.inputEcgPoint(waveList[i])
+            respirationArray[i]=result
+        }
+
         waveIntSize=waveList.size
         waveViewSize=waveIntSize/total
         if (waveViewSize * total < waveIntSize) {
@@ -54,6 +56,20 @@ class EcgWaveInfo constructor(var bytes: ByteArray) {
                 waveList[k + index * total]
             } else {
                 1000000
+            }
+
+        }
+        return result
+
+    }
+
+    fun getRespiration(index: Int): IntArray {
+        val result = IntArray(total)
+        for (k in 0 until total) {
+            result[k] = if (k + index * total < respirationArray.size) {
+                respirationArray[k + index * total]
+            } else {
+                0
             }
 
         }

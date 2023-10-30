@@ -12,6 +12,7 @@ import com.viatom.checkme.R
 class WaveView : View {
     var canvas: Canvas? = null
     var data: IntArray? = null
+    var respirationData: IntArray? = null
     private val wavePaint = Paint()
 
     constructor(context: Context?) : super(context) {
@@ -35,6 +36,9 @@ class WaveView : View {
             color = getColor(R.color.white)
             style = Paint.Style.STROKE
             strokeWidth = 2.0f
+
+            //font size
+            textSize = 30f
         }
 
     }
@@ -60,6 +64,19 @@ class WaveView : View {
                     )
                 }
 
+            }
+            //draw 10 respiration data text
+            respirationData?.apply {
+                for (index in indices) {
+                    if (index % 200 == 0) {
+                        canvas.drawText(
+                            this[index].toString(),
+                            index.toFloat() * width / size,
+                            (height * 1 / 5).toFloat(),
+                            wavePaint
+                        )
+                    }
+                }
             }
             canvas.drawPath(p, wavePaint)
         }

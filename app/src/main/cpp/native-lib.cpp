@@ -3,9 +3,10 @@
 #include "EcgInterface.h"
 
 
+
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_vaca_ecg_1respiration_MainActivity_initEcgRespiration(JNIEnv *env, jobject thiz) {
+Java_com_viatom_checkme_utils_EcgRespiration_initEcgRespiration(JNIEnv *env, jobject thiz) {
     ECG_ALG_CONFIG alg_config;
     char ecg_alg_version[30] = {0};
     alg_config.sOrgSampleRate = 250;
@@ -17,9 +18,10 @@ Java_com_vaca_ecg_1respiration_MainActivity_initEcgRespiration(JNIEnv *env, jobj
     EcgAlgGetResult(NULL,true);
 }
 
+
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_vaca_ecg_1respiration_MainActivity_inputEcgPoint(JNIEnv *env, jobject thiz, jint data) {
+Java_com_viatom_checkme_utils_EcgRespiration_inputEcgPoint(JNIEnv *env, jobject thiz, jint data) {
     EcgAlgAnalysis(data);
     ECG_ALG_RESULT alg_result={0};
     EcgAlgGetResult(&alg_result,0);
