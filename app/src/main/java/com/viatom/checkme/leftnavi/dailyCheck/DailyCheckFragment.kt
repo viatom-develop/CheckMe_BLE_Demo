@@ -113,40 +113,40 @@ class DailyCheckFragment : Fragment() {
 
 
 
-        model.done.observe(viewLifecycleOwner, {
+        model.done.observe(viewLifecycleOwner) {
             if (it) {
                 pro.visibility = View.VISIBLE
             } else {
                 pro.visibility = View.GONE
             }
-        })
+        }
 
-        model.list.observe(viewLifecycleOwner, {
+        model.list.observe(viewLifecycleOwner) {
             dailyViewAdapter.addAll(it)
-        })
+        }
 
-        model.progress.observe(viewLifecycleOwner, {
+        model.progress.observe(viewLifecycleOwner) {
             pro.progress = it
-        })
+        }
 
-        model.waveVisible.observe(viewLifecycleOwner, {
+        model.waveVisible.observe(viewLifecycleOwner) {
             wave.visibility = if (it) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
-        })
+        }
 
 
-        model.waveResult.observe(viewLifecycleOwner, {
+        model.waveResult.observe(viewLifecycleOwner) {
             hr.text = "HR: " + it.hr.toString() + " bpm"
             st.text = "ST: " + it.st.toString() + " mV"
-            qrs.text = "QRS: " + it.hr.toString() + " ms"
-            pvcs.text = "PVCS: " + it.hr.toString()
-            qtc.text = "QTC: " + it.hr.toString() + " ms"
-            qt.text = "QT: " + it.hr.toString() + " ms"
+            qrs.text = "QRS: " + it.qrs.toString() + " ms"
+            pvcs.text = "PVCS: " + it.pvcs.toString()
+            qtc.text = "QTC: " + it.qtc.toString() + " ms"
+            qt.text = "QT: " + it.qt.toString() + " ms"
 
-        })
+        }
 
 
         switch(MainActivity.currentId)

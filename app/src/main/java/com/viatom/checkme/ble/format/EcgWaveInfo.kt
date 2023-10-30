@@ -17,7 +17,7 @@ class EcgWaveInfo constructor(var bytes: ByteArray) {
     var hrList: IntArray = IntArray(hrSize / 2)
     var waveList: IntArray = IntArray(waveSize / 2)
     var waveIntSize = waveSize / 2
-    val total = 1000
+    val total = 2500
     var waveViewSize = waveIntSize / total
 
 
