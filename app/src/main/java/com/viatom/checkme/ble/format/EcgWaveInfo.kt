@@ -32,9 +32,12 @@ class EcgWaveInfo constructor(var bytes: ByteArray) {
         waveList= ECGInnerItem(bytes).ecgData
         respirationArray=  IntArray(waveList.size)
         EcgRespiration.initEcgRespiration()
-        for(i in waveList.indices){
-            val result=EcgRespiration.inputEcgPoint(waveList[i])
-            respirationArray[i]=result
+        //every 2 points
+        for( i in 0 until waveList.size step 2){
+            respirationArray[i]=EcgRespiration.inputEcgPoint(waveList[i])
+            if(i+1<waveList.size){
+                respirationArray[i+1]= respirationArray[i]
+            }
         }
 
         waveIntSize=waveList.size
